@@ -3,16 +3,17 @@ const OpenAI = require("openai");
 const fs = require("fs");
 const path = require("path");
 
-if (!process.env.GROQ_API_KEY) {
-  throw new Error("GROQ_API_KEY is missing from the server environment.");
+function getAIClient() {
+  if (!process.env.GROQ_API_KEY) {
+    throw new Error("GROQ_API_KEY is missing from the server environment.");
+  }
+  return new OpenAI({
+    apiKey: process.env.GROQ_API_KEY,
+    baseURL: "https://api.groq.com/openai/v1",
+    timeout: 45_000,
+    maxRetries: 1,
+  });
 }
-
-const ai = new OpenAI({
-  apiKey: process.env.GROQ_API_KEY,
-  baseURL: "https://api.groq.com/openai/v1",
-  timeout: 45_000,
-  maxRetries: 1,
-});
 
 const MODEL = "qwen/qwen3.8-27b";
 
@@ -168,6 +169,7 @@ over a guessed answer.
 `;
 
   try {
+    const ai = getAIClient();
     const response = await ai.chat.completions.create({
       model: MODEL,
       temperature: 0,
