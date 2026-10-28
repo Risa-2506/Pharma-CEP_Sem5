@@ -27,14 +27,14 @@ export default function RegisterBatchFlow({
   const [step, setStep] = useState(1); // 1: Input Data, 2: Image & AI Scan, 3: Verification & Baseline, 4: Blockchain Receipt
 
   // Step 1: Form Inputs
-  const [medicineName, setMedicineName] = useState('Pantoprazole 40 mg Tablets');
-  const [batchNumber, setBatchNumber] = useState('APX-PAN-24001');
-  const [manufacturingDate, setManufacturingDate] = useState('01/2026');
-  const [expiryDate, setExpiryDate] = useState('12/2027');
-  const [composition, setComposition] = useState('Pantoprazole 40 mg');
-  const [quantity, setQuantity] = useState('10000');
-  const [mrp, setMrp] = useState('₹120');
-  const [sealId, setSealId] = useState('SEAL-APX-001');
+  const [medicineName, setMedicineName] = useState('');
+  const [batchNumber, setBatchNumber] = useState('');
+  const [manufacturingDate, setManufacturingDate] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [composition, setComposition] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [mrp, setMrp] = useState('');
+  const [sealId, setSealId] = useState('');
 
   // Step 2: Image & Extraction
   const [imageFile, setImageFile] = useState(null);
@@ -50,18 +50,6 @@ export default function RegisterBatchFlow({
 
   // Step 4: Receipt
   const [blockchainReceipt, setBlockchainReceipt] = useState(null);
-
-  // Quick Preset Helper
-  const fillApprovedSample = () => {
-    setMedicineName('Pantoprazole 40 mg Tablets');
-    setBatchNumber('APX-PAN-24001');
-    setManufacturingDate('01/2026');
-    setExpiryDate('12/2027');
-    setComposition('Pantoprazole 40 mg');
-    setQuantity('10000');
-    setMrp('₹120');
-    setSealId('SEAL-APX-001');
-  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -207,26 +195,6 @@ export default function RegisterBatchFlow({
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={fillApprovedSample}
-            style={{
-              padding: '0.5rem',
-              borderRadius: 'var(--radius-sm)',
-              background: 'rgba(6, 182, 212, 0.12)',
-              color: '#38bdf8',
-              border: '1px solid rgba(6, 182, 212, 0.3)',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px'
-            }}
-          >
-            <Sparkles size={14} /> Auto-Fill Approved Sample (APX-PAN-24001)
-          </button>
-
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
@@ -235,6 +203,7 @@ export default function RegisterBatchFlow({
               <input
                 type="text"
                 required
+                placeholder="e.g. Paracetamol 500mg Tablets"
                 value={medicineName}
                 onChange={(e) => setMedicineName(e.target.value)}
                 style={{
@@ -257,6 +226,7 @@ export default function RegisterBatchFlow({
                 <input
                   type="text"
                   required
+                  placeholder="e.g. BATCH-2026-001"
                   value={batchNumber}
                   onChange={(e) => setBatchNumber(e.target.value.toUpperCase())}
                   style={{
@@ -279,6 +249,7 @@ export default function RegisterBatchFlow({
                 <input
                   type="number"
                   required
+                  placeholder="e.g. 5000"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   style={{
@@ -346,6 +317,7 @@ export default function RegisterBatchFlow({
               </label>
               <input
                 type="text"
+                placeholder="e.g. Paracetamol 500 mg"
                 value={composition}
                 onChange={(e) => setComposition(e.target.value)}
                 style={{
@@ -367,6 +339,7 @@ export default function RegisterBatchFlow({
                 </label>
                 <input
                   type="text"
+                  placeholder="e.g. ₹95"
                   value={mrp}
                   onChange={(e) => setMrp(e.target.value)}
                   style={{
@@ -388,6 +361,7 @@ export default function RegisterBatchFlow({
                 <input
                   type="text"
                   required
+                  placeholder="e.g. SEAL-MFG-001"
                   value={sealId}
                   onChange={(e) => setSealId(e.target.value.toUpperCase())}
                   style={{

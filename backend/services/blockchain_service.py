@@ -142,6 +142,21 @@ class BlockchainService:
 
         return self._send_transaction(func, account)
 
+    def ensure_participant_authorized(self, account_address: str):
+        if not self.contract:
+            return
+        target = Web3.to_checksum_address(account_address)
+        try:
+            is_auth = self.contract.functions.authorizedParticipants(target).call()
+            if not is_auth:
+                owner_key = Config.HARDHAT_OWNER_PRIVATE_KEY
+                owner_acct = self.web3.eth.account.from_key(owner_key)
+                func = self.contract.functions.authorizeParticipant(target)
+                self._send_transaction(func, owner_acct)
+                logger.info(f"Authorized participant on blockchain: {target}")
+        except Exception as e:
+            logger.warning(f"Could not authorize participant {account_address}: {e}")
+
     def transfer_batch(
         self,
         sender_private_key: str,
@@ -152,9 +167,10 @@ class BlockchainService:
         if not self.contract:
             raise RuntimeError("Blockchain contract is not initialized.")
 
-        account = self.web3.eth.account.from_key(sender_private_key)
         receiver = Web3.to_checksum_address(receiver_address)
+        self.ensure_participant_authorized(receiver)
 
+        account = self.web3.eth.account.from_key(sender_private_key)
         func = self.contract.functions.transferBatch(
             str(batch_id), receiver, str(new_seal_id)
         )
@@ -213,6 +229,66 @@ class BlockchainService:
                 }
                 for i in inspections
             ],
+        }
+
+    def get_batch_events(self, batch_id: str) -> dict:
+        if not self.contract:
+            raise RuntimeError("Blockchain contract is not initialized.")
+
+        history = self.get_batch_history(batch_id)
+        events = []
+
+        def clean_val(val):
+            if isinstance(val, (bytes, bytearray)):
+                return "0x" + val.hex()
+            return val
+
+        try:
+            reg_filter = self.contract.events.BatchRegistered.create_filter(
+                from_block=0,
+                argument_filters={"batchId": batch_id}
+            )
+            for entry in reg_filter.get_all_entries():
+                raw_args = dict(entry.args)
+                clean_args = {k: clean_val(v) for k, v in raw_args.items()}
+                clean_args["batchId"] = batch_id
+                events.append({
+                    "event": "BatchRegistered",
+                    "blockNumber": entry.blockNumber,
+                    "transactionHash": entry.transactionHash.hex(),
+                    "args": clean_args
+                })
+        except Exception as e:
+            logger.warning(f"Could not query BatchRegistered events: {e}")
+
+        try:
+            trans_filter = self.contract.events.BatchTransferred.create_filter(
+                from_block=0,
+                argument_filters={"batchId": batch_id}
+            )
+            for entry in trans_filter.get_all_entries():
+                raw_args = dict(entry.args)
+                clean_args = {k: clean_val(v) for k, v in raw_args.items()}
+                clean_args["batchId"] = batch_id
+                events.append({
+                    "event": "BatchTransferred",
+                    "blockNumber": entry.blockNumber,
+                    "transactionHash": entry.transactionHash.hex(),
+                    "args": clean_args
+                })
+        except Exception as e:
+            logger.warning(f"Could not query BatchTransferred events: {e}")
+
+        current_holder = history.get("currentHolder", "")
+
+        return {
+            "batchId": batch_id,
+            "contractAddress": self.contract_address,
+            "currentHolder": current_holder,
+            "onChainHistory": history,
+            "events": events,
+            "recordedEvents": events,
+            "eventCount": len(events),
         }
 
     def _send_transaction(self, function, account) -> dict:

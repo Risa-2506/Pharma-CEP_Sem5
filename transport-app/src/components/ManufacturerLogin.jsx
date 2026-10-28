@@ -3,8 +3,8 @@ import { Truck, ShieldCheck, Lock, User, ArrowRight, AlertCircle, Building2 } fr
 import { api } from '../services/api';
 
 export default function ManufacturerLogin({ onLoginSuccess }) {
-  const [username, setUsername] = useState('aarav_apex');
-  const [password, setPassword] = useState('Password@123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -188,36 +188,6 @@ export default function ManufacturerLogin({ onLoginSuccess }) {
             <ArrowRight size={17} />
           </button>
         </form>
-
-        {/* Quick Demo Operator Selector */}
-        <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-subtle)' }}>
-          <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '0.5rem', textAlign: 'center' }}>
-            Quick Demo Sign In:
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              setUsername('aarav_apex');
-              setPassword('Password@123');
-            }}
-            style={{
-              width: '100%',
-              padding: '0.55rem',
-              borderRadius: 'var(--radius-sm)',
-              background: 'var(--bg-elevated)',
-              color: '#38bdf8',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              border: '1px solid rgba(6, 182, 212, 0.25)',
-            }}
-          >
-            <Building2 size={14} /> Aarav Sharma (Apex Pharma)
-          </button>
-        </div>
       </div>
     </div>
   );

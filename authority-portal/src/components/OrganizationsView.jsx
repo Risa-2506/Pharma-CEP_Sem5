@@ -81,17 +81,6 @@ export default function OrganizationsView({
     setContactPhone('');
   };
 
-  // Quick Preset Helper for testing the 4 standard organizations
-  const fillPreset = (presetName, presetType, presetCode, presetAddress) => {
-    setName(presetName);
-    setType(presetType);
-    setCode(presetCode);
-    setAddress(presetAddress);
-    setContactPerson(`${presetName.split(' ')[0]} Admin`);
-    setContactEmail(`ops@${presetName.toLowerCase().replace(/[^a-z]/g, '')}.com`);
-    setContactPhone('+91 98765 43210');
-  };
-
   const filteredOrgs = (organizations || []).filter(org => {
     const matchSearch = org.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                         org.code?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -361,43 +350,6 @@ export default function OrganizationsView({
               >
                 ✕
               </button>
-            </div>
-
-            {/* Quick Presets for Demo Testing */}
-            <div style={{ marginBottom: '1.25rem', padding: '0.75rem 1rem', background: 'var(--bg-card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                Quick Test Templates:
-              </span>
-              <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.4rem', flexWrap: 'wrap' }}>
-                <button
-                  type="button"
-                  onClick={() => fillPreset('Apex Pharma Pvt. Ltd.', 'Manufacturer', 'APEX', 'MIDC Industrial Area, Pune, Maharashtra')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(6, 182, 212, 0.15)', color: '#38bdf8', border: '1px solid rgba(6, 182, 212, 0.3)' }}
-                >
-                  + Apex Pharma (Manufacturer)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillPreset('ABC Distributors', 'Distributor', 'ABCD', 'Sector 18 Logistics Hub, Gurgaon, Haryana')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(99, 102, 241, 0.15)', color: '#818cf8', border: '1px solid rgba(99, 102, 241, 0.3)' }}
-                >
-                  + ABC Distributors (Distributor)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillPreset('XYZ Wholesale', 'Wholesaler', 'XYZW', 'Pharma Trade Centre, Ahmedabad, Gujarat')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', border: '1px solid rgba(245, 158, 11, 0.3)' }}
-                >
-                  + XYZ Wholesale (Wholesaler)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillPreset('HealthPlus Pharmacy', 'Retailer', 'HPLU', 'Bandra West, Mumbai, Maharashtra')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}
-                >
-                  + HealthPlus Pharmacy (Retailer)
-                </button>
-              </div>
             </div>
 
             <form onSubmit={handleCreateOrg} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

@@ -148,4 +148,8 @@ export const api = {
     const qs = new URLSearchParams(params).toString();
     return request(`/api/batches${qs ? `?${qs}` : ''}`);
   },
+
+  async getBatchBlockchainAudit(batchId) {
+    return request(`/api/batches/${batchId}/blockchain`);
+  },
 };

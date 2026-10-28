@@ -3,8 +3,8 @@ import { ShieldCheck, Lock, User, AlertCircle, ArrowRight, Server, Database, Cpu
 import { api } from '../services/api';
 
 export default function LoginView({ onLoginSuccess, health }) {
-  const [username, setUsername] = useState('authority_admin');
-  const [password, setPassword] = useState('Admin@123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 

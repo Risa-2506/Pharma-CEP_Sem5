@@ -92,6 +92,26 @@ export const api = {
     });
   },
 
+  async transferBatch(batchId, payload) {
+    return request(`/api/batches/${batchId}/transfer`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async getOrganizations(params = {}) {
+    const qs = new URLSearchParams(params).toString();
+    return request(`/api/organizations${qs ? `?${qs}` : ''}`);
+  },
+
+  async getSupplyChainRules() {
+    return request('/api/supply-chain/rules');
+  },
+
+  async getBatchBlockchainAudit(batchId) {
+    return request(`/api/batches/${batchId}/blockchain`);
+  },
+
   async extractMedicineImage(imageFile) {
     const token = getAuthToken();
     const formData = new FormData();

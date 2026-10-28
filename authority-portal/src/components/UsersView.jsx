@@ -33,7 +33,7 @@ export default function UsersView({
   const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('PharmaShield@2026');
+  const [password, setPassword] = useState('');
   const [organizationId, setOrganizationId] = useState('');
   const [role, setRole] = useState('Manufacturer Operator');
 
@@ -97,20 +97,8 @@ export default function UsersView({
     setFullName('');
     setUsername('');
     setEmail('');
-    setPassword('PharmaShield@2026');
+    setPassword('');
     setRole('Manufacturer Operator');
-  };
-
-  // Quick preset helper for the test scenarios
-  const fillPresetUser = (name, uname, mail, roleName, targetOrgType) => {
-    setFullName(name);
-    setUsername(uname);
-    setEmail(mail);
-    setRole(roleName);
-    const matchedOrg = (organizations || []).find(o => o.type === targetOrgType);
-    if (matchedOrg) {
-      setOrganizationId(matchedOrg.id);
-    }
   };
 
   const filteredUsers = (users || []).filter(u => {
@@ -399,43 +387,6 @@ export default function UsersView({
               >
                 ✕
               </button>
-            </div>
-
-            {/* Quick Test Preset Buttons */}
-            <div style={{ marginBottom: '1.25rem', padding: '0.75rem 1rem', background: 'var(--bg-card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                Quick Test Operator Presets:
-              </span>
-              <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.4rem', flexWrap: 'wrap' }}>
-                <button
-                  type="button"
-                  onClick={() => fillPresetUser('Aarav Sharma', 'aarav_apex', 'aarav@apexpharma.com', 'Manufacturer Operator', 'Manufacturer')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(6, 182, 212, 0.15)', color: '#38bdf8', border: '1px solid rgba(6, 182, 212, 0.3)' }}
-                >
-                  + Aarav (Manufacturer)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillPresetUser('Rahul Mehta', 'rahul_abc', 'rahul@abcdistributors.com', 'Distributor Operator', 'Distributor')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(99, 102, 241, 0.15)', color: '#818cf8', border: '1px solid rgba(99, 102, 241, 0.3)' }}
-                >
-                  + Rahul (Distributor)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillPresetUser('Vikram Patel', 'vikram_xyz', 'vikram@xyzwholesale.com', 'Wholesaler Operator', 'Wholesaler')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24', border: '1px solid rgba(245, 158, 11, 0.3)' }}
-                >
-                  + Vikram (Wholesaler)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fillPresetUser('Dr. Sneha Rao', 'sneha_healthplus', 'sneha@healthplus.com', 'Retailer Operator', 'Retailer')}
-                  style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.15)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}
-                >
-                  + Dr. Sneha (Retailer)
-                </button>
-              </div>
             </div>
 
             <form onSubmit={handleCreateUser} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
