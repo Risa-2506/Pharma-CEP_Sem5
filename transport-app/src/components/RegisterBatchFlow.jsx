@@ -67,29 +67,24 @@ export default function RegisterBatchFlow({
     try {
       // In real scenario, image is uploaded to /api/ai/extract
       // If simulated or test scenario, provide the extracted fields
-      let extractedData;
-      if (imageFile) {
-        try {
-          const aiRes = await api.extractMedicineImage(imageFile);
-          if (aiRes?.medicineInfo) {
-            extractedData = aiRes.medicineInfo;
-          }
-        } catch (e) {
-          console.warn('Live OCR note, using package scan:', e);
+      if (!imageFile) {
+        throw new Error('Please select or capture a medicine packaging image for physical verification.');
+      }
+
+      let extractedData = null;
+      try {
+        const aiRes = await api.extractMedicineImage(imageFile);
+        if (aiRes && aiRes.medicineInfo) {
+          extractedData = aiRes.medicineInfo;
+        } else if (aiRes && aiRes.error) {
+          throw new Error(aiRes.error);
         }
+      } catch (e) {
+        throw new Error(e.message || 'Image text extraction failed. Please ensure the medicine label is clear and legible.');
       }
 
       if (!extractedData) {
-        // Fallback or demo high-precision extraction matching packaging
-        extractedData = {
-          medicineName: medicineName,
-          manufacturer: user?.organizationName || 'Apex Pharma Pvt. Ltd.',
-          composition: composition,
-          batchNumber: simulateMismatch ? 'APX-FAKE-99999' : batchNumber,
-          expiryDate: simulateMismatch ? '05/2025' : expiryDate,
-          manufacturingDate: manufacturingDate,
-          mrp: mrp,
-        };
+        throw new Error('Could not detect medicine details from the packaging image. Please verify label clarity or configure GROQ_API_KEY in .env.');
       }
 
       setAiExtracted(extractedData);
