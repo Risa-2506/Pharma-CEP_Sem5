@@ -61,6 +61,13 @@ class AIService:
 
     def _call_groq_direct(self, file_bytes: bytes) -> dict:
         import base64
+
+        mime_type = "image/jpeg"
+        if file_bytes.startswith(b"\x89PNG\r\n\x1a\n"):
+            mime_type = "image/png"
+        elif file_bytes[:4] == b"RIFF" and file_bytes[8:12] == b"WEBP":
+            mime_type = "image/webp"
+
         base64_img = base64.b64encode(file_bytes).decode("utf-8")
         headers = {
             "Authorization": f"Bearer {self.groq_api_key}",
@@ -77,7 +84,7 @@ class AIService:
                     "role": "user",
                     "content": [
                         {"type": "text", "text": "Extract all printed package details."},
-                        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_img}"}},
+                        {"type": "image_url", "image_url": {"url": f"data:{mime_type};base64,{base64_img}"}},
                     ],
                 },
             ],

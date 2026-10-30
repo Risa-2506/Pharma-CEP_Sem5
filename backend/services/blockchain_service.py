@@ -235,7 +235,21 @@ class BlockchainService:
         if not self.contract:
             raise RuntimeError("Blockchain contract is not initialized.")
 
-        history = self.get_batch_history(batch_id)
+        try:
+            history = self.get_batch_history(batch_id)
+        except Exception as e:
+            logger.warning(f"Batch '{batch_id}' not found on blockchain: {e}")
+            return {
+                "batchId": batch_id,
+                "contractAddress": self.contract_address,
+                "currentHolder": "Not registered on active ledger",
+                "onChainHistory": None,
+                "events": [],
+                "recordedEvents": [],
+                "eventCount": 0,
+                "warning": f"Batch '{batch_id}' has not been registered on the current blockchain instance."
+            }
+
         events = []
 
         def clean_val(val):

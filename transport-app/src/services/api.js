@@ -42,6 +42,10 @@ async function request(endpoint, options = {}) {
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
+    if (response.status === 401 && !endpoint.includes('/api/auth/login')) {
+      clearAuth();
+      window.dispatchEvent(new CustomEvent('pharmashield:session_expired'));
+    }
     const errorMsg = data.error || data.message || `Request failed with status ${response.status}`;
     const err = new Error(errorMsg);
     err.status = response.status;

@@ -58,6 +58,16 @@ export default function App() {
     }
   }, [token, user, loadBatches]);
 
+  useEffect(() => {
+    const handleExpired = () => {
+      setUser(null);
+      setToken(null);
+      showToast('Your session has expired. Please sign in again.', 'error');
+    };
+    window.addEventListener('pharmashield:session_expired', handleExpired);
+    return () => window.removeEventListener('pharmashield:session_expired', handleExpired);
+  }, [showToast]);
+
   const handleLoginSuccess = (authenticatedUser) => {
     setUser(authenticatedUser);
     setToken(getAuthToken());
