@@ -68,10 +68,10 @@ export default function ManufacturerLogin({ onLoginSuccess }) {
           border: '1px solid rgba(6, 182, 212, 0.3)',
           marginBottom: '0.5rem'
         }}>
-          MANUFACTURER WORKSPACE
+          SUPPLY CHAIN OPERATOR WORKSPACE
         </div>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-          Physical Medicine Handling & Blockchain Batch Registration
+          Manufacturer, Distributor, Wholesaler & Pharmacy Portal
         </p>
       </div>
 

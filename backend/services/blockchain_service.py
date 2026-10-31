@@ -262,7 +262,7 @@ class BlockchainService:
             stage_eth_keys = {
                 "Manufacturer": "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
                 "Distributor": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
-                "Wholesaler": "0x5de4111afa1a4b94908f83103eb219e8638b38558a1dcf3734e29ddae8ac0057",
+                "Wholesaler": "0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a",
                 "Retailer": "0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6",
             }
 
@@ -304,6 +304,21 @@ class BlockchainService:
                     )
                 except Exception as ie:
                     logger.warning(f"Could not replay inspection during sync: {ie}")
+
+            dispenses = batch.get("dispenseHistory", [])
+            for d in dispenses:
+                ret_key = stage_eth_keys.get("Retailer", mfg_key)
+                disp_notes = f"Dispensed {d.get('dispensedQuantity')} units to patient: {d.get('patientId')}"
+                curr_seal = batch.get("sealId", "SEAL-DISPENSED")
+                try:
+                    self.inspect_batch(
+                        inspector_private_key=ret_key,
+                        batch_id=b_id,
+                        notes=disp_notes,
+                        new_seal_id=curr_seal,
+                    )
+                except Exception as de:
+                    logger.warning(f"Could not replay dispense during sync: {de}")
 
             logger.info(f"Successfully auto-synced batch '{b_id}' to active blockchain ledger!")
             return True

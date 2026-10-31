@@ -221,11 +221,16 @@ class AIService:
                     if base_key == "batchNumber":
                         is_match = (norm_exp == norm_ext)
                     elif base_key == "composition":
-                        # Match if active ingredients are contained in formulation or vice versa
-                        exp_words = [w.lower() for w in re.findall(r"[a-zA-Z0-9]+", str(expected_val)) if len(w) > 1]
+                        # Check for tamper/contamination keywords first
                         ext_lower = str(extracted_val).lower()
-                        words_matched = all(w in ext_lower for w in exp_words) if exp_words else False
-                        is_match = (norm_exp == norm_ext) or (norm_exp in norm_ext) or (norm_ext in norm_exp) or words_matched
+                        red_flags = ["contaminant", "adulterant", "poison", "counterfeit", "fake", "tampered", "impurity", "unknown compound"]
+                        if any(rf in ext_lower for rf in red_flags):
+                            is_match = False
+                        else:
+                            # Match if active ingredients are contained in formulation or vice versa
+                            exp_words = [w.lower() for w in re.findall(r"[a-zA-Z0-9]+", str(expected_val)) if len(w) > 1]
+                            words_matched = all(w in ext_lower for w in exp_words) if exp_words else False
+                            is_match = (norm_exp == norm_ext) or (norm_exp in norm_ext) or (norm_ext in norm_exp) or words_matched
                     elif base_key == "mrp":
                         # Numeric price comparison (e.g., 150 vs Rs. 150.00 PER 15 TABS)
                         def parse_price(val):

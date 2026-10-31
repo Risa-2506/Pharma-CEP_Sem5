@@ -160,8 +160,11 @@ export default function DashboardView({
     }
 
     if (stageKey === 'Retailer') {
-      if (currentStage === 'Retailer') {
+      if (currentStage === 'Retailer' && !isInTransit) {
         return { completed: true, active: true, inTransit: false };
+      }
+      if (isInTransit && currentStage === 'Retailer') {
+        return { completed: false, active: true, inTransit: true };
       }
       return { completed: false, active: false, inTransit: false };
     }

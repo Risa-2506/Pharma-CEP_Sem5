@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ManufacturerLogin from './components/ManufacturerLogin';
 import ManufacturerDashboard from './components/ManufacturerDashboard';
 import DistributorDashboard from './components/DistributorDashboard';
+import WholesalerDashboard from './components/WholesalerDashboard';
+import RetailerDashboard from './components/RetailerDashboard';
 import RegisterBatchFlow from './components/RegisterBatchFlow';
 import { api, getAuthToken, getStoredUser } from './services/api';
 import { 
@@ -18,7 +20,9 @@ import {
   AlertCircle,
   Info,
   X,
-  Truck
+  Truck,
+  Boxes,
+  Store
 } from 'lucide-react';
 
 export default function App() {
@@ -28,6 +32,14 @@ export default function App() {
   const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(false);
   const [toasts, setToasts] = useState([]);
+
+  const userType = user?.organizationType || '';
+  const userRole = (user?.role || '').toLowerCase();
+
+  const isDistributor = userType === 'Distributor' || userRole.includes('distributor');
+  const isWholesaler = userType === 'Wholesaler' || userRole.includes('wholesaler');
+  const isRetailer = userType === 'Retailer' || userType === 'Pharmacy' || userRole.includes('retailer') || userRole.includes('pharmacy');
+  const isManufacturer = !isDistributor && !isWholesaler && !isRetailer;
 
   const showToast = useCallback((message, type = 'info') => {
     const id = Date.now() + Math.random();
@@ -104,8 +116,24 @@ export default function App() {
         ) : (
           <>
             {activeTab === 'dashboard' && (
-              (user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) ? (
+              isDistributor ? (
                 <DistributorDashboard
+                  user={user}
+                  batches={batches}
+                  onRefresh={loadBatches}
+                  loading={loading}
+                  showToast={showToast}
+                />
+              ) : isWholesaler ? (
+                <WholesalerDashboard
+                  user={user}
+                  batches={batches}
+                  onRefresh={loadBatches}
+                  loading={loading}
+                  showToast={showToast}
+                />
+              ) : isRetailer ? (
+                <RetailerDashboard
                   user={user}
                   batches={batches}
                   onRefresh={loadBatches}
@@ -173,9 +201,10 @@ export default function App() {
                   <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem' }}>
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Supply Chain Stage</div>
                     <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#10b981' }}>
-                      {(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor'))
-                        ? 'Stage 2: Bulk Receiving, Scan Verification & Onward Dispatch'
-                        : 'Stage 1: Production, Packaging & Verification'}
+                      {isManufacturer && 'Stage 1: Production, Packaging & Baseline Registration'}
+                      {isDistributor && 'Stage 2: Bulk Receiving, Scan Verification & Onward Dispatch'}
+                      {isWholesaler && 'Stage 3: Regional Wholesale Receiving & Pharmacy Distribution'}
+                      {isRetailer && 'Stage 4: Pharmacy Counter Verification & Patient Dispensing'}
                     </div>
                   </div>
 
@@ -212,15 +241,21 @@ export default function App() {
             className={`nav-tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
             onClick={() => setActiveTab('dashboard')}
           >
-            {(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) ? (
+            {isDistributor ? (
               <Truck size={20} />
+            ) : isWholesaler ? (
+              <Boxes size={20} />
+            ) : isRetailer ? (
+              <Store size={20} />
             ) : (
               <Package size={20} />
             )}
-            <span>{(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) ? 'Logistics' : 'Batches'}</span>
+            <span>
+              {isDistributor ? 'Logistics' : isWholesaler ? 'Wholesale' : isRetailer ? 'Pharmacy' : 'Batches'}
+            </span>
           </button>
 
-          {!(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) && (
+          {isManufacturer && (
             <button
               className="nav-action-btn"
               title="Register New Batch"

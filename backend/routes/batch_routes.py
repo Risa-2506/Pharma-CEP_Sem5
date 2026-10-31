@@ -15,7 +15,7 @@ STAGE_ETH_ACCOUNTS = {
 STAGE_ETH_KEYS = {
     "Manufacturer": "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
     "Distributor": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
-    "Wholesaler": "0x5de4111afa1a4b94908f83103eb219e8638b38558a1dcf3734e29ddae8ac0057",
+    "Wholesaler": "0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a",
     "Retailer": "0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6",
 }
 
@@ -51,6 +51,7 @@ def serialize_batch(batch):
         "transferHistory": batch.get("transferHistory", []),
         "verificationHistory": batch.get("verificationHistory", []),
         "receiptHistory": batch.get("receiptHistory", []),
+        "dispenseHistory": batch.get("dispenseHistory", []),
         "trustedBaseline": batch.get("trustedBaseline"),
         "createdAt": batch.get("createdAt"),
         "updatedAt": batch.get("updatedAt"),
@@ -146,6 +147,7 @@ def get_incoming_deliveries():
     return jsonify({
         "success": True,
         "deliveries": deliveries,
+        "incomingDeliveries": deliveries,
         "count": len(deliveries),
     }), 200
 
@@ -690,59 +692,63 @@ def transfer_batch(batch_id):
     receiver_name = receiver_org.get("name", "")
     receiver_type = receiver_org.get("type", "")
 
-    if rule_doc:
-        allowed_transitions = rule_doc.get("allowedTransitions", [])
-        relationships = rule_doc.get("relationships", [])
+    default_transitions = [
+        {"from": "Manufacturer", "to": "Distributor"},
+        {"from": "Distributor", "to": "Wholesaler"},
+        {"from": "Wholesaler", "to": "Retailer"},
+    ]
+    allowed_transitions = (rule_doc.get("allowedTransitions") if rule_doc else None) or default_transitions
+    relationships = rule_doc.get("relationships", []) if rule_doc else []
 
-        is_authorized = False
+    is_authorized = False
 
-        # If explicit transitions are defined, check for strict match
-        for t in allowed_transitions:
-            from_org_rule = t.get("fromOrg")
-            to_org_rule = t.get("toOrg")
+    # Check for transition match
+    for t in allowed_transitions:
+        from_org_rule = t.get("fromOrg")
+        to_org_rule = t.get("toOrg")
 
-            from_match = (from_org_rule == current_holder_name) if from_org_rule else (t.get("from") == current_stage)
-            to_match = (to_org_rule == receiver_name) if to_org_rule else (t.get("to") == receiver_type)
+        from_match = (from_org_rule == current_holder_name) if from_org_rule else (t.get("from") == current_stage)
+        to_match = (to_org_rule == receiver_name) if to_org_rule else (t.get("to") == receiver_type)
 
-            if from_match and to_match:
-                is_authorized = True
-                break
+        if from_match and to_match:
+            is_authorized = True
+            break
 
-        # If pipeline relationships are defined, check sequential partner
-        if relationships:
-            curr_idx = -1
-            rec_idx = -1
-            for idx, rel in enumerate(relationships):
-                if rel.get("orgId") == batch.get("currentHolderId") or rel.get("orgName") == current_holder_name or rel.get("type") == current_stage:
-                    curr_idx = idx
-                if str(rel.get("orgId")) == str(receiver_org.get("_id")) or rel.get("orgName") == receiver_name:
-                    rec_idx = idx
+    # If pipeline relationships are defined, check sequential partner
+    if relationships:
+        curr_idx = -1
+        rec_idx = -1
+        for idx, rel in enumerate(relationships):
+            if rel.get("orgId") == batch.get("currentHolderId") or rel.get("orgName") == current_holder_name or rel.get("type") == current_stage:
+                curr_idx = idx
+            if str(rel.get("orgId")) == str(receiver_org.get("_id")) or rel.get("orgName") == receiver_name:
+                rec_idx = idx
 
-            if curr_idx != -1 and rec_idx == curr_idx + 1:
-                is_authorized = True
-            elif not is_authorized and rec_idx != curr_idx + 1:
-                is_authorized = False
+        if curr_idx != -1 and rec_idx == curr_idx + 1:
+            is_authorized = True
+        elif not is_authorized and rec_idx != curr_idx + 1:
+            is_authorized = False
 
-        if not is_authorized:
-            # Log Discrepancy in MongoDB
-            discrepancy_record = {
-                "batchId": batch.get("batchId"),
-                "issueType": "Unauthorized Transfer Attempt",
-                "description": f"Attempted transfer from '{current_holder_name}' ({current_stage}) to unauthorized recipient '{receiver_name}' ({receiver_type}).",
-                "expected": f"Authorized supply chain next stage partner",
-                "actual": f"{receiver_name} ({receiver_type})",
-                "detectedBy": user.get("username", "Unknown"),
-                "detectedByRole": user.get("role", "Unknown"),
-                "status": "Open",
-                "timestamp": datetime.now(timezone.utc).isoformat(),
-            }
-            discrepancies_col.insert_one(discrepancy_record)
+    if not is_authorized:
+        # Log Discrepancy in MongoDB
+        discrepancy_record = {
+            "batchId": batch.get("batchId"),
+            "issueType": "Unauthorized Transfer Attempt",
+            "description": f"Attempted transfer from '{current_holder_name}' ({current_stage}) to unauthorized recipient '{receiver_name}' ({receiver_type}).",
+            "expected": f"Authorized supply chain next stage partner",
+            "actual": f"{receiver_name} ({receiver_type})",
+            "detectedBy": user.get("username", "Unknown"),
+            "detectedByRole": user.get("role", "Unknown"),
+            "status": "Open",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+        discrepancies_col.insert_one(discrepancy_record)
 
-            return jsonify({
-                "success": False,
-                "error": f"UNAUTHORIZED TRANSFER REJECTED: '{receiver_name}' is not authorized to receive batches from '{current_holder_name}' under the active Supply Chain Rules configured by the Regulatory Authority.",
-                "discrepancyLogged": True,
-            }), 403
+        return jsonify({
+            "success": False,
+            "error": f"UNAUTHORIZED TRANSFER REJECTED: '{receiver_name}' is not authorized to receive batches from '{current_holder_name}' under the active Supply Chain Rules configured by the Regulatory Authority.",
+            "discrepancyLogged": True,
+        }), 403
 
     # 5. Execute On-Chain Transfer on Blockchain
     tx_hash = None
@@ -850,5 +856,116 @@ def get_batch_blockchain_audit(batch_id):
         }), 200
     except Exception as e:
         return jsonify({"success": False, "error": f"Failed to read blockchain ledger: {str(e)}"}), 500
+
+
+@batch_bp.route("/api/batches/<batch_id>/dispense", methods=["POST"])
+@token_required
+def dispense_batch(batch_id):
+    """
+    Dispenses medicine units to a patient at the final Pharmacy / Retailer stage.
+    Completes the end-to-end supply chain verification journey.
+    """
+    from datetime import datetime, timezone
+    from services.blockchain_service import blockchain_service
+    from config import Config
+
+    user = getattr(request, "user", {})
+    user_org_id = user.get("organizationId")
+    user_role = user.get("role", "")
+    user_stage = user.get("organizationType", "Retailer")
+
+    if user_stage != "Retailer" and user_role != "Authority":
+        return jsonify({
+            "success": False,
+            "error": f"Unauthorized: Only licensed Pharmacy / Retailer participants can dispense medicine to patients (Your stage: '{user_stage}')."
+        }), 403
+
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"batchNumber": batch_id}, {"_id": batch_id}]})
+    if not batch:
+        return jsonify({"success": False, "error": f"Batch '{batch_id}' not found."}), 404
+
+    if batch.get("status") == "Blocked":
+        return jsonify({
+            "success": False,
+            "error": "CRITICAL: Batch is under REGULATORY HOLD (Blocked). Dispensing is strictly prohibited."
+        }), 403
+
+    if user_role != "Authority" and batch.get("currentHolderId") != user_org_id:
+        return jsonify({
+            "success": False,
+            "error": f"Custody Error: Batch '{batch_id}' is held by '{batch.get('currentHolderName')}', not your pharmacy."
+        }), 403
+
+    if batch.get("status") == "In Transit":
+        return jsonify({
+            "success": False,
+            "error": "Cannot dispense: Batch is currently In Transit. Scan verification and receipt must be completed first."
+        }), 400
+
+    data = request.get_json(silent=True) or {}
+    patient_id = (data.get("patientId") or data.get("prescriptionId") or f"PAT-{int(datetime.now().timestamp())}").strip()
+    qty_to_dispense = int(data.get("dispensedQuantity") or data.get("quantity") or 1)
+    notes = (data.get("notes") or f"Dispensed {qty_to_dispense} units to patient ID {patient_id}").strip()
+
+    curr_qty = int(batch.get("quantity") or 1)
+    new_qty = max(0, curr_qty - qty_to_dispense)
+    new_status = "Dispensed" if new_qty == 0 else "In Custody"
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+    dispense_record = {
+        "dispensedAt": now_iso,
+        "dispensedBy": user.get("username", "Pharmacist"),
+        "patientId": patient_id,
+        "dispensedQuantity": qty_to_dispense,
+        "remainingQuantity": new_qty,
+        "notes": notes,
+        "pharmacyName": user.get("organizationName", "Authorized Pharmacy"),
+    }
+
+    # On-Chain Inspection/Dispense event
+    tx_hash = None
+    block_num = None
+    if blockchain_service.is_connected() and blockchain_service.contract:
+        try:
+            retailer_key = STAGE_ETH_KEYS.get("Retailer", Config.HARDHAT_OWNER_PRIVATE_KEY)
+            disp_notes = f"Dispensed {qty_to_dispense} units to patient: {patient_id}"
+            tx_res = blockchain_service.inspect_batch(
+                inspector_private_key=retailer_key,
+                batch_id=batch.get("batchId"),
+                notes=disp_notes,
+                new_seal_id=batch.get("sealId", "SEAL-DISPENSED")
+            )
+            tx_hash = tx_res.get("transactionHash")
+            block_num = tx_res.get("blockNumber")
+            dispense_record["txHash"] = tx_hash
+            dispense_record["blockNumber"] = block_num
+        except Exception as e:
+            logger.warning(f"Could not log blockchain dispense event: {e}")
+
+    updated = batches_col.find_one_and_update(
+        {"_id": batch["_id"]},
+        {
+            "$set": {
+                "quantity": new_qty,
+                "status": new_status,
+                "updatedAt": now_iso,
+            },
+            "$push": {
+                "dispenseHistory": dispense_record,
+            }
+        },
+        return_document=True
+    )
+
+    return jsonify({
+        "success": True,
+        "message": f"Successfully dispensed {qty_to_dispense} units to patient {patient_id}!",
+        "batch": serialize_batch(updated),
+        "dispenseRecord": dispense_record,
+        "blockchainReceipt": {
+            "transactionHash": tx_hash,
+            "blockNumber": block_num,
+        }
+    }), 200
 
 

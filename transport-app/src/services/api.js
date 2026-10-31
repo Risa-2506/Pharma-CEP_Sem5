@@ -134,6 +134,13 @@ export const api = {
     });
   },
 
+  async dispenseBatch(batchId, dispenseDetails) {
+    return request(`/api/batches/${batchId}/dispense`, {
+      method: 'POST',
+      body: JSON.stringify(dispenseDetails),
+    });
+  },
+
   async extractMedicineImage(imageFile) {
     const token = getAuthToken();
     const formData = new FormData();
