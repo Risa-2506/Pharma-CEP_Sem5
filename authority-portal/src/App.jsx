@@ -48,9 +48,9 @@ export default function App() {
   }, []);
 
   // Load All Authority Data
-  const loadPortalData = useCallback(async () => {
+  const loadPortalData = useCallback(async (silent = false) => {
     if (!token) return;
-    setLoading(true);
+    if (!silent) setLoading(true);
     try {
       const [sumRes, batchRes, orgRes, userRes, ruleRes] = await Promise.allSettled([
         api.getBatchSummary(),
@@ -70,7 +70,7 @@ export default function App() {
     } catch (err) {
       console.error('Error loading portal data:', err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, [token, loadHealth]);
 
@@ -78,9 +78,25 @@ export default function App() {
     loadHealth();
   }, [loadHealth]);
 
+  // Initial fetch and automatic live surveillance polling (every 5 seconds + on window focus)
   useEffect(() => {
     if (token && user) {
-      loadPortalData();
+      loadPortalData(false);
+
+      const intervalId = setInterval(() => {
+        loadPortalData(true);
+      }, 5000);
+
+      const handleFocus = () => {
+        loadPortalData(true);
+      };
+
+      window.addEventListener('focus', handleFocus);
+
+      return () => {
+        clearInterval(intervalId);
+        window.removeEventListener('focus', handleFocus);
+      };
     }
   }, [token, user, loadPortalData]);
 

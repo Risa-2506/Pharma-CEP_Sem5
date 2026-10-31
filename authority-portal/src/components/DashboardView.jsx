@@ -619,16 +619,53 @@ export default function DashboardView({
                       })}
                     </div>
 
-                    {/* Transfer Trail Summary (if transferred) */}
-                    {b.transferHistory && b.transferHistory.length > 0 && (
+                    {/* Transfer Trail Summary / Initial Registration Status */}
+                    {b.transferHistory && b.transferHistory.length > 0 ? (
+                      (() => {
+                        const latestTransfer = b.transferHistory[b.transferHistory.length - 1];
+                        return (
+                          <div style={{
+                            marginTop: '0.25rem',
+                            padding: '0.65rem 1rem',
+                            background: '#f8fafc',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid #e2e8f0',
+                            fontSize: '0.75rem',
+                            color: '#475569',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexWrap: 'wrap',
+                            gap: '0.5rem'
+                          }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <Truck size={14} color="#d97706" />
+                              <span>
+                                Custody dispatched from <strong style={{ color: '#0f172a' }}>{latestTransfer.senderOrgName}</strong> to <strong style={{ color: '#0284c7' }}>{latestTransfer.receiverOrgName}</strong>
+                              </span>
+                              <span style={{ color: '#64748b' }}>
+                                • Seal: <code style={{ color: '#7c3aed', fontFamily: 'var(--font-mono)' }}>{latestTransfer.newSealId}</code>
+                              </span>
+                            </div>
+
+                            {latestTransfer.blockNumber && (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.72rem', color: '#059669', fontWeight: 600 }}>
+                                <Cpu size={12} />
+                                <span>Hardhat Block #{latestTransfer.blockNumber}</span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()
+                    ) : (
                       <div style={{
                         marginTop: '0.25rem',
                         padding: '0.65rem 1rem',
-                        background: '#f8fafc',
+                        background: '#f0fdf4',
                         borderRadius: 'var(--radius-md)',
-                        border: '1px solid #e2e8f0',
+                        border: '1px solid #bbf7d0',
                         fontSize: '0.75rem',
-                        color: '#475569',
+                        color: '#166534',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
@@ -636,19 +673,16 @@ export default function DashboardView({
                         gap: '0.5rem'
                       }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <Truck size={14} color="#d97706" />
+                          <CheckCircle2 size={14} color="#059669" />
                           <span>
-                            Custody dispatched from <strong style={{ color: '#0f172a' }}>{b.transferHistory[0].senderOrgName}</strong> to <strong style={{ color: '#0284c7' }}>{b.transferHistory[0].receiverOrgName}</strong>
-                          </span>
-                          <span style={{ color: '#64748b' }}>
-                            • Seal: <code style={{ color: '#7c3aed', fontFamily: 'var(--font-mono)' }}>{b.transferHistory[0].newSealId}</code>
+                            Manufactured by <strong style={{ color: '#0f172a' }}>{b.manufacturerName}</strong> • Cryptographic Baseline & Tamper Seal <code style={{ color: '#7c3aed', fontFamily: 'var(--font-mono)' }}>{b.sealId}</code> verified
                           </span>
                         </div>
 
-                        {b.transferHistory[0].blockNumber && (
+                        {b.blockNumber && (
                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.72rem', color: '#059669', fontWeight: 600 }}>
                             <Cpu size={12} />
-                            <span>Hardhat Block #{b.transferHistory[0].blockNumber}</span>
+                            <span>Hardhat Block #{b.blockNumber}</span>
                           </div>
                         )}
                       </div>
@@ -661,29 +695,29 @@ export default function DashboardView({
             <div style={{
               padding: '3.5rem 2rem',
               textAlign: 'center',
-              background: 'rgba(18, 29, 51, 0.5)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px dashed var(--border-medium)',
+              background: '#ffffff',
+              borderRadius: 'var(--radius-xl)',
+              border: '1px dashed #cbd5e1',
             }}>
               <div style={{
                 width: '56px',
                 height: '56px',
                 borderRadius: '16px',
-                background: 'rgba(6, 182, 212, 0.1)',
+                background: '#f0f9ff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto 1.25rem'
               }}>
-                <Package size={28} color="#06b6d4" />
+                <Package size={28} color="#0284c7" />
               </div>
 
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem' }}>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
                 No active batches in the supply chain yet
               </h4>
               <p style={{
                 fontSize: '0.85rem',
-                color: 'var(--text-secondary)',
+                color: '#64748b',
                 maxWidth: '460px',
                 margin: '0 auto 1.5rem',
                 lineHeight: 1.6
