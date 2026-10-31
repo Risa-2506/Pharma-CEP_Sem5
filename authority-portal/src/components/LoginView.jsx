@@ -125,7 +125,7 @@ export default function LoginView({ onLoginSuccess, health }) {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="authority_admin"
+                placeholder="Enter authority username"
                 required
                 style={{
                   background: 'transparent',

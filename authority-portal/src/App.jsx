@@ -141,6 +141,7 @@ export default function App() {
             metrics={metrics}
             batches={batches}
             health={health}
+            rules={rules}
             onRefresh={loadPortalData}
             loading={loading}
             setActiveTab={setActiveTab}
@@ -214,11 +215,11 @@ function ToastContainer({ toasts, removeToast }) {
       position: 'fixed',
       bottom: '24px',
       right: '24px',
-      zIndex: 200,
+      zIndex: 9999,
       display: 'flex',
       flexDirection: 'column',
       gap: '10px',
-      maxWidth: '420px',
+      maxWidth: '440px',
     }}>
       {toasts.map(toast => {
         const isSuccess = toast.type === 'success';
@@ -232,24 +233,24 @@ function ToastContainer({ toasts, removeToast }) {
               alignItems: 'center',
               justifyContent: 'space-between',
               gap: '12px',
-              padding: '12px 16px',
+              padding: '12px 18px',
               borderRadius: 'var(--radius-md)',
-              background: 'var(--bg-surface)',
-              border: `1px solid ${isSuccess ? 'rgba(16, 185, 129, 0.4)' : isError ? 'rgba(244, 63, 94, 0.4)' : 'var(--border-medium)'}`,
-              boxShadow: 'var(--shadow-lg)',
+              background: '#ffffff',
+              border: `1px solid ${isSuccess ? '#a7f3d0' : isError ? '#fecaca' : '#cbd5e1'}`,
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
               animation: 'fadeIn 0.2s ease-out',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {isSuccess && <CheckCircle size={18} color="#10b981" />}
-              {isError && <AlertCircle size={18} color="#f43f5e" />}
-              {!isSuccess && !isError && <Info size={18} color="#06b6d4" />}
-              <span style={{ fontSize: '0.85rem', color: '#fff' }}>{toast.message}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {isSuccess && <CheckCircle size={18} color="#059669" style={{ flexShrink: 0 }} />}
+              {isError && <AlertCircle size={18} color="#dc2626" style={{ flexShrink: 0 }} />}
+              {!isSuccess && !isError && <Info size={18} color="#0284c7" style={{ flexShrink: 0 }} />}
+              <span style={{ fontSize: '0.85rem', color: '#0f172a', fontWeight: 600, lineHeight: 1.4 }}>{toast.message}</span>
             </div>
 
             <button
               onClick={() => removeToast(toast.id)}
-              style={{ background: 'transparent', color: 'var(--text-muted)', padding: '2px' }}
+              style={{ background: 'transparent', color: '#64748b', padding: '4px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
             >
               <X size={15} />
             </button>

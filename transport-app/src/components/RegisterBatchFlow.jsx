@@ -41,7 +41,6 @@ export default function RegisterBatchFlow({
   const [imagePreview, setImagePreview] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
   const [aiExtracted, setAiExtracted] = useState(null);
-  const [simulateMismatch, setSimulateMismatch] = useState(false);
 
   // Step 3: Verification Result & Baseline
   const [verificationResult, setVerificationResult] = useState(null);
@@ -202,7 +201,7 @@ export default function RegisterBatchFlow({
               <input
                 type="text"
                 required
-                placeholder="e.g. Paracetamol 500mg Tablets"
+                placeholder="Enter medicine product name"
                 value={medicineName}
                 onChange={(e) => setMedicineName(e.target.value)}
                 style={{
@@ -227,7 +226,7 @@ export default function RegisterBatchFlow({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. BATCH-2026-001"
+                  placeholder="Enter manufacturing batch number"
                   value={batchNumber}
                   onChange={(e) => setBatchNumber(e.target.value.toUpperCase())}
                   style={{
@@ -252,7 +251,7 @@ export default function RegisterBatchFlow({
                 <input
                   type="number"
                   required
-                  placeholder="e.g. 5000"
+                  placeholder="Enter total units produced"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   style={{
@@ -326,7 +325,7 @@ export default function RegisterBatchFlow({
               </label>
               <input
                 type="text"
-                placeholder="e.g. Paracetamol 500 mg"
+                placeholder="Enter active formulation"
                 value={composition}
                 onChange={(e) => setComposition(e.target.value)}
                 style={{
@@ -350,7 +349,7 @@ export default function RegisterBatchFlow({
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. ₹95"
+                  placeholder="Enter MRP in INR"
                   value={mrp}
                   onChange={(e) => setMrp(e.target.value)}
                   style={{
@@ -374,7 +373,7 @@ export default function RegisterBatchFlow({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. SEAL-MFG-001"
+                  placeholder="Enter tamper seal ID"
                   value={sealId}
                   onChange={(e) => setSealId(e.target.value.toUpperCase())}
                   style={{
@@ -495,60 +494,6 @@ export default function RegisterBatchFlow({
             >
               <Upload size={14} /> {imagePreview ? 'Change Image' : 'Select Photo'}
             </label>
-          </div>
-
-          {/* Test Scenario Selector: Pass vs Fail */}
-          <div style={{
-            background: '#f8fafc',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid #e2e8f0',
-            padding: '0.85rem',
-          }}>
-            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#475569', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
-              Demo Verification Mode:
-            </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button
-                type="button"
-                onClick={() => setSimulateMismatch(false)}
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  background: !simulateMismatch ? '#ecfdf5' : '#ffffff',
-                  color: !simulateMismatch ? '#059669' : '#64748b',
-                  border: `1px solid ${!simulateMismatch ? '#a7f3d0' : '#cbd5e1'}`,
-                  cursor: 'pointer'
-                }}
-              >
-                ✓ Valid Match (Pass)
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setSimulateMismatch(true)}
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  background: simulateMismatch ? '#fef2f2' : '#ffffff',
-                  color: simulateMismatch ? '#b91c1c' : '#64748b',
-                  border: `1px solid ${simulateMismatch ? '#fecaca' : '#cbd5e1'}`,
-                  cursor: 'pointer'
-                }}
-              >
-                ✗ Test Mismatch (Fail)
-              </button>
-            </div>
-            {simulateMismatch && (
-              <p style={{ fontSize: '0.7rem', color: '#b91c1c', marginTop: '0.4rem', fontWeight: 500 }}>
-                Simulating physical packaging with mismatched batch & expired date to test system fraud rejection.
-              </p>
-            )}
           </div>
 
           <button
@@ -760,7 +705,7 @@ export default function RegisterBatchFlow({
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', fontSize: '0.75rem' }}>
               <div>
                 <span style={{ color: '#64748b' }}>Initial Holder: </span>
-                <span style={{ color: '#0f172a', fontWeight: 600 }}>{user?.organizationName || 'Apex Pharma'}</span>
+                <span style={{ color: '#0f172a', fontWeight: 600 }}>{user?.organizationName || 'Licensed Manufacturer'}</span>
               </div>
               <div>
                 <span style={{ color: '#64748b' }}>Status: </span>

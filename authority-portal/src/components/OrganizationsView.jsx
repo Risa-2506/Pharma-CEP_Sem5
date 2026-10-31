@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Building2, 
   Plus, 
@@ -25,6 +26,16 @@ export default function OrganizationsView({
   const [typeFilter, setTypeFilter] = useState('ALL');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [isModalOpen]);
 
   // Form State
   const [name, setName] = useState('');
@@ -314,24 +325,27 @@ export default function OrganizationsView({
       </div>
 
       {/* Create Organization Modal */}
-      {isModalOpen && (
+      {isModalOpen && createPortal(
         <div style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(15, 23, 42, 0.45)',
+          width: '100vw',
+          height: '100vh',
+          margin: 0,
+          background: 'rgba(15, 23, 42, 0.6)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 100,
+          zIndex: 9999,
           padding: '1.5rem',
         }}>
           <div style={{
             background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            border: '1px solid #cbd5e1',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '560px',
@@ -348,7 +362,7 @@ export default function OrganizationsView({
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                style={{ background: 'transparent', color: '#64748b', fontSize: '1.2rem', padding: '4px 8px' }}
+                style={{ background: 'transparent', color: '#64748b', fontSize: '1.2rem', padding: '4px 8px', border: 'none', cursor: 'pointer' }}
               >
                 ✕
               </button>
@@ -362,7 +376,7 @@ export default function OrganizationsView({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Apex Pharma Pvt. Ltd."
+                  placeholder="Enter registered organization legal name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   style={{
@@ -408,7 +422,7 @@ export default function OrganizationsView({
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. APEX"
+                    placeholder="Enter short code (e.g. 3-6 uppercase letters)"
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
                     style={{
@@ -431,7 +445,7 @@ export default function OrganizationsView({
                 </label>
                 <input
                   type="text"
-                  placeholder="Facility location, State, Country"
+                  placeholder="Enter facility physical address"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   style={{
@@ -453,7 +467,7 @@ export default function OrganizationsView({
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Aarav Sharma"
+                    placeholder="Enter primary contact person"
                     value={contactPerson}
                     onChange={(e) => setContactPerson(e.target.value)}
                     style={{
@@ -474,7 +488,7 @@ export default function OrganizationsView({
                   </label>
                   <input
                     type="email"
-                    placeholder="regulatory@apexpharma.com"
+                    placeholder="Enter official contact email"
                     value={contactEmail}
                     onChange={(e) => setContactEmail(e.target.value)}
                     style={{
@@ -501,7 +515,8 @@ export default function OrganizationsView({
                     color: '#475569',
                     fontWeight: 600,
                     fontSize: '0.85rem',
-                    border: '1px solid #e2e8f0'
+                    border: '1px solid #e2e8f0',
+                    cursor: 'pointer'
                   }}
                 >
                   Cancel
@@ -519,6 +534,8 @@ export default function OrganizationsView({
                     fontSize: '0.85rem',
                     boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                     opacity: submitting ? 0.7 : 1,
+                    border: 'none',
+                    cursor: submitting ? 'not-allowed' : 'pointer'
                   }}
                 >
                   {submitting ? 'Creating in MongoDB...' : 'Confirm Registration'}
@@ -526,7 +543,8 @@ export default function OrganizationsView({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

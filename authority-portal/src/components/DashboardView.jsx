@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Package, 
   Truck, 
@@ -29,6 +30,7 @@ export default function DashboardView({
   metrics, 
   batches, 
   health, 
+  rules: rulesProp,
   onRefresh, 
   loading,
   setActiveTab 
@@ -37,14 +39,35 @@ export default function DashboardView({
   const [auditData, setAuditData] = useState(null);
   const [auditLoading, setAuditLoading] = useState(false);
   const [auditError, setAuditError] = useState('');
-  const [rules, setRules] = useState(null);
+  const [rules, setRules] = useState(rulesProp || null);
+
+  // Sync rules from props if provided
+  useEffect(() => {
+    if (rulesProp) {
+      setRules(rulesProp);
+    }
+  }, [rulesProp]);
+
+  // Lock body scroll when audit modal is open
+  useEffect(() => {
+    if (auditBatchId) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [auditBatchId]);
 
   // Load supply chain rules to know configured partners per stage
   useEffect(() => {
     async function loadRules() {
       try {
         const res = await api.getSupplyChainRules();
-        if (res.rule) setRules(res.rule);
+        if (res.rules) {
+          setRules(res.rules);
+        } else if (res.rule) {
+          setRules(res.rule);
+        }
       } catch (err) {
         console.warn('Could not load supply chain rules for dashboard stepper:', err);
       }
@@ -798,20 +821,23 @@ export default function DashboardView({
       </div>
 
       {/* On-Chain Blockchain Ledger Audit Modal */}
-      {auditBatchId && (
+      {auditBatchId && createPortal(
         <div style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
+          width: '100vw',
+          height: '100vh',
           background: 'rgba(15, 23, 42, 0.6)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 120,
+          zIndex: 9999,
           padding: '1.5rem',
+          margin: 0
         }}>
           <div style={{
             background: '#ffffff',
@@ -1004,24 +1030,26 @@ export default function DashboardView({
               </div>
             ) : null}
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid #e2e8f0', paddingTop: '1rem' }}>
               <button
                 onClick={() => setAuditBatchId(null)}
                 style={{
                   padding: '0.6rem 1.25rem',
                   borderRadius: 'var(--radius-sm)',
-                  background: 'var(--bg-elevated)',
-                  color: '#fff',
+                  background: '#f1f5f9',
+                  color: '#0f172a',
                   fontSize: '0.82rem',
-                  fontWeight: 600,
-                  border: '1px solid var(--border-medium)',
+                  fontWeight: 700,
+                  border: '1px solid #cbd5e1',
+                  cursor: 'pointer'
                 }}
               >
                 Close Audit
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

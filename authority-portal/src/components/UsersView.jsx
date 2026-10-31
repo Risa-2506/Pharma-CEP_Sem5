@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Users, 
   UserPlus, 
@@ -8,10 +9,10 @@ import {
   Key, 
   Building2, 
   ShieldCheck, 
-  Lock,
-  Mail,
-  UserCheck,
-  RefreshCw
+  Lock, 
+  Mail, 
+  UserCheck, 
+  RefreshCw 
 } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -28,6 +29,16 @@ export default function UsersView({
   const [selectedUserForReset, setSelectedUserForReset] = useState(null);
   const [newPassword, setNewPassword] = useState('PharmaShield@2026');
   const [submitting, setSubmitting] = useState(false);
+
+  // Lock body scroll when either modal is open
+  useEffect(() => {
+    if (isCreateModalOpen || isResetModalOpen) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [isCreateModalOpen, isResetModalOpen]);
 
   // Form State for User Creation
   const [fullName, setFullName] = useState('');
@@ -351,24 +362,27 @@ export default function UsersView({
       </div>
 
       {/* Create User Modal */}
-      {isCreateModalOpen && (
+      {isCreateModalOpen && createPortal(
         <div style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(15, 23, 42, 0.45)',
+          width: '100vw',
+          height: '100vh',
+          margin: 0,
+          background: 'rgba(15, 23, 42, 0.6)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 100,
+          zIndex: 9999,
           padding: '1.5rem',
         }}>
           <div style={{
             background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            border: '1px solid #cbd5e1',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '560px',
@@ -385,7 +399,7 @@ export default function UsersView({
               </div>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
-                style={{ background: 'transparent', color: '#64748b', fontSize: '1.2rem', padding: '4px 8px' }}
+                style={{ background: 'transparent', color: '#64748b', fontSize: '1.2rem', padding: '4px 8px', border: 'none', cursor: 'pointer' }}
               >
                 ✕
               </button>
@@ -399,7 +413,7 @@ export default function UsersView({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Aarav Sharma"
+                  placeholder="Enter full legal name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   style={{
@@ -422,7 +436,7 @@ export default function UsersView({
                   <input
                     type="text"
                     required
-                    placeholder="aarav_apex"
+                    placeholder="Enter login username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
                     style={{
@@ -444,7 +458,7 @@ export default function UsersView({
                   <input
                     type="email"
                     required
-                    placeholder="aarav@apexpharma.com"
+                    placeholder="Enter official email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     style={{
@@ -533,6 +547,7 @@ export default function UsersView({
                 </label>
                 <input
                   type="text"
+                  placeholder="Enter temporary password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   style={{
@@ -559,7 +574,8 @@ export default function UsersView({
                     color: '#475569',
                     fontWeight: 600,
                     fontSize: '0.85rem',
-                    border: '1px solid #e2e8f0'
+                    border: '1px solid #e2e8f0',
+                    cursor: 'pointer'
                   }}
                 >
                   Cancel
@@ -577,6 +593,8 @@ export default function UsersView({
                     fontSize: '0.85rem',
                     boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                     opacity: submitting ? 0.7 : 1,
+                    border: 'none',
+                    cursor: submitting ? 'not-allowed' : 'pointer'
                   }}
                 >
                   {submitting ? 'Creating User...' : 'Provision User'}
@@ -584,28 +602,32 @@ export default function UsersView({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Reset Password Modal */}
-      {isResetModalOpen && selectedUserForReset && (
+      {isResetModalOpen && selectedUserForReset && createPortal(
         <div style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(15, 23, 42, 0.45)',
+          width: '100vw',
+          height: '100vh',
+          margin: 0,
+          background: 'rgba(15, 23, 42, 0.6)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 100,
+          zIndex: 9999,
           padding: '1.5rem',
         }}>
           <div style={{
             background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            border: '1px solid #cbd5e1',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '440px',
@@ -632,6 +654,7 @@ export default function UsersView({
                 <input
                   type="text"
                   required
+                  placeholder="Enter new temporary password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   style={{
@@ -658,7 +681,8 @@ export default function UsersView({
                     color: '#475569',
                     fontWeight: 600,
                     fontSize: '0.85rem',
-                    border: '1px solid #e2e8f0'
+                    border: '1px solid #e2e8f0',
+                    cursor: 'pointer'
                   }}
                 >
                   Cancel
@@ -676,6 +700,8 @@ export default function UsersView({
                     fontSize: '0.85rem',
                     boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                     opacity: submitting ? 0.7 : 1,
+                    border: 'none',
+                    cursor: submitting ? 'not-allowed' : 'pointer'
                   }}
                 >
                   {submitting ? 'Updating...' : 'Set New Password'}
@@ -683,7 +709,8 @@ export default function UsersView({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

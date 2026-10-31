@@ -1226,7 +1226,7 @@ export default function WholesalerDashboard({
                 type="text"
                 value={transferSealId}
                 onChange={(e) => setTransferSealId(e.target.value)}
-                placeholder="e.g. SEAL-TR-4910"
+                placeholder="Enter transit tamper seal ID"
                 style={{
                   width: '100%',
                   background: '#ffffff',

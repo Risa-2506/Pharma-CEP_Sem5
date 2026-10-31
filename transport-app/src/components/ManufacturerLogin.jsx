@@ -122,7 +122,7 @@ export default function ManufacturerLogin({ onLoginSuccess }) {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="e.g. risa25"
+                placeholder="Enter authorized username"
                 style={{
                   background: 'transparent',
                   border: 'none',

@@ -1182,7 +1182,7 @@ export default function RetailerDashboard({
                 type="text"
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
-                placeholder="e.g. PAT-982104"
+                placeholder="Enter patient ID or prescription ref"
                 style={{
                   width: '100%',
                   background: '#ffffff',

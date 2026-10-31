@@ -188,7 +188,7 @@ export default function ManufacturerDashboard({
         </div>
 
         <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.01em', margin: 0 }}>
-          {user?.organizationName || 'Apex Pharma Pvt. Ltd.'}
+          {user?.organizationName || 'Licensed Pharmaceutical Facility'}
         </h2>
         <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '3px' }}>
           Operator: <strong style={{ color: '#0f172a' }}>{user?.fullName || user?.username || 'Operator'}</strong>
@@ -749,7 +749,7 @@ export default function ManufacturerDashboard({
                   required
                   value={newSealId}
                   onChange={(e) => setNewSealId(e.target.value.toUpperCase())}
-                  placeholder="e.g. SEAL-TR-4091"
+                  placeholder="Enter transit tamper seal ID"
                   style={{
                     width: '100%',
                     background: '#ffffff',
