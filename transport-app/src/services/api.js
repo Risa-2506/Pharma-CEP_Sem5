@@ -96,10 +96,14 @@ export const api = {
     });
   },
 
-  async transferBatch(batchId, payload) {
+  async transferBatch(batchId, payload, optionalSealId) {
+    let body = payload;
+    if (typeof payload === 'string') {
+      body = { receiverOrgId: payload, newSealId: optionalSealId };
+    }
     return request(`/api/batches/${batchId}/transfer`, {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: JSON.stringify(body),
     });
   },
 

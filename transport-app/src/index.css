@@ -177,6 +177,15 @@ input, select, textarea {
   outline: none;
 }
 
+select {
+  color-scheme: dark;
+}
+
+select option {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
 /* Animation */
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(12px); }

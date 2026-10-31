@@ -655,16 +655,17 @@ export default function ManufacturerDashboard({
                       required
                       style={{
                         width: '100%',
-                        background: 'var(--bg-input)',
+                        background: '#0d1526',
                         border: '1px solid rgba(6, 182, 212, 0.4)',
                         borderRadius: 'var(--radius-md)',
                         padding: '0.7rem',
                         color: '#fff',
+                        colorScheme: 'dark',
                         fontSize: '0.85rem',
                       }}
                     >
                       {authorizedDistributors.map(d => (
-                        <option key={d.id} value={d.id}>
+                        <option key={d.id} value={d.id} style={{ background: '#0f172a', color: '#ffffff' }}>
                           {d.name} ({d.code || 'DIST'})
                         </option>
                       ))}

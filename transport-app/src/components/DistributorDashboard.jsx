@@ -1202,15 +1202,17 @@ export default function DistributorDashboard({
                       width: '100%',
                       padding: '9px 12px',
                       borderRadius: 'var(--radius-md)',
-                      background: 'var(--bg-card)',
+                      background: '#0d1526',
                       border: '1px solid var(--border-medium)',
                       color: '#fff',
+                      colorScheme: 'dark',
                       fontSize: '0.8rem',
                       outline: 'none'
                     }}
                   >
+                    <option value="" style={{ background: '#0f172a', color: '#94a3b8' }}>-- Select Target Wholesaler --</option>
                     {authorizedWholesalers.map(w => (
-                      <option key={w._id || w.id} value={w._id || w.id}>
+                      <option key={w._id || w.id} value={w._id || w.id} style={{ background: '#0f172a', color: '#ffffff' }}>
                         {w.name} ({w.code || 'WHOLESALER'})
                       </option>
                     ))}

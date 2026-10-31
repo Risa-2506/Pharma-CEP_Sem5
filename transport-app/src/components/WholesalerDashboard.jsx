@@ -245,11 +245,10 @@ export default function WholesalerDashboard({
     setTransferError('');
 
     try {
-      const res = await api.transferBatch(
-        batchToTransfer.batchId,
-        selectedReceiverId,
-        transferSealId.trim()
-      );
+      const res = await api.transferBatch(batchToTransfer.batchId, {
+        receiverOrgId: selectedReceiverId,
+        newSealId: transferSealId.trim()
+      });
 
       setTransferSuccess(`Custody of batch ${batchToTransfer.batchId} transferred successfully to Retailer!`);
       showToast(`Batch ${batchToTransfer.batchId} dispatched to Retailer!`, 'success');
@@ -1179,18 +1178,19 @@ export default function WholesalerDashboard({
                   onChange={(e) => setSelectedReceiverId(e.target.value)}
                   style={{
                     width: '100%',
-                    background: 'var(--bg-surface)',
+                    background: '#0d1526',
                     border: '1px solid var(--border-medium)',
                     color: '#fff',
+                    colorScheme: 'dark',
                     padding: '10px',
                     borderRadius: 'var(--radius-md)',
                     fontSize: '0.82rem',
                     outline: 'none'
                   }}
                 >
-                  <option value="">-- Select Target Retailer --</option>
+                  <option value="" style={{ background: '#0f172a', color: '#94a3b8' }}>-- Select Target Retailer --</option>
                   {authorizedRetailers.map(r => (
-                    <option key={r._id || r.id} value={r._id || r.id}>
+                    <option key={r._id || r.id} value={r._id || r.id} style={{ background: '#0f172a', color: '#ffffff' }}>
                       {r.name} ({r.code || 'RETAIL'}) - {r.address || 'Licensed Retailer'}
                     </option>
                   ))}

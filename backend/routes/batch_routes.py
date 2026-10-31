@@ -1,3 +1,4 @@
+import json
 import logging
 from flask import Blueprint, request, jsonify
 from database import batches_col, discrepancies_col
@@ -666,6 +667,18 @@ def transfer_batch(batch_id):
         }), 400
 
     data = request.get_json(silent=True) or {}
+    if isinstance(data, str):
+        try:
+            parsed = json.loads(data)
+            if isinstance(parsed, dict):
+                data = parsed
+            else:
+                data = {"receiverOrgId": str(parsed)}
+        except Exception:
+            data = {"receiverOrgId": data}
+    elif not isinstance(data, dict):
+        data = {}
+
     receiver_id = (data.get("receiverId") or data.get("receiverOrgId") or "").strip()
     new_seal_id = (data.get("newSealId") or data.get("sealId") or f"SEAL-{int(datetime.now().timestamp())}").strip()
 

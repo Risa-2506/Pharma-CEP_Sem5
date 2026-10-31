@@ -54,6 +54,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+select {
+  color-scheme: dark;
+}
+
+select option {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

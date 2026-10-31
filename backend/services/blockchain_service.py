@@ -168,9 +168,9 @@ class BlockchainService:
             raise RuntimeError("Blockchain contract is not initialized.")
 
         receiver = Web3.to_checksum_address(receiver_address)
-        self.ensure_participant_authorized(receiver)
-
         account = self.web3.eth.account.from_key(sender_private_key)
+        self.ensure_participant_authorized(account.address)
+        self.ensure_participant_authorized(receiver)
         func = self.contract.functions.transferBatch(
             str(batch_id), receiver, str(new_seal_id)
         )
