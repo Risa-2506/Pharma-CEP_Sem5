@@ -110,10 +110,10 @@ export default function OrganizationsView({
         gap: '1rem'
       }}>
         <div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>
             Authorized Organisations Registry
           </h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          <p style={{ fontSize: '0.875rem', color: '#475569' }}>
             Register, authorize, and govern licensed pharmaceutical supply chain participants.
           </p>
         </div>
@@ -126,11 +126,11 @@ export default function OrganizationsView({
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
             borderRadius: 'var(--radius-md)',
-            background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+            background: 'linear-gradient(135deg, #0284c7, #2563eb)',
             color: '#fff',
             fontSize: '0.875rem',
             fontWeight: 700,
-            boxShadow: '0 4px 15px rgba(6, 182, 212, 0.35)',
+            boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
           }}
         >
           <Plus size={18} /> Register New Organisation
@@ -139,28 +139,29 @@ export default function OrganizationsView({
 
       {/* Filter and Search Bar */}
       <div style={{
-        background: 'var(--bg-surface)',
+        background: '#ffffff',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #e2e8f0',
         padding: '1rem 1.25rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '1rem'
+        gap: '1rem',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         {/* Search */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '0.6rem',
-          background: 'var(--bg-card)',
+          background: '#f8fafc',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-subtle)',
+          border: '1px solid #cbd5e1',
           padding: '0.5rem 0.9rem',
           minWidth: '280px',
         }}>
-          <Search size={16} color="var(--text-muted)" />
+          <Search size={16} color="#64748b" />
           <input
             type="text"
             placeholder="Search by name, code, contact..."
@@ -169,7 +170,7 @@ export default function OrganizationsView({
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#fff',
+              color: '#0f172a',
               fontSize: '0.85rem',
               width: '100%',
             }}
@@ -187,9 +188,9 @@ export default function OrganizationsView({
                 borderRadius: '8px',
                 fontSize: '0.78rem',
                 fontWeight: 600,
-                background: typeFilter === t ? 'rgba(6, 182, 212, 0.2)' : 'var(--bg-elevated)',
-                color: typeFilter === t ? '#38bdf8' : 'var(--text-secondary)',
-                border: typeFilter === t ? '1px solid rgba(6, 182, 212, 0.4)' : '1px solid transparent',
+                background: typeFilter === t ? '#eff6ff' : '#f1f5f9',
+                color: typeFilter === t ? '#1d4ed8' : '#475569',
+                border: typeFilter === t ? '1px solid #bfdbfe' : '1px solid #e2e8f0',
               }}
             >
               {t}
@@ -200,22 +201,23 @@ export default function OrganizationsView({
 
       {/* Organisations Table */}
       <div style={{
-        background: 'var(--bg-surface)',
+        background: '#ffffff',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #e2e8f0',
         overflow: 'hidden',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
             <thead>
-              <tr style={{ background: 'var(--bg-elevated)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                <th style={{ padding: '0.9rem 1.25rem' }}>Organisation</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Type</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Code</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Contact Info</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Address</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Status</th>
-                <th style={{ padding: '0.9rem 1.25rem', textAlign: 'right' }}>Actions</th>
+              <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#64748b' }}>
+                <th style={{ padding: '0.9rem 1.25rem', fontWeight: 700 }}>Organisation</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Type</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Code</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Contact Info</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Address</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Status</th>
+                <th style={{ padding: '0.9rem 1.25rem', textAlign: 'right', fontWeight: 700 }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -226,15 +228,15 @@ export default function OrganizationsView({
                     <tr
                       key={org.id}
                       style={{
-                        borderBottom: '1px solid var(--border-subtle)',
+                        borderBottom: '1px solid #f1f5f9',
                         transition: 'background 0.15s',
                       }}
                     >
                       <td style={{ padding: '1rem 1.25rem' }}>
-                        <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.92rem' }}>
+                        <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.92rem' }}>
                           {org.name}
                         </div>
-                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                        <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
                           ID: {org.id.substring(0, 10)}...
                         </div>
                       </td>
@@ -245,22 +247,22 @@ export default function OrganizationsView({
                         </span>
                       </td>
 
-                      <td style={{ padding: '1rem 1rem', fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#94a3b8' }}>
+                      <td style={{ padding: '1rem 1rem', fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#64748b' }}>
                         {org.code || '—'}
                       </td>
 
                       <td style={{ padding: '1rem 1rem' }}>
                         {org.contactPerson && (
-                          <div style={{ color: '#e2e8f0', fontWeight: 500 }}>{org.contactPerson}</div>
+                          <div style={{ color: '#334155', fontWeight: 600 }}>{org.contactPerson}</div>
                         )}
                         {org.contactEmail && (
-                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '4px' }}>
                             <Mail size={12} /> {org.contactEmail}
                           </div>
                         )}
                       </td>
 
-                      <td style={{ padding: '1rem 1rem', color: 'var(--text-secondary)', maxWidth: '220px', fontSize: '0.8rem' }}>
+                      <td style={{ padding: '1rem 1rem', color: '#64748b', maxWidth: '220px', fontSize: '0.8rem' }}>
                         {org.address || '—'}
                       </td>
 
@@ -319,7 +321,7 @@ export default function OrganizationsView({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
@@ -328,25 +330,25 @@ export default function OrganizationsView({
           padding: '1.5rem',
         }}>
           <div style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '560px',
             padding: '2rem',
-            boxShadow: 'var(--shadow-lg)',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
             animation: 'fadeIn 0.2s ease-out'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <Building2 size={24} color="#06b6d4" />
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#fff' }}>
+                <Building2 size={24} color="#0284c7" />
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a' }}>
                   Register New Organisation
                 </h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                style={{ background: 'transparent', color: 'var(--text-muted)', fontSize: '1.2rem', padding: '4px 8px' }}
+                style={{ background: 'transparent', color: '#64748b', fontSize: '1.2rem', padding: '4px 8px' }}
               >
                 ✕
               </button>
@@ -354,7 +356,7 @@ export default function OrganizationsView({
 
             <form onSubmit={handleCreateOrg} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                   Organisation Legal Name *
                 </label>
                 <input
@@ -365,11 +367,11 @@ export default function OrganizationsView({
                   onChange={(e) => setName(e.target.value)}
                   style={{
                     width: '100%',
-                    background: 'var(--bg-card)',
-                    border: '1px solid var(--border-medium)',
+                    background: '#f8fafc',
+                    border: '1px solid #cbd5e1',
                     borderRadius: 'var(--radius-sm)',
                     padding: '0.65rem 0.85rem',
-                    color: '#fff',
+                    color: '#0f172a',
                     fontSize: '0.85rem',
                   }}
                 />
@@ -377,7 +379,7 @@ export default function OrganizationsView({
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Organisation Role / Type *
                   </label>
                   <select
@@ -385,11 +387,11 @@ export default function OrganizationsView({
                     onChange={(e) => setType(e.target.value)}
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                     }}
                   >
@@ -401,7 +403,7 @@ export default function OrganizationsView({
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Org Identifier Code
                   </label>
                   <input
@@ -411,11 +413,11 @@ export default function OrganizationsView({
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                       fontFamily: 'var(--font-mono)',
                     }}
@@ -424,7 +426,7 @@ export default function OrganizationsView({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                   Registered Physical Facility Address
                 </label>
                 <input
@@ -434,11 +436,11 @@ export default function OrganizationsView({
                   onChange={(e) => setAddress(e.target.value)}
                   style={{
                     width: '100%',
-                    background: 'var(--bg-card)',
-                    border: '1px solid var(--border-medium)',
+                    background: '#f8fafc',
+                    border: '1px solid #cbd5e1',
                     borderRadius: 'var(--radius-sm)',
                     padding: '0.65rem 0.85rem',
-                    color: '#fff',
+                    color: '#0f172a',
                     fontSize: '0.85rem',
                   }}
                 />
@@ -446,7 +448,7 @@ export default function OrganizationsView({
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Primary Contact Person
                   </label>
                   <input
@@ -456,18 +458,18 @@ export default function OrganizationsView({
                     onChange={(e) => setContactPerson(e.target.value)}
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                     }}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Official Contact Email
                   </label>
                   <input
@@ -477,11 +479,11 @@ export default function OrganizationsView({
                     onChange={(e) => setContactEmail(e.target.value)}
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                     }}
                   />
@@ -495,10 +497,11 @@ export default function OrganizationsView({
                   style={{
                     padding: '0.65rem 1.25rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'var(--bg-elevated)',
-                    color: 'var(--text-secondary)',
+                    background: '#f1f5f9',
+                    color: '#475569',
                     fontWeight: 600,
                     fontSize: '0.85rem',
+                    border: '1px solid #e2e8f0'
                   }}
                 >
                   Cancel
@@ -510,11 +513,11 @@ export default function OrganizationsView({
                   style={{
                     padding: '0.65rem 1.4rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                    background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                     color: '#fff',
                     fontWeight: 700,
                     fontSize: '0.85rem',
-                    boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3)',
+                    boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                     opacity: submitting ? 0.7 : 1,
                   }}
                 >

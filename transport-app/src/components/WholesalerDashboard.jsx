@@ -269,37 +269,38 @@ export default function WholesalerDashboard({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} className="animate-slide">
       {/* Header Profile Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.08))',
-        border: '1px solid rgba(16, 185, 129, 0.3)',
+        background: '#ecfdf5',
+        border: '1px solid #a7f3d0',
         borderRadius: 'var(--radius-lg)',
         padding: '1.25rem',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.25rem' }}>
             <span style={{
-              background: 'rgba(16, 185, 129, 0.2)',
-              color: '#34d399',
+              background: '#d1fae5',
+              color: '#047857',
               fontSize: '0.68rem',
               fontWeight: 800,
               padding: '2px 8px',
               borderRadius: '4px',
-              border: '1px solid rgba(16, 185, 129, 0.4)'
+              border: '1px solid #6ee7b7'
             }}>
               STAGE 3: WHOLESALER
             </span>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+            <span style={{ fontSize: '0.72rem', color: '#047857' }}>
               Bulk Stock & Pharmacy Distribution Hub
             </span>
           </div>
 
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
             {user?.organizationName || 'Sunset Wholesale'}
           </h2>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Operator: <strong style={{ color: '#fff' }}>{user?.fullName || user?.username}</strong>
+          <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '2px' }}>
+            Operator: <strong style={{ color: '#0f172a' }}>{user?.fullName || user?.username}</strong>
           </div>
         </div>
 
@@ -307,15 +308,16 @@ export default function WholesalerDashboard({
           onClick={onRefresh}
           disabled={loading}
           style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-medium)',
-            color: 'var(--text-secondary)',
+            background: '#ffffff',
+            border: '1px solid #cbd5e1',
+            color: '#475569',
             padding: '8px',
             borderRadius: 'var(--radius-md)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
           }}
           title="Refresh Data"
         >
@@ -332,22 +334,23 @@ export default function WholesalerDashboard({
         <div 
           onClick={() => setActiveSubTab('incoming')}
           style={{
-            background: activeSubTab === 'incoming' ? 'rgba(245, 158, 11, 0.15)' : 'var(--bg-card)',
-            border: `1px solid ${activeSubTab === 'incoming' ? '#f59e0b' : 'var(--border-subtle)'}`,
+            background: activeSubTab === 'incoming' ? '#fef3c7' : '#ffffff',
+            border: `1px solid ${activeSubTab === 'incoming' ? '#f59e0b' : '#e2e8f0'}`,
             borderRadius: 'var(--radius-md)',
             padding: '0.85rem',
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#f59e0b' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#b45309' }}>
             <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>INCOMING</span>
             <Truck size={14} />
           </div>
-          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
             {totalIncoming}
           </div>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: '2px' }}>
             Awaiting Verification
           </div>
         </div>
@@ -355,22 +358,23 @@ export default function WholesalerDashboard({
         <div 
           onClick={() => setActiveSubTab('inventory')}
           style={{
-            background: activeSubTab === 'inventory' ? 'rgba(16, 185, 129, 0.15)' : 'var(--bg-card)',
-            border: `1px solid ${activeSubTab === 'inventory' ? '#10b981' : 'var(--border-subtle)'}`,
+            background: activeSubTab === 'inventory' ? '#d1fae5' : '#ffffff',
+            border: `1px solid ${activeSubTab === 'inventory' ? '#10b981' : '#e2e8f0'}`,
             borderRadius: 'var(--radius-md)',
             padding: '0.85rem',
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#10b981' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#047857' }}>
             <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>INVENTORY</span>
             <Boxes size={14} />
           </div>
-          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
             {verifiedInventoryCount}
           </div>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: '2px' }}>
             Verified In Custody
           </div>
         </div>
@@ -378,22 +382,23 @@ export default function WholesalerDashboard({
         <div 
           onClick={() => setActiveSubTab('history')}
           style={{
-            background: activeSubTab === 'history' ? 'rgba(6, 182, 212, 0.15)' : 'var(--bg-card)',
-            border: `1px solid ${activeSubTab === 'history' ? '#06b6d4' : 'var(--border-subtle)'}`,
+            background: activeSubTab === 'history' ? '#e0f2fe' : '#ffffff',
+            border: `1px solid ${activeSubTab === 'history' ? '#0284c7' : '#e2e8f0'}`,
             borderRadius: 'var(--radius-md)',
             padding: '0.85rem',
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#06b6d4' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#0369a1' }}>
             <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>TO PHARMACY</span>
             <Store size={14} />
           </div>
-          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
             {outgoingCount}
           </div>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: '2px' }}>
             Dispatched Batches
           </div>
         </div>
@@ -402,10 +407,10 @@ export default function WholesalerDashboard({
       {/* Subtab Toggle Buttons */}
       <div style={{
         display: 'flex',
-        background: 'var(--bg-surface)',
+        background: '#f1f5f9',
         borderRadius: 'var(--radius-md)',
         padding: '4px',
-        border: '1px solid var(--border-medium)'
+        border: '1px solid #e2e8f0'
       }}>
         <button
           onClick={() => setActiveSubTab('incoming')}
@@ -416,8 +421,9 @@ export default function WholesalerDashboard({
             border: 'none',
             fontSize: '0.75rem',
             fontWeight: 700,
-            background: activeSubTab === 'incoming' ? 'rgba(245, 158, 11, 0.2)' : 'transparent',
-            color: activeSubTab === 'incoming' ? '#fbbf24' : 'var(--text-muted)',
+            background: activeSubTab === 'incoming' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'incoming' ? '#b45309' : '#64748b',
+            boxShadow: activeSubTab === 'incoming' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
             cursor: 'pointer'
           }}
         >
@@ -433,8 +439,9 @@ export default function WholesalerDashboard({
             border: 'none',
             fontSize: '0.75rem',
             fontWeight: 700,
-            background: activeSubTab === 'inventory' ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-            color: activeSubTab === 'inventory' ? '#34d399' : 'var(--text-muted)',
+            background: activeSubTab === 'inventory' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'inventory' ? '#047857' : '#64748b',
+            boxShadow: activeSubTab === 'inventory' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
             cursor: 'pointer'
           }}
         >
@@ -450,8 +457,9 @@ export default function WholesalerDashboard({
             border: 'none',
             fontSize: '0.75rem',
             fontWeight: 700,
-            background: activeSubTab === 'history' ? 'rgba(6, 182, 212, 0.2)' : 'transparent',
-            color: activeSubTab === 'history' ? '#38bdf8' : 'var(--text-muted)',
+            background: activeSubTab === 'history' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'history' ? '#0369a1' : '#64748b',
+            boxShadow: activeSubTab === 'history' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
             cursor: 'pointer'
           }}
         >
@@ -464,12 +472,13 @@ export default function WholesalerDashboard({
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
-        background: 'var(--bg-card)',
-        border: '1px solid var(--border-subtle)',
+        background: '#ffffff',
+        border: '1px solid #cbd5e1',
         borderRadius: 'var(--radius-md)',
-        padding: '8px 12px'
+        padding: '8px 12px',
+        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)'
       }}>
-        <Search size={15} color="var(--text-muted)" />
+        <Search size={15} color="#64748b" />
         <input
           type="text"
           placeholder="Search by Batch ID or Medicine name..."
@@ -478,7 +487,7 @@ export default function WholesalerDashboard({
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#fff',
+            color: '#0f172a',
             fontSize: '0.8rem',
             width: '100%',
             outline: 'none'
@@ -487,7 +496,7 @@ export default function WholesalerDashboard({
         {searchTerm && (
           <button 
             onClick={() => setSearchTerm('')} 
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+            style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer' }}
           >
             <X size={14} />
           </button>
@@ -498,18 +507,18 @@ export default function WholesalerDashboard({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {filteredList.length === 0 ? (
           <div style={{
-            background: 'var(--bg-card)',
-            border: '1px dashed var(--border-medium)',
+            background: '#ffffff',
+            border: '1px dashed #cbd5e1',
             borderRadius: 'var(--radius-lg)',
             padding: '2.5rem 1rem',
             textAlign: 'center',
-            color: 'var(--text-muted)'
+            color: '#64748b'
           }}>
-            <Package size={32} style={{ margin: '0 auto 0.75rem', opacity: 0.4 }} />
-            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>
+            <Package size={32} color="#94a3b8" style={{ margin: '0 auto 0.75rem' }} />
+            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>
               No {activeSubTab === 'incoming' ? 'Incoming Deliveries' : activeSubTab === 'inventory' ? 'Wholesale Inventory' : 'Dispatched Batches'} Found
             </div>
-            <div style={{ fontSize: '0.72rem', marginTop: '4px' }}>
+            <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '4px' }}>
               {activeSubTab === 'incoming' 
                 ? 'Deliveries dispatched to you by authorized Distributors will appear here.'
                 : activeSubTab === 'inventory'
@@ -527,8 +536,8 @@ export default function WholesalerDashboard({
                 key={batch.batchId}
                 onClick={() => setSelectedBatch(batch)}
                 style={{
-                  background: 'var(--bg-card)',
-                  border: isHold ? '1px solid rgba(239, 68, 68, 0.5)' : (isIncoming ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid var(--border-medium)'),
+                  background: '#ffffff',
+                  border: isHold ? '1px solid #fca5a5' : (isIncoming ? '1px solid #fde68a' : '1px solid #e2e8f0'),
                   borderRadius: 'var(--radius-lg)',
                   padding: '1rem',
                   display: 'flex',
@@ -536,6 +545,7 @@ export default function WholesalerDashboard({
                   gap: '0.6rem',
                   cursor: 'pointer',
                   position: 'relative',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
                   transition: 'transform 0.15s, border-color 0.15s'
                 }}
               >
@@ -546,11 +556,11 @@ export default function WholesalerDashboard({
                       fontFamily: 'var(--font-mono)',
                       fontWeight: 800,
                       fontSize: '0.85rem',
-                      color: '#38bdf8'
+                      color: '#0284c7'
                     }}>
                       {batch.batchId}
                     </span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                    <span style={{ fontSize: '0.7rem', color: '#64748b' }}>
                       • {batch.quantity ? `${batch.quantity} units` : ''}
                     </span>
                   </div>
@@ -559,11 +569,11 @@ export default function WholesalerDashboard({
                     <span style={{
                       fontSize: '0.68rem',
                       fontWeight: 700,
-                      background: 'rgba(239, 68, 68, 0.2)',
-                      color: '#ef4444',
+                      background: '#fef2f2',
+                      color: '#dc2626',
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      border: '1px solid rgba(239, 68, 68, 0.4)'
+                      border: '1px solid #fecaca'
                     }}>
                       REGULATORY HOLD
                     </span>
@@ -571,11 +581,11 @@ export default function WholesalerDashboard({
                     <span style={{
                       fontSize: '0.68rem',
                       fontWeight: 700,
-                      background: 'rgba(245, 158, 11, 0.2)',
-                      color: '#fbbf24',
+                      background: '#fef3c7',
+                      color: '#b45309',
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      border: '1px solid rgba(245, 158, 11, 0.4)',
+                      border: '1px solid #fde68a',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px'
@@ -586,11 +596,11 @@ export default function WholesalerDashboard({
                     <span style={{
                       fontSize: '0.68rem',
                       fontWeight: 700,
-                      background: 'rgba(16, 185, 129, 0.2)',
-                      color: '#34d399',
+                      background: '#ecfdf5',
+                      color: '#047857',
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      border: '1px solid rgba(16, 185, 129, 0.4)',
+                      border: '1px solid #a7f3d0',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px'
@@ -601,7 +611,7 @@ export default function WholesalerDashboard({
                 </div>
 
                 {/* Medicine Name & Formulation */}
-                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#fff' }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>
                   {batch.medicineName}
                 </div>
 
@@ -611,13 +621,13 @@ export default function WholesalerDashboard({
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   fontSize: '0.72rem',
-                  color: 'var(--text-secondary)',
-                  borderTop: '1px solid var(--border-subtle)',
+                  color: '#475569',
+                  borderTop: '1px solid #f1f5f9',
                   paddingTop: '0.5rem'
                 }}>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>From: </span>
-                    <strong style={{ color: '#fff' }}>
+                    <span style={{ color: '#64748b' }}>From: </span>
+                    <strong style={{ color: '#0f172a' }}>
                       {batch.transferHistory?.length > 0
                         ? batch.transferHistory[batch.transferHistory.length - 1].senderOrgName
                         : batch.manufacturerName}
@@ -625,8 +635,8 @@ export default function WholesalerDashboard({
                   </div>
 
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Exp: </span>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: '#fff' }}>{batch.expiryDate || 'N/A'}</span>
+                    <span style={{ color: '#64748b' }}>Exp: </span>
+                    <span style={{ fontFamily: 'var(--font-mono)', color: '#0f172a', fontWeight: 600 }}>{batch.expiryDate || 'N/A'}</span>
                   </div>
                 </div>
 
@@ -637,7 +647,7 @@ export default function WholesalerDashboard({
                       onClick={(e) => openScanModal(batch, e)}
                       style={{
                         flex: 1,
-                        background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                        background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                         color: '#fff',
                         border: 'none',
                         padding: '8px 12px',
@@ -649,7 +659,7 @@ export default function WholesalerDashboard({
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '6px',
-                        boxShadow: '0 2px 8px rgba(6, 182, 212, 0.25)'
+                        boxShadow: '0 2px 8px rgba(2, 132, 199, 0.25)'
                       }}
                     >
                       <Camera size={14} /> Scan & Verify Package
@@ -661,7 +671,7 @@ export default function WholesalerDashboard({
                       onClick={(e) => openTransferModal(batch, e)}
                       style={{
                         flex: 1,
-                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        background: 'linear-gradient(135deg, #059669, #047857)',
                         color: '#fff',
                         border: 'none',
                         padding: '8px 12px',
@@ -672,7 +682,8 @@ export default function WholesalerDashboard({
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '6px'
+                        gap: '6px',
+                        boxShadow: '0 2px 8px rgba(5, 150, 105, 0.25)'
                       }}
                     >
                       <Store size={14} /> Dispatch to Pharmacy
@@ -693,7 +704,7 @@ export default function WholesalerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(8px)',
           zIndex: 100,
           display: 'flex',
@@ -701,8 +712,8 @@ export default function WholesalerDashboard({
           justifyContent: 'center'
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            borderTop: '1px solid #e2e8f0',
             borderRadius: '24px 24px 0 0',
             width: '100%',
             maxWidth: '520px',
@@ -712,21 +723,22 @@ export default function WholesalerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
+            boxShadow: '0 -10px 25px -5px rgba(0, 0, 0, 0.1)',
             animation: 'slideUp 0.3s ease-out'
           }}>
             {/* Modal Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: '#38bdf8', fontWeight: 800 }}>
+                <div style={{ fontSize: '0.7rem', color: '#0284c7', fontWeight: 800 }}>
                   STAGE 3: WHOLESALER VERIFICATION
                 </div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                   Scan Medicine Package
                 </h3>
               </div>
               <button
                 onClick={() => setIsScanModalOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+                style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer' }}
               >
                 <X size={20} />
               </button>
@@ -734,7 +746,8 @@ export default function WholesalerDashboard({
 
             {/* Batch Info Pill */}
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '0.75rem 1rem',
               display: 'flex',
@@ -743,14 +756,14 @@ export default function WholesalerDashboard({
               fontSize: '0.78rem'
             }}>
               <div>
-                <div style={{ color: 'var(--text-muted)' }}>Target Batch:</div>
-                <div style={{ fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)' }}>
+                <div style={{ color: '#64748b' }}>Target Batch:</div>
+                <div style={{ fontWeight: 800, color: '#0284c7', fontFamily: 'var(--font-mono)' }}>
                   {batchToVerify.batchId}
                 </div>
               </div>
               <div>
-                <div style={{ color: 'var(--text-muted)' }}>Medicine:</div>
-                <div style={{ fontWeight: 700, color: '#38bdf8' }}>
+                <div style={{ color: '#64748b' }}>Medicine:</div>
+                <div style={{ fontWeight: 700, color: '#0f172a' }}>
                   {batchToVerify.medicineName}
                 </div>
               </div>
@@ -759,33 +772,33 @@ export default function WholesalerDashboard({
             {/* Error Banner */}
             {scanError && (
               <div style={{
-                background: 'var(--rose-bg)',
-                border: '1px solid rgba(244, 63, 94, 0.4)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#fca5a5',
+                color: '#dc2626',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'flex-start',
                 gap: '8px'
               }}>
-                <AlertCircle size={16} color="#f43f5e" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <AlertCircle size={16} color="#dc2626" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <span>{scanError}</span>
               </div>
             )}
 
             {/* Image Upload Area */}
             <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155', marginBottom: '0.5rem', display: 'block' }}>
                 Capture or Upload Physical Medicine Box / Blister Photo:
               </label>
 
               <div style={{
-                border: '2px dashed var(--border-medium)',
+                border: '2px dashed #cbd5e1',
                 borderRadius: 'var(--radius-lg)',
                 padding: '1rem',
                 textAlign: 'center',
-                background: 'var(--bg-surface)',
+                background: '#f8fafc',
                 position: 'relative'
               }}>
                 {imagePreview ? (
@@ -801,7 +814,7 @@ export default function WholesalerDashboard({
                         display: 'inline-block',
                         marginTop: '0.75rem',
                         fontSize: '0.72rem',
-                        color: '#38bdf8',
+                        color: '#0284c7',
                         cursor: 'pointer',
                         textDecoration: 'underline'
                       }}
@@ -818,11 +831,11 @@ export default function WholesalerDashboard({
                   </div>
                 ) : (
                   <div>
-                    <Camera size={32} color="#06b6d4" style={{ margin: '0 auto 0.5rem' }} />
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#fff' }}>
+                    <Camera size={32} color="#0284c7" style={{ margin: '0 auto 0.5rem' }} />
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>
                       Take photo or upload package image
                     </div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '2px' }}>
                       AI Vision will extract composition, batch number & MRP to verify against Manufacturer baseline
                     </div>
                     <label
@@ -830,14 +843,14 @@ export default function WholesalerDashboard({
                       style={{
                         display: 'inline-block',
                         marginTop: '0.75rem',
-                        background: 'rgba(6, 182, 212, 0.15)',
-                        color: '#38bdf8',
+                        background: '#eff6ff',
+                        color: '#1d4ed8',
                         padding: '6px 14px',
                         borderRadius: 'var(--radius-sm)',
                         fontSize: '0.75rem',
                         fontWeight: 700,
                         cursor: 'pointer',
-                        border: '1px solid rgba(6, 182, 212, 0.4)'
+                        border: '1px solid #bfdbfe'
                       }}
                     >
                       Select Image
@@ -860,7 +873,7 @@ export default function WholesalerDashboard({
                 onClick={handleExecuteScanVerification}
                 disabled={isScanning}
                 style={{
-                  background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                  background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                   color: '#fff',
                   border: 'none',
                   padding: '12px',
@@ -871,7 +884,8 @@ export default function WholesalerDashboard({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px'
+                  gap: '8px',
+                  boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)'
                 }}
               >
                 {isScanning ? (
@@ -893,8 +907,8 @@ export default function WholesalerDashboard({
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {/* Overall Verdict Banner */}
                 <div style={{
-                  background: scanResult.verified ? 'rgba(16, 185, 129, 0.15)' : 'rgba(244, 63, 94, 0.15)',
-                  border: `1px solid ${scanResult.verified ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'}`,
+                  background: scanResult.verified ? '#ecfdf5' : '#fef2f2',
+                  border: `1px solid ${scanResult.verified ? '#a7f3d0' : '#fecaca'}`,
                   borderRadius: 'var(--radius-md)',
                   padding: '1rem',
                   display: 'flex',
@@ -902,19 +916,19 @@ export default function WholesalerDashboard({
                   gap: '10px'
                 }}>
                   {scanResult.verified ? (
-                    <ShieldCheck size={26} color="#10b981" style={{ flexShrink: 0 }} />
+                    <ShieldCheck size={26} color="#059669" style={{ flexShrink: 0 }} />
                   ) : (
-                    <ShieldAlert size={26} color="#f43f5e" style={{ flexShrink: 0 }} />
+                    <ShieldAlert size={26} color="#dc2626" style={{ flexShrink: 0 }} />
                   )}
                   <div>
                     <div style={{
                       fontSize: '0.88rem',
                       fontWeight: 800,
-                      color: scanResult.verified ? '#10b981' : '#f43f5e'
+                      color: scanResult.verified ? '#047857' : '#dc2626'
                     }}>
                       {scanResult.verified ? 'VERIFIED AT WHOLESALER' : 'VERIFICATION FAILED'}
                     </div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+                    <div style={{ fontSize: '0.72rem', color: '#475569' }}>
                       {scanResult.verified 
                         ? 'Medicine packaging directly matches the original Manufacturer baseline and cryptographic hash.'
                         : `Discrepancy detected on: ${scanResult.failedFields?.join(', ') || 'Package fields'}`}
@@ -924,13 +938,14 @@ export default function WholesalerDashboard({
 
                 {/* Field-by-Field Baseline Comparison */}
                 <div style={{
-                  background: 'var(--bg-surface)',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   borderRadius: 'var(--radius-md)',
                   padding: '0.75rem',
                   fontSize: '0.75rem'
                 }}>
-                  <div style={{ fontWeight: 700, color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <FileText size={14} color="#38bdf8" /> Field-Level Baseline Comparison
+                  <div style={{ fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <FileText size={14} color="#0284c7" /> Field-Level Baseline Comparison
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -941,13 +956,13 @@ export default function WholesalerDashboard({
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'space-between',
-                          padding: '4px 6px',
-                          borderBottom: '1px solid var(--border-subtle)'
+                          padding: '6px 8px',
+                          borderBottom: '1px solid #e2e8f0'
                         }}
                       >
                         <div>
-                          <div style={{ fontWeight: 600, color: '#fff' }}>{f.field}</div>
-                          <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
+                          <div style={{ fontWeight: 700, color: '#0f172a' }}>{f.field}</div>
+                          <div style={{ fontSize: '0.68rem', color: '#64748b' }}>
                             Expected: {String(f.expected)}
                           </div>
                         </div>
@@ -958,12 +973,13 @@ export default function WholesalerDashboard({
                             fontWeight: 800,
                             padding: '2px 6px',
                             borderRadius: '4px',
-                            background: f.match ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)',
-                            color: f.match ? '#10b981' : '#f43f5e'
+                            background: f.match ? '#ecfdf5' : '#fef2f2',
+                            color: f.match ? '#047857' : '#dc2626',
+                            border: `1px solid ${f.match ? '#a7f3d0' : '#fecaca'}`
                           }}>
                             {f.status}
                           </span>
-                          <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <div style={{ fontSize: '0.68rem', color: '#334155', maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {String(f.extracted)}
                           </div>
                         </div>
@@ -974,24 +990,25 @@ export default function WholesalerDashboard({
 
                 {/* Cryptographic Hash Audit */}
                 <div style={{
-                  background: 'var(--bg-surface)',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   borderRadius: 'var(--radius-md)',
                   padding: '0.75rem',
                   fontSize: '0.72rem',
                   fontFamily: 'var(--font-mono)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ color: '#64748b', display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <Lock size={12} /> Cryptographic Integrity Audit
                     </span>
-                    <span style={{ color: scanResult.hashMatch ? '#10b981' : '#f43f5e', fontWeight: 800 }}>
+                    <span style={{ color: scanResult.hashMatch ? '#047857' : '#dc2626', fontWeight: 800 }}>
                       {scanResult.hashMatch ? '✓ HASH MATCH' : '✗ HASH MISMATCH'}
                     </span>
                   </div>
-                  <div style={{ wordBreak: 'break-all', color: '#c084fc' }}>
+                  <div style={{ wordBreak: 'break-all', color: '#7c3aed' }}>
                     Trusted Hash: {scanResult.trustedDataHash}
                   </div>
-                  <div style={{ wordBreak: 'break-all', color: '#38bdf8', marginTop: '2px' }}>
+                  <div style={{ wordBreak: 'break-all', color: '#0284c7', marginTop: '2px' }}>
                     Scanned Hash: {scanResult.scannedDataHash}
                   </div>
                 </div>
@@ -1000,7 +1017,7 @@ export default function WholesalerDashboard({
                 {scanResult.verified && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.25rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)' }}>
+                      <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#334155' }}>
                         New Wholesaler Storage Security Seal ID:
                       </label>
                       <input 
@@ -1009,11 +1026,11 @@ export default function WholesalerDashboard({
                         onChange={(e) => setNewSealId(e.target.value)}
                         style={{
                           width: '100%',
-                          background: 'var(--bg-surface)',
-                          border: '1px solid var(--border-medium)',
+                          background: '#ffffff',
+                          border: '1px solid #cbd5e1',
                           padding: '8px',
                           borderRadius: 'var(--radius-sm)',
-                          color: '#fff',
+                          color: '#0f172a',
                           fontFamily: 'var(--font-mono)',
                           fontSize: '0.78rem',
                           marginTop: '2px'
@@ -1025,7 +1042,7 @@ export default function WholesalerDashboard({
                       onClick={handleConfirmReceipt}
                       disabled={receiving}
                       style={{
-                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        background: 'linear-gradient(135deg, #059669, #047857)',
                         color: '#fff',
                         border: 'none',
                         padding: '12px',
@@ -1037,7 +1054,7 @@ export default function WholesalerDashboard({
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '8px',
-                        boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                        boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)'
                       }}
                     >
                       {receiving ? (
@@ -1068,7 +1085,7 @@ export default function WholesalerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(8px)',
           zIndex: 100,
           display: 'flex',
@@ -1076,8 +1093,8 @@ export default function WholesalerDashboard({
           justifyContent: 'center'
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            borderTop: '1px solid #e2e8f0',
             borderRadius: '24px 24px 0 0',
             width: '100%',
             maxWidth: '520px',
@@ -1087,21 +1104,22 @@ export default function WholesalerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
+            boxShadow: '0 -10px 25px -5px rgba(0, 0, 0, 0.1)',
             animation: 'slideUp 0.3s ease-out'
           }}>
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 800 }}>
+                <div style={{ fontSize: '0.7rem', color: '#059669', fontWeight: 800 }}>
                   STAGE 3 ➔ STAGE 4 CUSTODY DISPATCH
                 </div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                   Transfer to Pharmacy / Retailer
                 </h3>
               </div>
               <button
                 onClick={() => setIsTransferModalOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+                style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer' }}
               >
                 <X size={20} />
               </button>
@@ -1109,88 +1127,89 @@ export default function WholesalerDashboard({
 
             {/* Transfer Details Card */}
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '0.75rem 1rem',
               fontSize: '0.78rem'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Batch ID:</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#fff' }}>
+                <span style={{ color: '#64748b' }}>Batch ID:</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#0284c7' }}>
                   {batchToTransfer.batchId}
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Medicine:</span>
-                <span style={{ fontWeight: 700, color: '#38bdf8' }}>{batchToTransfer.medicineName}</span>
+                <span style={{ color: '#64748b' }}>Medicine:</span>
+                <span style={{ fontWeight: 700, color: '#0f172a' }}>{batchToTransfer.medicineName}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Quantity:</span>
-                <span style={{ color: '#fff' }}>{batchToTransfer.quantity} units</span>
+                <span style={{ color: '#64748b' }}>Quantity:</span>
+                <span style={{ color: '#0f172a', fontWeight: 600 }}>{batchToTransfer.quantity} units</span>
               </div>
             </div>
 
             {/* Error / Success Feedback */}
             {transferError && (
               <div style={{
-                background: 'var(--rose-bg)',
-                border: '1px solid rgba(244, 63, 94, 0.4)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#fca5a5',
+                color: '#dc2626',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <AlertCircle size={16} color="#f43f5e" />
+                <AlertCircle size={16} color="#dc2626" />
                 <span>{transferError}</span>
               </div>
             )}
 
             {transferSuccess && (
               <div style={{
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#34d399',
+                color: '#047857',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <CheckCircle2 size={16} color="#10b981" />
+                <CheckCircle2 size={16} color="#059669" />
                 <span>{transferSuccess}</span>
               </div>
             )}
 
             {/* Target Retailer Select */}
             <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155', marginBottom: '4px', display: 'block' }}>
                 Authorized Target Pharmacy / Retailer *
               </label>
               {loadingRules ? (
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Loading authorized retailers...</div>
+                <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Loading authorized retailers...</div>
               ) : (
                 <select
                   value={selectedReceiverId}
                   onChange={(e) => setSelectedReceiverId(e.target.value)}
                   style={{
                     width: '100%',
-                    background: '#0d1526',
-                    border: '1px solid var(--border-medium)',
-                    color: '#fff',
-                    colorScheme: 'dark',
+                    background: '#ffffff',
+                    border: '1px solid #cbd5e1',
+                    color: '#0f172a',
+                    colorScheme: 'light',
                     padding: '10px',
                     borderRadius: 'var(--radius-md)',
                     fontSize: '0.82rem',
                     outline: 'none'
                   }}
                 >
-                  <option value="" style={{ background: '#0f172a', color: '#94a3b8' }}>-- Select Target Retailer --</option>
+                  <option value="" style={{ background: '#ffffff', color: '#64748b' }}>-- Select Target Retailer --</option>
                   {authorizedRetailers.map(r => (
-                    <option key={r._id || r.id} value={r._id || r.id} style={{ background: '#0f172a', color: '#ffffff' }}>
+                    <option key={r._id || r.id} value={r._id || r.id} style={{ background: '#ffffff', color: '#0f172a' }}>
                       {r.name} ({r.code || 'RETAIL'}) - {r.address || 'Licensed Retailer'}
                     </option>
                   ))}
@@ -1200,7 +1219,7 @@ export default function WholesalerDashboard({
 
             {/* New Transit Security Seal ID */}
             <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#334155', marginBottom: '4px', display: 'block' }}>
                 Transit Tamper-Evident Security Seal ID *
               </label>
               <input
@@ -1210,9 +1229,9 @@ export default function WholesalerDashboard({
                 placeholder="e.g. SEAL-TR-4910"
                 style={{
                   width: '100%',
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-medium)',
-                  color: '#fff',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  color: '#0f172a',
                   fontFamily: 'var(--font-mono)',
                   padding: '10px',
                   borderRadius: 'var(--radius-md)',
@@ -1227,9 +1246,9 @@ export default function WholesalerDashboard({
               disabled={transferLoading || !selectedReceiverId}
               style={{
                 background: selectedReceiverId 
-                  ? 'linear-gradient(135deg, #10b981, #059669)'
-                  : 'var(--bg-surface)',
-                color: selectedReceiverId ? '#fff' : 'var(--text-muted)',
+                  ? 'linear-gradient(135deg, #059669, #047857)'
+                  : '#f1f5f9',
+                color: selectedReceiverId ? '#fff' : '#94a3b8',
                 border: 'none',
                 padding: '12px',
                 borderRadius: 'var(--radius-md)',
@@ -1240,7 +1259,8 @@ export default function WholesalerDashboard({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                marginTop: '0.5rem'
+                marginTop: '0.5rem',
+                boxShadow: selectedReceiverId ? '0 4px 12px rgba(5, 150, 105, 0.25)' : 'none'
               }}
             >
               {transferLoading ? (
@@ -1267,7 +1287,7 @@ export default function WholesalerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(8px)',
           zIndex: 100,
           display: 'flex',
@@ -1275,8 +1295,8 @@ export default function WholesalerDashboard({
           justifyContent: 'center'
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            borderTop: '1px solid #e2e8f0',
             borderRadius: '24px 24px 0 0',
             width: '100%',
             maxWidth: '520px',
@@ -1286,27 +1306,29 @@ export default function WholesalerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
+            boxShadow: '0 -10px 25px -5px rgba(0, 0, 0, 0.1)',
             animation: 'slideUp 0.3s ease-out'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: '#38bdf8', fontWeight: 800 }}>
+                <div style={{ fontSize: '0.7rem', color: '#0284c7', fontWeight: 800 }}>
                   END-TO-END TRACEABILITY AUDIT
                 </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                   {selectedBatch.batchId}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedBatch(null)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+                style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer' }}
               >
                 <X size={20} />
               </button>
             </div>
 
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '1rem',
               display: 'flex',
@@ -1314,37 +1336,38 @@ export default function WholesalerDashboard({
               gap: '0.5rem',
               fontSize: '0.78rem'
             }}>
-              <div><span style={{ color: 'var(--text-muted)' }}>Medicine:</span> <strong style={{ color: '#fff' }}>{selectedBatch.medicineName}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Manufacturer:</span> <strong style={{ color: '#fff' }}>{selectedBatch.manufacturerName}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Current Custody Holder:</span> <strong style={{ color: '#38bdf8' }}>{selectedBatch.currentHolderName}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Current Stage:</span> <span style={{ color: '#10b981', fontWeight: 700 }}>Stage 3 (Wholesaler)</span></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Active Status:</span> <strong style={{ color: '#fff' }}>{selectedBatch.status}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Quantity:</span> <span style={{ color: '#fff' }}>{selectedBatch.quantity} units</span></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Current Security Seal:</span> <span style={{ fontFamily: 'var(--font-mono)', color: '#fbbf24' }}>{selectedBatch.sealId}</span></div>
+              <div><span style={{ color: '#64748b' }}>Medicine:</span> <strong style={{ color: '#0f172a' }}>{selectedBatch.medicineName}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Manufacturer:</span> <strong style={{ color: '#0f172a' }}>{selectedBatch.manufacturerName}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Current Custody Holder:</span> <strong style={{ color: '#0284c7' }}>{selectedBatch.currentHolderName}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Current Stage:</span> <span style={{ color: '#059669', fontWeight: 700 }}>Stage 3 (Wholesaler)</span></div>
+              <div><span style={{ color: '#64748b' }}>Active Status:</span> <strong style={{ color: '#0f172a' }}>{selectedBatch.status}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Quantity:</span> <span style={{ color: '#0f172a', fontWeight: 600 }}>{selectedBatch.quantity} units</span></div>
+              <div><span style={{ color: '#64748b' }}>Current Security Seal:</span> <span style={{ fontFamily: 'var(--font-mono)', color: '#d97706', fontWeight: 700 }}>{selectedBatch.sealId}</span></div>
             </div>
 
             {/* Cryptographic Baseline Audit */}
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '1rem',
               fontSize: '0.75rem',
               fontFamily: 'var(--font-mono)'
             }}>
-              <div style={{ fontWeight: 700, color: '#c084fc', marginBottom: '6px' }}>
+              <div style={{ fontWeight: 700, color: '#7c3aed', marginBottom: '6px' }}>
                 Manufacturer Cryptographic Baseline
               </div>
-              <div style={{ wordBreak: 'break-all', color: 'var(--text-secondary)' }}>
+              <div style={{ wordBreak: 'break-all', color: '#475569' }}>
                 Trusted Hash: {selectedBatch.trustedDataHash}
               </div>
-              <div style={{ marginTop: '4px', color: '#10b981' }}>
+              <div style={{ marginTop: '4px', color: '#059669' }}>
                 Fingerprint: {selectedBatch.batchFingerprint}
               </div>
             </div>
 
             {/* Custody Transfer History */}
             <div>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
                 Custody Chain Transitions ({selectedBatch.transferHistory?.length || 0})
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -1352,7 +1375,8 @@ export default function WholesalerDashboard({
                   <div 
                     key={idx}
                     style={{
-                      background: 'var(--bg-surface)',
+                      background: '#f8fafc',
+                      border: '1px solid #e2e8f0',
                       borderRadius: 'var(--radius-sm)',
                       padding: '8px 10px',
                       fontSize: '0.72rem',
@@ -1362,13 +1386,13 @@ export default function WholesalerDashboard({
                     }}
                   >
                     <div>
-                      <strong style={{ color: '#38bdf8' }}>{t.senderOrgName}</strong> ➔ <strong style={{ color: '#10b981' }}>{t.receiverOrgName}</strong>
-                      <div style={{ color: 'var(--text-muted)', fontSize: '0.65rem' }}>
+                      <strong style={{ color: '#0284c7' }}>{t.senderOrgName}</strong> ➔ <strong style={{ color: '#059669' }}>{t.receiverOrgName}</strong>
+                      <div style={{ color: '#64748b', fontSize: '0.65rem' }}>
                         Seal: {t.newSealId}
                       </div>
                     </div>
                     {t.blockNumber && (
-                      <span style={{ color: '#10b981', fontFamily: 'var(--font-mono)', fontSize: '0.68rem' }}>
+                      <span style={{ color: '#059669', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', fontWeight: 600 }}>
                         Block #{t.blockNumber}
                       </span>
                     )}

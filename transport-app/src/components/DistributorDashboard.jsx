@@ -291,34 +291,35 @@ export default function DistributorDashboard({
     <div className="animate-slide" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Top Welcome Header */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(37, 99, 235, 0.1))',
+        background: '#f0f9ff',
         borderRadius: 'var(--radius-xl)',
-        border: '1px solid rgba(6, 182, 212, 0.3)',
+        border: '1px solid #bae6fd',
         padding: '1.25rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '0.75rem'
+        gap: '0.75rem',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
             width: '46px',
             height: '46px',
             borderRadius: '14px',
-            background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+            background: 'linear-gradient(135deg, #0284c7, #2563eb)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 15px rgba(6, 182, 212, 0.4)'
+            boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)'
           }}>
             <Truck size={24} color="#fff" />
           </div>
           <div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <div style={{ fontSize: '0.75rem', color: '#0369a1', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
               <Building2 size={12} /> {user?.organizationName}
             </div>
-            <h1 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em' }}>
+            <h1 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.01em' }}>
               Distributor Logistics Hub
             </h1>
           </div>
@@ -333,12 +334,13 @@ export default function DistributorDashboard({
             gap: '6px',
             padding: '8px 14px',
             borderRadius: 'var(--radius-md)',
-            background: 'var(--bg-elevated)',
-            color: 'var(--text-main)',
-            border: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            color: '#475569',
+            border: '1px solid #cbd5e1',
             fontSize: '0.78rem',
             fontWeight: 600,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
           }}
         >
           <RefreshCw size={13} className={loading ? 'spin' : ''} />
@@ -349,89 +351,93 @@ export default function DistributorDashboard({
       {/* 4 Summary KPI Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem' }}>
         <div style={{
-          background: 'var(--bg-card)',
+          background: '#fffbeb',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-medium)',
+          border: '1px solid #fde68a',
           padding: '1rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '4px'
+          gap: '4px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.04)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Incoming Deliveries</span>
-            <Truck size={14} color="#f59e0b" />
+            <span style={{ fontSize: '0.72rem', color: '#b45309', fontWeight: 700 }}>Incoming Deliveries</span>
+            <Truck size={14} color="#d97706" />
           </div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: totalIncoming > 0 ? '#f59e0b' : '#fff' }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>
             {totalIncoming}
           </div>
-          <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>Awaiting receipt scan</div>
+          <div style={{ fontSize: '0.68rem', color: '#64748b' }}>Awaiting receipt scan</div>
         </div>
 
         <div style={{
-          background: 'var(--bg-card)',
+          background: '#ecfdf5',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-medium)',
+          border: '1px solid #a7f3d0',
           padding: '1rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '4px'
+          gap: '4px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.04)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Verified Inventory</span>
-            <Package size={14} color="#10b981" />
+            <span style={{ fontSize: '0.72rem', color: '#047857', fontWeight: 700 }}>Verified Inventory</span>
+            <Package size={14} color="#059669" />
           </div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#10b981' }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>
             {verifiedInventoryCount}
           </div>
-          <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>Ready for Wholesaler transfer</div>
+          <div style={{ fontSize: '0.68rem', color: '#64748b' }}>Ready for Wholesaler transfer</div>
         </div>
 
         <div style={{
-          background: 'var(--bg-card)',
+          background: '#fef2f2',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-medium)',
+          border: '1px solid #fecaca',
           padding: '1rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '4px'
+          gap: '4px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.04)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Discrepancies</span>
-            <ShieldAlert size={14} color="#f43f5e" />
+            <span style={{ fontSize: '0.72rem', color: '#dc2626', fontWeight: 700 }}>Discrepancies</span>
+            <ShieldAlert size={14} color="#dc2626" />
           </div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#f43f5e' }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>
             0
           </div>
-          <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>Flagged packages</div>
+          <div style={{ fontSize: '0.68rem', color: '#64748b' }}>Flagged packages</div>
         </div>
 
         <div style={{
-          background: 'var(--bg-card)',
+          background: '#eff6ff',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-medium)',
+          border: '1px solid #bfdbfe',
           padding: '1rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '4px'
+          gap: '4px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.04)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Outgoing Transfers</span>
-            <Boxes size={14} color="#38bdf8" />
+            <span style={{ fontSize: '0.72rem', color: '#1d4ed8', fontWeight: 700 }}>Outgoing Transfers</span>
+            <Boxes size={14} color="#2563eb" />
           </div>
-          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#38bdf8' }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>
             {outgoingCount}
           </div>
-          <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>Dispatched to Wholesalers</div>
+          <div style={{ fontSize: '0.68rem', color: '#64748b' }}>Dispatched to Wholesalers</div>
         </div>
       </div>
 
       {/* Sub-Tab Navigation Bar */}
       <div style={{
         display: 'flex',
-        background: 'var(--bg-surface)',
+        background: '#f1f5f9',
         borderRadius: 'var(--radius-md)',
         padding: '4px',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #e2e8f0',
         gap: '4px'
       }}>
         <button
@@ -441,15 +447,16 @@ export default function DistributorDashboard({
             padding: '8px 4px',
             borderRadius: 'var(--radius-sm)',
             border: 'none',
-            background: activeSubTab === 'incoming' ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.2))' : 'transparent',
-            color: activeSubTab === 'incoming' ? '#fbbf24' : 'var(--text-secondary)',
+            background: activeSubTab === 'incoming' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'incoming' ? '#b45309' : '#64748b',
             fontWeight: activeSubTab === 'incoming' ? 700 : 500,
             fontSize: '0.78rem',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px'
+            gap: '6px',
+            boxShadow: activeSubTab === 'incoming' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none'
           }}
         >
           <Truck size={13} /> Incoming ({totalIncoming})
@@ -462,15 +469,16 @@ export default function DistributorDashboard({
             padding: '8px 4px',
             borderRadius: 'var(--radius-sm)',
             border: 'none',
-            background: activeSubTab === 'inventory' ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.2))' : 'transparent',
-            color: activeSubTab === 'inventory' ? '#34d399' : 'var(--text-secondary)',
+            background: activeSubTab === 'inventory' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'inventory' ? '#047857' : '#64748b',
             fontWeight: activeSubTab === 'inventory' ? 700 : 500,
             fontSize: '0.78rem',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px'
+            gap: '6px',
+            boxShadow: activeSubTab === 'inventory' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none'
           }}
         >
           <Package size={13} /> Inventory ({verifiedInventoryCount})
@@ -483,15 +491,16 @@ export default function DistributorDashboard({
             padding: '8px 4px',
             borderRadius: 'var(--radius-sm)',
             border: 'none',
-            background: activeSubTab === 'history' ? 'rgba(56, 189, 248, 0.15)' : 'transparent',
-            color: activeSubTab === 'history' ? '#38bdf8' : 'var(--text-secondary)',
+            background: activeSubTab === 'history' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'history' ? '#0284c7' : '#64748b',
             fontWeight: activeSubTab === 'history' ? 700 : 500,
             fontSize: '0.78rem',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px'
+            gap: '6px',
+            boxShadow: activeSubTab === 'history' ? '0 1px 3px rgba(0,0,0,0.06)' : 'none'
           }}
         >
           <Clock size={13} /> Transferred ({outgoingCount})
@@ -500,7 +509,7 @@ export default function DistributorDashboard({
 
       {/* Search Bar */}
       <div style={{ position: 'relative' }}>
-        <Search size={15} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+        <Search size={15} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#64748b' }} />
         <input
           type="text"
           placeholder="Search by batch ID or medicine name..."
@@ -510,11 +519,12 @@ export default function DistributorDashboard({
             width: '100%',
             padding: '10px 12px 10px 36px',
             borderRadius: 'var(--radius-md)',
-            background: 'var(--bg-card)',
-            border: '1px solid var(--border-medium)',
-            color: '#fff',
+            background: '#ffffff',
+            border: '1px solid #cbd5e1',
+            color: '#0f172a',
             fontSize: '0.82rem',
-            outline: 'none'
+            outline: 'none',
+            boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.04)'
           }}
         />
       </div>
@@ -522,9 +532,9 @@ export default function DistributorDashboard({
       {/* Content List Based on Active Tab */}
       {filteredList.length === 0 ? (
         <div style={{
-          background: 'var(--bg-card)',
+          background: '#ffffff',
           borderRadius: 'var(--radius-lg)',
-          border: '1px dashed var(--border-medium)',
+          border: '1px dashed #cbd5e1',
           padding: '2.5rem 1.5rem',
           textAlign: 'center',
           display: 'flex',
@@ -536,23 +546,23 @@ export default function DistributorDashboard({
             width: '48px',
             height: '48px',
             borderRadius: '16px',
-            background: 'rgba(100, 116, 139, 0.1)',
+            background: '#f1f5f9',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--text-muted)'
+            color: '#64748b'
           }}>
             {activeSubTab === 'incoming' ? <Truck size={24} /> : <Package size={24} />}
           </div>
           <div>
-            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>
+            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a' }}>
               {activeSubTab === 'incoming' 
                 ? 'No Incoming Deliveries' 
                 : activeSubTab === 'inventory' 
                   ? 'No Verified Inventory' 
                   : 'No Outgoing Transfers'}
             </div>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', maxWidth: '280px', marginTop: '4px' }}>
+            <p style={{ fontSize: '0.75rem', color: '#64748b', maxWidth: '280px', marginTop: '4px' }}>
               {activeSubTab === 'incoming'
                 ? 'When an authorized Manufacturer dispatches a batch to your distribution center, it will appear here for receipt verification.'
                 : activeSubTab === 'inventory'
@@ -571,14 +581,14 @@ export default function DistributorDashboard({
               <div
                 key={batch.batchId}
                 style={{
-                  background: 'var(--bg-card)',
+                  background: '#ffffff',
                   borderRadius: 'var(--radius-lg)',
-                  border: isIncoming ? '1px solid rgba(245, 158, 11, 0.35)' : '1px solid var(--border-medium)',
+                  border: isIncoming ? '1px solid #fde68a' : '1px solid #e2e8f0',
                   padding: '1.25rem',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.85rem',
-                  boxShadow: 'var(--shadow-sm)',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
                   position: 'relative',
                   overflow: 'hidden'
                 }}
@@ -596,10 +606,10 @@ export default function DistributorDashboard({
                 {/* Batch Identification Header */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                       Batch Number
                     </div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#38bdf8', fontFamily: 'var(--font-mono)' }}>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0284c7', fontFamily: 'var(--font-mono)' }}>
                       {batch.batchId}
                     </div>
                   </div>
@@ -609,9 +619,9 @@ export default function DistributorDashboard({
                     fontWeight: 700,
                     padding: '3px 8px',
                     borderRadius: '4px',
-                    background: isIncoming ? 'rgba(245, 158, 11, 0.15)' : 'rgba(16, 185, 129, 0.15)',
-                    color: isIncoming ? '#fbbf24' : '#34d399',
-                    border: isIncoming ? '1px solid rgba(245, 158, 11, 0.3)' : '1px solid rgba(16, 185, 129, 0.3)',
+                    background: isIncoming ? '#fef3c7' : '#ecfdf5',
+                    color: isIncoming ? '#b45309' : '#047857',
+                    border: isIncoming ? '1px solid #fde68a' : '1px solid #a7f3d0',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px'
@@ -623,10 +633,10 @@ export default function DistributorDashboard({
 
                 {/* Medicine & Supply Chain Info */}
                 <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>
+                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a' }}>
                     {batch.medicineName}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '2px' }}>
                     {batch.composition || 'Active Pharmaceutical Ingredients'}
                   </div>
                 </div>
@@ -638,24 +648,25 @@ export default function DistributorDashboard({
                   gap: '0.5rem',
                   padding: '0.75rem',
                   borderRadius: 'var(--radius-md)',
-                  background: 'rgba(0, 0, 0, 0.25)',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   fontSize: '0.72rem'
                 }}>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Manufacturer:</span>
-                    <div style={{ fontWeight: 600, color: '#e2e8f0' }}>{batch.manufacturerName}</div>
+                    <span style={{ color: '#64748b' }}>Manufacturer:</span>
+                    <div style={{ fontWeight: 600, color: '#0f172a' }}>{batch.manufacturerName}</div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Quantity:</span>
-                    <div style={{ fontWeight: 600, color: '#e2e8f0' }}>{batch.quantity?.toLocaleString()} units</div>
+                    <span style={{ color: '#64748b' }}>Quantity:</span>
+                    <div style={{ fontWeight: 600, color: '#0f172a' }}>{batch.quantity?.toLocaleString()} units</div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Transit Seal ID:</span>
-                    <div style={{ fontFamily: 'var(--font-mono)', color: '#c084fc' }}>{batch.sealId}</div>
+                    <span style={{ color: '#64748b' }}>Transit Seal ID:</span>
+                    <div style={{ fontFamily: 'var(--font-mono)', color: '#7c3aed', fontWeight: 600 }}>{batch.sealId}</div>
                   </div>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Expiry Date:</span>
-                    <div style={{ fontWeight: 600, color: '#e2e8f0' }}>{batch.expiryDate}</div>
+                    <span style={{ color: '#64748b' }}>Expiry Date:</span>
+                    <div style={{ fontWeight: 600, color: '#0f172a' }}>{batch.expiryDate}</div>
                   </div>
                 </div>
 
@@ -668,7 +679,7 @@ export default function DistributorDashboard({
                       width: '100%',
                       padding: '10px 14px',
                       borderRadius: 'var(--radius-md)',
-                      background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                      background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                       color: '#fff',
                       border: 'none',
                       fontWeight: 700,
@@ -678,7 +689,7 @@ export default function DistributorDashboard({
                       justifyContent: 'center',
                       gap: '8px',
                       cursor: 'pointer',
-                      boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3)'
+                      boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)'
                     }}
                   >
                     <Camera size={15} /> Scan Medicine Package & Verify
@@ -693,7 +704,7 @@ export default function DistributorDashboard({
                       width: '100%',
                       padding: '10px 14px',
                       borderRadius: 'var(--radius-md)',
-                      background: 'linear-gradient(135deg, #38bdf8, #2563eb)',
+                      background: 'linear-gradient(135deg, #059669, #047857)',
                       color: '#fff',
                       border: 'none',
                       fontWeight: 700,
@@ -702,7 +713,8 @@ export default function DistributorDashboard({
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)'
                     }}
                   >
                     <Truck size={15} /> Transfer Custody to Wholesaler <ArrowRight size={14} />
@@ -724,7 +736,7 @@ export default function DistributorDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
@@ -733,9 +745,9 @@ export default function DistributorDashboard({
           padding: '1rem'
         }}>
           <div style={{
-            background: 'var(--bg-surface)',
+            background: '#ffffff',
             borderRadius: 'var(--radius-xl)',
-            border: '1px solid var(--border-medium)',
+            border: '1px solid #e2e8f0',
             width: '100%',
             maxWidth: '520px',
             maxHeight: '92vh',
@@ -744,7 +756,7 @@ export default function DistributorDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1.25rem',
-            boxShadow: 'var(--shadow-lg)'
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
           }}>
             {/* Modal Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -753,7 +765,7 @@ export default function DistributorDashboard({
                   width: '36px',
                   height: '36px',
                   borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                  background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
@@ -761,11 +773,11 @@ export default function DistributorDashboard({
                   <Camera size={18} color="#fff" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fff' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0f172a' }}>
                     Distributor Medicine Package Verification
                   </h3>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                    Batch: <span style={{ fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>{batchToVerify.batchId}</span>
+                  <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                    Batch: <span style={{ fontFamily: 'var(--font-mono)', color: '#0284c7', fontWeight: 700 }}>{batchToVerify.batchId}</span>
                   </div>
                 </div>
               </div>
@@ -773,7 +785,7 @@ export default function DistributorDashboard({
               <button
                 onClick={() => setIsScanModalOpen(false)}
                 disabled={isScanning || receiving}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '1.2rem' }}
+                style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: '1.2rem' }}
               >
                 ✕
               </button>
@@ -782,17 +794,17 @@ export default function DistributorDashboard({
             {/* Error Message */}
             {scanError && (
               <div style={{
-                background: 'rgba(244, 63, 94, 0.15)',
-                border: '1px solid rgba(244, 63, 94, 0.4)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-sm)',
                 padding: '0.75rem',
-                color: '#fca5a5',
+                color: '#dc2626',
                 fontSize: '0.75rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <AlertCircle size={16} />
+                <AlertCircle size={16} color="#dc2626" />
                 <span>{scanError}</span>
               </div>
             )}
@@ -800,37 +812,37 @@ export default function DistributorDashboard({
             {/* Success Message */}
             {receiveSuccess && (
               <div style={{
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
                 borderRadius: 'var(--radius-sm)',
                 padding: '0.75rem',
-                color: '#6ee7b7',
+                color: '#047857',
                 fontSize: '0.75rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <CheckCircle2 size={16} />
+                <CheckCircle2 size={16} color="#059669" />
                 <span>Batch accepted into Distributor Inventory! Updating ledger...</span>
               </div>
             )}
 
             {/* Step 1: Package Image Upload & Scan */}
             <div style={{
-              background: 'var(--bg-card)',
+              background: '#f8fafc',
               borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-medium)',
+              border: '1px solid #e2e8f0',
               padding: '1rem',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.75rem'
             }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <QrCode size={15} color="#06b6d4" />
+              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <QrCode size={15} color="#0284c7" />
                 Physical Medicine Package Inspection
               </div>
 
-              <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+              <p style={{ fontSize: '0.72rem', color: '#475569' }}>
                 Photograph or upload the physical medicine box/label. The AI engine will read printed package details and verify them directly against the original Manufacturer baseline.
               </p>
 
@@ -845,7 +857,7 @@ export default function DistributorDashboard({
                       right: '8px',
                       padding: '4px 10px',
                       borderRadius: 'var(--radius-sm)',
-                      background: 'rgba(0, 0, 0, 0.8)',
+                      background: 'rgba(15, 23, 42, 0.8)',
                       color: '#fff',
                       fontSize: '0.7rem',
                       fontWeight: 600,
@@ -858,7 +870,7 @@ export default function DistributorDashboard({
                 </div>
               ) : (
                 <label style={{
-                  border: '2px dashed var(--border-medium)',
+                  border: '2px dashed #cbd5e1',
                   borderRadius: 'var(--radius-md)',
                   padding: '1.75rem 1rem',
                   display: 'flex',
@@ -866,11 +878,11 @@ export default function DistributorDashboard({
                   alignItems: 'center',
                   gap: '8px',
                   cursor: 'pointer',
-                  background: 'rgba(0, 0, 0, 0.15)'
+                  background: '#ffffff'
                 }}>
-                  <Upload size={24} color="#06b6d4" />
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#fff' }}>Click to capture or select photo</span>
-                  <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Supports JPG, PNG, WEBP</span>
+                  <Upload size={24} color="#0284c7" />
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Click to capture or select photo</span>
+                  <span style={{ fontSize: '0.68rem', color: '#64748b' }}>Supports JPG, PNG, WEBP</span>
                   <input type="file" accept="image/*" onChange={handleImageSelect} style={{ display: 'none' }} />
                 </label>
               )}
@@ -883,7 +895,7 @@ export default function DistributorDashboard({
                   width: '100%',
                   padding: '9px',
                   borderRadius: 'var(--radius-md)',
-                  background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                  background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                   color: '#fff',
                   border: 'none',
                   fontWeight: 700,
@@ -893,7 +905,8 @@ export default function DistributorDashboard({
                   justifyContent: 'center',
                   gap: '6px',
                   cursor: (!imageFile || isScanning) ? 'not-allowed' : 'pointer',
-                  opacity: (!imageFile || isScanning) ? 0.6 : 1
+                  opacity: (!imageFile || isScanning) ? 0.6 : 1,
+                  boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)'
                 }}
               >
                 {isScanning ? (
@@ -913,8 +926,8 @@ export default function DistributorDashboard({
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                 {/* Status Alert Banner */}
                 <div style={{
-                  background: scanResult.verified ? 'rgba(16, 185, 129, 0.15)' : 'rgba(244, 63, 94, 0.15)',
-                  border: scanResult.verified ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(244, 63, 94, 0.4)',
+                  background: scanResult.verified ? '#ecfdf5' : '#fef2f2',
+                  border: scanResult.verified ? '1px solid #a7f3d0' : '1px solid #fecaca',
                   borderRadius: 'var(--radius-md)',
                   padding: '0.85rem',
                   display: 'flex',
@@ -922,12 +935,12 @@ export default function DistributorDashboard({
                   justifyContent: 'space-between'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    {scanResult.verified ? <CheckCircle2 size={18} color="#10b981" /> : <AlertCircle size={18} color="#f43f5e" />}
+                    {scanResult.verified ? <CheckCircle2 size={18} color="#059669" /> : <AlertCircle size={18} color="#dc2626" />}
                     <div>
-                      <div style={{ fontSize: '0.82rem', fontWeight: 800, color: scanResult.verified ? '#10b981' : '#f43f5e' }}>
+                      <div style={{ fontSize: '0.82rem', fontWeight: 800, color: scanResult.verified ? '#047857' : '#dc2626' }}>
                         {scanResult.status}
                       </div>
-                      <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>
+                      <div style={{ fontSize: '0.68rem', color: '#475569' }}>
                         {scanResult.verified 
                           ? 'Package matches original Manufacturer baseline and cryptographic hash.'
                           : `Discrepancy detected on: ${scanResult.failedFields?.join(', ')}`}
@@ -938,16 +951,16 @@ export default function DistributorDashboard({
 
                 {/* Field-by-Field Comparison Table */}
                 <div style={{
-                  background: 'var(--bg-card)',
+                  background: '#f8fafc',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--border-medium)',
+                  border: '1px solid #e2e8f0',
                   padding: '0.85rem',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.5rem'
                 }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <FileText size={14} color="#38bdf8" /> Field-Level Baseline Comparison
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <FileText size={14} color="#0284c7" /> Field-Level Baseline Comparison
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -960,28 +973,30 @@ export default function DistributorDashboard({
                           justifyContent: 'space-between',
                           padding: '6px 8px',
                           borderRadius: '4px',
-                          background: 'rgba(0, 0, 0, 0.2)',
+                          background: '#ffffff',
+                          border: '1px solid #e2e8f0',
                           fontSize: '0.72rem'
                         }}
                       >
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontWeight: 600, color: '#e2e8f0' }}>{check.field}</span>
-                          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                          <span style={{ fontWeight: 700, color: '#0f172a' }}>{check.field}</span>
+                          <span style={{ fontSize: '0.65rem', color: '#64748b' }}>
                             Expected: {check.expected || 'N/A'}
                           </span>
                         </div>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span style={{ fontSize: '0.68rem', color: check.match ? '#94a3b8' : '#fca5a5' }}>
+                          <span style={{ fontSize: '0.68rem', color: '#334155' }}>
                             {check.extracted || 'Not detected'}
                           </span>
                           <span style={{
                             padding: '2px 6px',
                             borderRadius: '3px',
                             fontSize: '0.62rem',
-                            fontWeight: 700,
-                            background: check.match ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)',
-                            color: check.match ? '#10b981' : '#f43f5e'
+                            fontWeight: 800,
+                            background: check.match ? '#ecfdf5' : '#fef2f2',
+                            color: check.match ? '#047857' : '#dc2626',
+                            border: `1px solid ${check.match ? '#a7f3d0' : '#fecaca'}`
                           }}>
                             {check.status || (check.match ? 'MATCH' : 'MISMATCH')}
                           </span>
@@ -993,9 +1008,9 @@ export default function DistributorDashboard({
 
                 {/* Cryptographic Hash Comparison */}
                 <div style={{
-                  background: 'var(--bg-card)',
+                  background: '#f8fafc',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--border-medium)',
+                  border: '1px solid #e2e8f0',
                   padding: '0.85rem',
                   display: 'flex',
                   flexDirection: 'column',
@@ -1003,24 +1018,25 @@ export default function DistributorDashboard({
                   fontSize: '0.72rem'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                      <Lock size={13} color="#c084fc" /> Cryptographic Integrity Audit
+                    <span style={{ fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <Lock size={13} color="#7c3aed" /> Cryptographic Integrity Audit
                     </span>
                     <span style={{
                       padding: '2px 6px',
                       borderRadius: '3px',
                       fontSize: '0.65rem',
                       fontWeight: 800,
-                      background: scanResult.hashMatch ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)',
-                      color: scanResult.hashMatch ? '#10b981' : '#f43f5e'
+                      background: scanResult.hashMatch ? '#ecfdf5' : '#fef2f2',
+                      color: scanResult.hashMatch ? '#047857' : '#dc2626',
+                      border: `1px solid ${scanResult.hashMatch ? '#a7f3d0' : '#fecaca'}`
                     }}>
                       {scanResult.hashMatch ? '✓ HASH MATCH' : '✗ HASH MISMATCH'}
                     </span>
                   </div>
 
-                  <div style={{ wordBreak: 'break-all', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)' }}>
-                    <div>Trusted Hash: <span style={{ color: '#c084fc' }}>{scanResult.trustedDataHash}</span></div>
-                    <div>Scanned Hash: <span style={{ color: scanResult.hashMatch ? '#10b981' : '#f43f5e' }}>{scanResult.scannedDataHash}</span></div>
+                  <div style={{ wordBreak: 'break-all', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: '#475569' }}>
+                    <div>Trusted Hash: <span style={{ color: '#7c3aed' }}>{scanResult.trustedDataHash}</span></div>
+                    <div>Scanned Hash: <span style={{ color: scanResult.hashMatch ? '#047857' : '#dc2626' }}>{scanResult.scannedDataHash}</span></div>
                   </div>
                 </div>
 
@@ -1028,7 +1044,7 @@ export default function DistributorDashboard({
                 {scanResult.verified && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.25rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'block', marginBottom: '3px' }}>
+                      <label style={{ fontSize: '0.72rem', color: '#334155', fontWeight: 700, display: 'block', marginBottom: '3px' }}>
                         Warehouse Security Seal ID *
                       </label>
                       <input
@@ -1039,9 +1055,9 @@ export default function DistributorDashboard({
                           width: '100%',
                           padding: '8px 10px',
                           borderRadius: 'var(--radius-md)',
-                          background: 'var(--bg-elevated)',
-                          border: '1px solid var(--border-medium)',
-                          color: '#fff',
+                          background: '#ffffff',
+                          border: '1px solid #cbd5e1',
+                          color: '#0f172a',
                           fontFamily: 'var(--font-mono)',
                           fontSize: '0.78rem'
                         }}
@@ -1056,7 +1072,7 @@ export default function DistributorDashboard({
                         width: '100%',
                         padding: '11px',
                         borderRadius: 'var(--radius-md)',
-                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        background: 'linear-gradient(135deg, #059669, #047857)',
                         color: '#fff',
                         border: 'none',
                         fontWeight: 800,
@@ -1066,7 +1082,7 @@ export default function DistributorDashboard({
                         justifyContent: 'center',
                         gap: '8px',
                         cursor: receiving ? 'not-allowed' : 'pointer',
-                        boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                        boxShadow: '0 4px 15px rgba(5, 150, 105, 0.25)'
                       }}
                     >
                       {receiving ? (
@@ -1097,8 +1113,8 @@ export default function DistributorDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(15, 23, 42, 0.45)',
+          backdropFilter: 'blur(6px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -1106,37 +1122,38 @@ export default function DistributorDashboard({
           padding: '1rem'
         }}>
           <div style={{
-            background: 'var(--bg-surface)',
+            background: '#ffffff',
             borderRadius: 'var(--radius-xl)',
-            border: '1px solid var(--border-medium)',
+            border: '1px solid #e2e8f0',
             width: '100%',
             maxWidth: '500px',
             padding: '1.5rem',
             display: 'flex',
             flexDirection: 'column',
             gap: '1.25rem',
-            boxShadow: 'var(--shadow-lg)'
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
           }}>
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #38bdf8, #2563eb)',
+                  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 10px rgba(37, 99, 235, 0.2)'
                 }}>
                   <Truck size={18} color="#fff" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fff' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                     Transfer Custody to Wholesaler
                   </h3>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                    Batch: <span style={{ fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>{batchToTransfer.batchId}</span>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px' }}>
+                    Batch: <span style={{ fontFamily: 'var(--font-mono)', color: '#2563eb', fontWeight: 700 }}>{batchToTransfer.batchId}</span>
                   </div>
                 </div>
               </div>
@@ -1144,7 +1161,7 @@ export default function DistributorDashboard({
               <button
                 onClick={() => setIsTransferModalOpen(false)}
                 disabled={transferLoading}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '1.2rem' }}
+                style={{ background: '#f1f5f9', border: 'none', color: '#64748b', cursor: 'pointer', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}
               >
                 ✕
               </button>
@@ -1152,12 +1169,13 @@ export default function DistributorDashboard({
 
             {transferError && (
               <div style={{
-                background: 'rgba(244, 63, 94, 0.15)',
-                border: '1px solid rgba(244, 63, 94, 0.4)',
-                borderRadius: 'var(--radius-sm)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
+                borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#fca5a5',
-                fontSize: '0.75rem'
+                color: '#b91c1c',
+                fontSize: '0.78rem',
+                fontWeight: 600
               }}>
                 {transferError}
               </div>
@@ -1165,12 +1183,13 @@ export default function DistributorDashboard({
 
             {transferSuccess && (
               <div style={{
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
-                borderRadius: 'var(--radius-sm)',
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
+                borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#6ee7b7',
-                fontSize: '0.75rem'
+                color: '#047857',
+                fontSize: '0.78rem',
+                fontWeight: 600
               }}>
                 {transferSuccess}
               </div>
@@ -1178,19 +1197,19 @@ export default function DistributorDashboard({
 
             <form onSubmit={handleExecuteTransfer} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
+                <label style={{ fontSize: '0.75rem', color: '#475569', display: 'block', marginBottom: '6px', fontWeight: 600 }}>
                   Target Wholesaler (Authorized Route) *
                 </label>
                 {loadingRules ? (
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Loading authorized wholesalers...</div>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Loading authorized wholesalers...</div>
                 ) : authorizedWholesalers.length === 0 ? (
                   <div style={{
                     padding: '0.75rem',
                     borderRadius: 'var(--radius-md)',
-                    background: 'rgba(244, 63, 94, 0.1)',
-                    border: '1px solid rgba(244, 63, 94, 0.3)',
-                    color: '#fca5a5',
-                    fontSize: '0.72rem'
+                    background: '#fef2f2',
+                    border: '1px solid #fecaca',
+                    color: '#b91c1c',
+                    fontSize: '0.75rem'
                   }}>
                     No authorized Wholesalers configured by Regulatory Authority. Transfer is prevented.
                   </div>
@@ -1200,19 +1219,20 @@ export default function DistributorDashboard({
                     onChange={(e) => setSelectedReceiverId(e.target.value)}
                     style={{
                       width: '100%',
-                      padding: '9px 12px',
+                      padding: '10px 12px',
                       borderRadius: 'var(--radius-md)',
-                      background: '#0d1526',
-                      border: '1px solid var(--border-medium)',
-                      color: '#fff',
-                      colorScheme: 'dark',
-                      fontSize: '0.8rem',
-                      outline: 'none'
+                      background: '#ffffff',
+                      border: '1px solid #cbd5e1',
+                      color: '#0f172a',
+                      colorScheme: 'light',
+                      fontSize: '0.82rem',
+                      outline: 'none',
+                      fontWeight: 600
                     }}
                   >
-                    <option value="" style={{ background: '#0f172a', color: '#94a3b8' }}>-- Select Target Wholesaler --</option>
+                    <option value="" style={{ background: '#ffffff', color: '#64748b' }}>-- Select Target Wholesaler --</option>
                     {authorizedWholesalers.map(w => (
-                      <option key={w._id || w.id} value={w._id || w.id} style={{ background: '#0f172a', color: '#ffffff' }}>
+                      <option key={w._id || w.id} value={w._id || w.id} style={{ background: '#ffffff', color: '#0f172a' }}>
                         {w.name} ({w.code || 'WHOLESALER'})
                       </option>
                     ))}
@@ -1221,7 +1241,7 @@ export default function DistributorDashboard({
               </div>
 
               <div>
-                <label style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
+                <label style={{ fontSize: '0.75rem', color: '#475569', display: 'block', marginBottom: '6px', fontWeight: 600 }}>
                   New Transit Tamper Seal ID *
                 </label>
                 <input
@@ -1232,17 +1252,18 @@ export default function DistributorDashboard({
                     width: '100%',
                     padding: '9px 12px',
                     borderRadius: 'var(--radius-md)',
-                    background: 'var(--bg-card)',
-                    border: '1px solid var(--border-medium)',
-                    color: '#fff',
+                    background: '#ffffff',
+                    border: '1px solid #cbd5e1',
+                    color: '#0f172a',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.8rem',
-                    outline: 'none'
+                    fontSize: '0.82rem',
+                    outline: 'none',
+                    fontWeight: 600
                   }}
                 />
               </div>
 
-              <div style={{ display: 'flex', gap: '8px', marginTop: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '0.5rem' }}>
                 <button
                   type="button"
                   onClick={() => setIsTransferModalOpen(false)}
@@ -1251,11 +1272,11 @@ export default function DistributorDashboard({
                     flex: 1,
                     padding: '10px',
                     borderRadius: 'var(--radius-md)',
-                    background: 'var(--bg-elevated)',
-                    color: 'var(--text-secondary)',
-                    border: '1px solid var(--border-medium)',
+                    background: '#f8fafc',
+                    color: '#475569',
+                    border: '1px solid #cbd5e1',
                     fontWeight: 600,
-                    fontSize: '0.8rem',
+                    fontSize: '0.82rem',
                     cursor: 'pointer'
                   }}
                 >
@@ -1268,16 +1289,17 @@ export default function DistributorDashboard({
                     flex: 2,
                     padding: '10px',
                     borderRadius: 'var(--radius-md)',
-                    background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                    background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
                     color: '#fff',
                     border: 'none',
                     fontWeight: 700,
-                    fontSize: '0.8rem',
+                    fontSize: '0.82rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '6px',
-                    cursor: (transferLoading || authorizedWholesalers.length === 0) ? 'not-allowed' : 'pointer'
+                    cursor: (transferLoading || authorizedWholesalers.length === 0) ? 'not-allowed' : 'pointer',
+                    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)'
                   }}
                 >
                   {transferLoading ? (

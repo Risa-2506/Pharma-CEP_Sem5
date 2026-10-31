@@ -240,37 +240,38 @@ export default function RetailerDashboard({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }} className="animate-slide">
       {/* Header Profile Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(16, 185, 129, 0.08))',
-        border: '1px solid rgba(6, 182, 212, 0.3)',
+        background: 'linear-gradient(135deg, #f5f3ff, #ede9fe)',
+        border: '1px solid #ddd6fe',
         borderRadius: 'var(--radius-lg)',
         padding: '1.25rem',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        boxShadow: '0 2px 8px rgba(124, 58, 237, 0.06)'
       }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.25rem' }}>
             <span style={{
-              background: 'rgba(6, 182, 212, 0.2)',
-              color: '#38bdf8',
+              background: '#ffffff',
+              color: '#7c3aed',
               fontSize: '0.68rem',
               fontWeight: 800,
               padding: '2px 8px',
               borderRadius: '4px',
-              border: '1px solid rgba(6, 182, 212, 0.4)'
+              border: '1px solid #ddd6fe'
             }}>
               STAGE 4: PHARMACY / RETAILER
             </span>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+            <span style={{ fontSize: '0.72rem', color: '#64748b' }}>
               Final Dispensing & Patient Safety Custody
             </span>
           </div>
 
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
             {user?.organizationName || 'HealthPlus Pharmacy'}
           </h2>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Pharmacist: <strong style={{ color: '#fff' }}>{user?.fullName || user?.username}</strong>
+          <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px' }}>
+            Pharmacist: <strong style={{ color: '#0f172a' }}>{user?.fullName || user?.username}</strong>
           </div>
         </div>
 
@@ -278,15 +279,16 @@ export default function RetailerDashboard({
           onClick={onRefresh}
           disabled={loading}
           style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-medium)',
-            color: 'var(--text-secondary)',
+            background: '#ffffff',
+            border: '1px solid #cbd5e1',
+            color: '#475569',
             padding: '8px',
             borderRadius: 'var(--radius-md)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
           }}
           title="Refresh Data"
         >
@@ -303,22 +305,23 @@ export default function RetailerDashboard({
         <div 
           onClick={() => setActiveSubTab('incoming')}
           style={{
-            background: activeSubTab === 'incoming' ? 'rgba(245, 158, 11, 0.15)' : 'var(--bg-card)',
-            border: `1px solid ${activeSubTab === 'incoming' ? '#f59e0b' : 'var(--border-subtle)'}`,
+            background: activeSubTab === 'incoming' ? '#fef3c7' : '#ffffff',
+            border: `1px solid ${activeSubTab === 'incoming' ? '#f59e0b' : '#e2e8f0'}`,
             borderRadius: 'var(--radius-md)',
             padding: '0.85rem',
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#f59e0b' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#d97706' }}>
             <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>DELIVERIES</span>
             <Truck size={14} />
           </div>
-          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
             {totalIncoming}
           </div>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: '2px' }}>
             From Wholesalers
           </div>
         </div>
@@ -326,22 +329,23 @@ export default function RetailerDashboard({
         <div 
           onClick={() => setActiveSubTab('stock')}
           style={{
-            background: activeSubTab === 'stock' ? 'rgba(16, 185, 129, 0.15)' : 'var(--bg-card)',
-            border: `1px solid ${activeSubTab === 'stock' ? '#10b981' : 'var(--border-subtle)'}`,
+            background: activeSubTab === 'stock' ? '#d1fae5' : '#ffffff',
+            border: `1px solid ${activeSubTab === 'stock' ? '#10b981' : '#e2e8f0'}`,
             borderRadius: 'var(--radius-md)',
             padding: '0.85rem',
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#10b981' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#059669' }}>
             <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>ACTIVE STOCK</span>
             <Boxes size={14} />
           </div>
-          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
             {inStockCount}
           </div>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: '2px' }}>
             Ready to Dispense
           </div>
         </div>
@@ -349,22 +353,23 @@ export default function RetailerDashboard({
         <div 
           onClick={() => setActiveSubTab('dispensed')}
           style={{
-            background: activeSubTab === 'dispensed' ? 'rgba(192, 132, 252, 0.15)' : 'var(--bg-card)',
-            border: `1px solid ${activeSubTab === 'dispensed' ? '#c084fc' : 'var(--border-subtle)'}`,
+            background: activeSubTab === 'dispensed' ? '#ede9fe' : '#ffffff',
+            border: `1px solid ${activeSubTab === 'dispensed' ? '#8b5cf6' : '#e2e8f0'}`,
             borderRadius: 'var(--radius-md)',
             padding: '0.85rem',
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#c084fc' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#7c3aed' }}>
             <span style={{ fontSize: '0.7rem', fontWeight: 700 }}>DISPENSED</span>
             <Pill size={14} />
           </div>
-          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
             {dispensedCount}
           </div>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: '2px' }}>
             Patient Completed
           </div>
         </div>
@@ -373,10 +378,10 @@ export default function RetailerDashboard({
       {/* Subtab Toggle Buttons */}
       <div style={{
         display: 'flex',
-        background: 'var(--bg-surface)',
+        background: '#f1f5f9',
         borderRadius: 'var(--radius-md)',
         padding: '4px',
-        border: '1px solid var(--border-medium)'
+        border: '1px solid #e2e8f0'
       }}>
         <button
           onClick={() => setActiveSubTab('incoming')}
@@ -387,8 +392,9 @@ export default function RetailerDashboard({
             border: 'none',
             fontSize: '0.75rem',
             fontWeight: 700,
-            background: activeSubTab === 'incoming' ? 'rgba(245, 158, 11, 0.2)' : 'transparent',
-            color: activeSubTab === 'incoming' ? '#fbbf24' : 'var(--text-muted)',
+            background: activeSubTab === 'incoming' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'incoming' ? '#d97706' : '#64748b',
+            boxShadow: activeSubTab === 'incoming' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
             cursor: 'pointer'
           }}
         >
@@ -404,8 +410,9 @@ export default function RetailerDashboard({
             border: 'none',
             fontSize: '0.75rem',
             fontWeight: 700,
-            background: activeSubTab === 'stock' ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-            color: activeSubTab === 'stock' ? '#34d399' : 'var(--text-muted)',
+            background: activeSubTab === 'stock' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'stock' ? '#059669' : '#64748b',
+            boxShadow: activeSubTab === 'stock' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
             cursor: 'pointer'
           }}
         >
@@ -421,8 +428,9 @@ export default function RetailerDashboard({
             border: 'none',
             fontSize: '0.75rem',
             fontWeight: 700,
-            background: activeSubTab === 'dispensed' ? 'rgba(192, 132, 252, 0.2)' : 'transparent',
-            color: activeSubTab === 'dispensed' ? '#c084fc' : 'var(--text-muted)',
+            background: activeSubTab === 'dispensed' ? '#ffffff' : 'transparent',
+            color: activeSubTab === 'dispensed' ? '#7c3aed' : '#64748b',
+            boxShadow: activeSubTab === 'dispensed' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
             cursor: 'pointer'
           }}
         >
@@ -435,12 +443,12 @@ export default function RetailerDashboard({
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
-        background: 'var(--bg-card)',
-        border: '1px solid var(--border-subtle)',
+        background: '#ffffff',
+        border: '1px solid #cbd5e1',
         borderRadius: 'var(--radius-md)',
         padding: '8px 12px'
       }}>
-        <Search size={15} color="var(--text-muted)" />
+        <Search size={15} color="#94a3b8" />
         <input
           type="text"
           placeholder="Search by Batch ID or Medicine name..."
@@ -449,16 +457,17 @@ export default function RetailerDashboard({
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#fff',
+            color: '#0f172a',
             fontSize: '0.8rem',
             width: '100%',
-            outline: 'none'
+            outline: 'none',
+            fontWeight: 500
           }}
         />
         {searchTerm && (
           <button 
             onClick={() => setSearchTerm('')} 
-            style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+            style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
           >
             <X size={14} />
           </button>
@@ -469,15 +478,15 @@ export default function RetailerDashboard({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {filteredList.length === 0 ? (
           <div style={{
-            background: 'var(--bg-card)',
-            border: '1px dashed var(--border-medium)',
+            background: '#ffffff',
+            border: '1px dashed #cbd5e1',
             borderRadius: 'var(--radius-lg)',
             padding: '2.5rem 1rem',
             textAlign: 'center',
-            color: 'var(--text-muted)'
+            color: '#64748b'
           }}>
             <Store size={32} style={{ margin: '0 auto 0.75rem', opacity: 0.4 }} />
-            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>
+            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>
               No {activeSubTab === 'incoming' ? 'Incoming Deliveries' : activeSubTab === 'stock' ? 'Pharmacy Stock' : 'Dispensed Records'} Found
             </div>
             <div style={{ fontSize: '0.72rem', marginTop: '4px' }}>
@@ -499,8 +508,8 @@ export default function RetailerDashboard({
                 key={batch.batchId}
                 onClick={() => setSelectedBatch(batch)}
                 style={{
-                  background: 'var(--bg-card)',
-                  border: isHold ? '1px solid rgba(239, 68, 68, 0.5)' : (isIncoming ? '1px solid rgba(245, 158, 11, 0.4)' : isDispensed ? '1px solid rgba(192, 132, 252, 0.4)' : '1px solid var(--border-medium)'),
+                  background: '#ffffff',
+                  border: isHold ? '1px solid #fca5a5' : (isIncoming ? '1px solid #fde68a' : isDispensed ? '1px solid #ddd6fe' : '1px solid #e2e8f0'),
                   borderRadius: 'var(--radius-lg)',
                   padding: '1rem',
                   display: 'flex',
@@ -508,7 +517,8 @@ export default function RetailerDashboard({
                   gap: '0.6rem',
                   cursor: 'pointer',
                   position: 'relative',
-                  transition: 'transform 0.15s, border-color 0.15s'
+                  transition: 'transform 0.15s, border-color 0.15s',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
                 }}
               >
                 {/* Top Row: Batch ID and Status Badge */}
@@ -518,11 +528,11 @@ export default function RetailerDashboard({
                       fontFamily: 'var(--font-mono)',
                       fontWeight: 800,
                       fontSize: '0.85rem',
-                      color: '#38bdf8'
+                      color: '#2563eb'
                     }}>
                       {batch.batchId}
                     </span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                    <span style={{ fontSize: '0.7rem', color: '#64748b' }}>
                       • {batch.quantity ? `${batch.quantity} units` : ''}
                     </span>
                   </div>
@@ -531,11 +541,11 @@ export default function RetailerDashboard({
                     <span style={{
                       fontSize: '0.68rem',
                       fontWeight: 700,
-                      background: 'rgba(239, 68, 68, 0.2)',
+                      background: '#fef2f2',
                       color: '#ef4444',
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      border: '1px solid rgba(239, 68, 68, 0.4)'
+                      border: '1px solid #fecaca'
                     }}>
                       REGULATORY HOLD
                     </span>
@@ -543,11 +553,11 @@ export default function RetailerDashboard({
                     <span style={{
                       fontSize: '0.68rem',
                       fontWeight: 700,
-                      background: 'rgba(245, 158, 11, 0.2)',
-                      color: '#fbbf24',
+                      background: '#fffbeb',
+                      color: '#d97706',
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      border: '1px solid rgba(245, 158, 11, 0.4)',
+                      border: '1px solid #fde68a',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px'
@@ -558,11 +568,11 @@ export default function RetailerDashboard({
                     <span style={{
                       fontSize: '0.68rem',
                       fontWeight: 700,
-                      background: 'rgba(192, 132, 252, 0.2)',
-                      color: '#c084fc',
+                      background: '#f5f3ff',
+                      color: '#7c3aed',
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      border: '1px solid rgba(192, 132, 252, 0.4)',
+                      border: '1px solid #ddd6fe',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px'
@@ -573,11 +583,11 @@ export default function RetailerDashboard({
                     <span style={{
                       fontSize: '0.68rem',
                       fontWeight: 700,
-                      background: 'rgba(16, 185, 129, 0.2)',
-                      color: '#34d399',
+                      background: '#ecfdf5',
+                      color: '#059669',
                       padding: '2px 8px',
                       borderRadius: '4px',
-                      border: '1px solid rgba(16, 185, 129, 0.4)',
+                      border: '1px solid #a7f3d0',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px'
@@ -588,7 +598,7 @@ export default function RetailerDashboard({
                 </div>
 
                 {/* Medicine Name & Formulation */}
-                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#fff' }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a' }}>
                   {batch.medicineName}
                 </div>
 
@@ -598,13 +608,13 @@ export default function RetailerDashboard({
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   fontSize: '0.72rem',
-                  color: 'var(--text-secondary)',
-                  borderTop: '1px solid var(--border-subtle)',
+                  color: '#64748b',
+                  borderTop: '1px solid #f1f5f9',
                   paddingTop: '0.5rem'
                 }}>
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>From: </span>
-                    <strong style={{ color: '#fff' }}>
+                    <span style={{ color: '#94a3b8' }}>From: </span>
+                    <strong style={{ color: '#0f172a' }}>
                       {batch.transferHistory?.length > 0
                         ? batch.transferHistory[batch.transferHistory.length - 1].senderOrgName
                         : batch.manufacturerName}
@@ -612,8 +622,8 @@ export default function RetailerDashboard({
                   </div>
 
                   <div>
-                    <span style={{ color: 'var(--text-muted)' }}>Exp: </span>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: '#fff' }}>{batch.expiryDate || 'N/A'}</span>
+                    <span style={{ color: '#94a3b8' }}>Exp: </span>
+                    <span style={{ fontFamily: 'var(--font-mono)', color: '#0f172a', fontWeight: 600 }}>{batch.expiryDate || 'N/A'}</span>
                   </div>
                 </div>
 
@@ -624,10 +634,10 @@ export default function RetailerDashboard({
                       onClick={(e) => openScanModal(batch, e)}
                       style={{
                         flex: 1,
-                        background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                        background: 'linear-gradient(135deg, #059669, #047857)',
                         color: '#fff',
                         border: 'none',
-                        padding: '8px 12px',
+                        padding: '9px 12px',
                         borderRadius: 'var(--radius-md)',
                         fontSize: '0.75rem',
                         fontWeight: 700,
@@ -636,7 +646,7 @@ export default function RetailerDashboard({
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '6px',
-                        boxShadow: '0 2px 8px rgba(6, 182, 212, 0.25)'
+                        boxShadow: '0 2px 8px rgba(5, 150, 105, 0.2)'
                       }}
                     >
                       <Camera size={14} /> Scan & Verify Package
@@ -648,10 +658,10 @@ export default function RetailerDashboard({
                       onClick={(e) => openDispenseModal(batch, e)}
                       style={{
                         flex: 1,
-                        background: 'linear-gradient(135deg, #c084fc, #9333ea)',
+                        background: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
                         color: '#fff',
                         border: 'none',
-                        padding: '8px 12px',
+                        padding: '9px 12px',
                         borderRadius: 'var(--radius-md)',
                         fontSize: '0.75rem',
                         fontWeight: 700,
@@ -660,7 +670,7 @@ export default function RetailerDashboard({
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '6px',
-                        boxShadow: '0 2px 8px rgba(192, 132, 252, 0.25)'
+                        boxShadow: '0 2px 8px rgba(124, 58, 237, 0.2)'
                       }}
                     >
                       <Pill size={14} /> Dispense to Patient
@@ -681,16 +691,16 @@ export default function RetailerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(15, 23, 42, 0.45)',
+          backdropFilter: 'blur(6px)',
           zIndex: 100,
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'center'
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            borderTop: '1px solid #e2e8f0',
             borderRadius: '24px 24px 0 0',
             width: '100%',
             maxWidth: '520px',
@@ -700,29 +710,31 @@ export default function RetailerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
-            animation: 'slideUp 0.3s ease-out'
+            animation: 'slideUp 0.3s ease-out',
+            boxShadow: '0 -10px 25px rgba(0, 0, 0, 0.1)'
           }}>
             {/* Modal Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 800 }}>
+                <div style={{ fontSize: '0.7rem', color: '#059669', fontWeight: 800 }}>
                   STAGE 4: PHARMACY VERIFICATION
                 </div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                   Pharmacy Counter Package Verification
                 </h3>
               </div>
               <button
                 onClick={() => setIsScanModalOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+                style={{ background: '#f1f5f9', border: 'none', color: '#64748b', cursor: 'pointer', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
             {/* Batch Info Pill */}
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '0.75rem 1rem',
               display: 'flex',
@@ -731,14 +743,14 @@ export default function RetailerDashboard({
               fontSize: '0.78rem'
             }}>
               <div>
-                <div style={{ color: 'var(--text-muted)' }}>Target Batch:</div>
-                <div style={{ fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)' }}>
+                <div style={{ color: '#64748b' }}>Target Batch:</div>
+                <div style={{ fontWeight: 800, color: '#0f172a', fontFamily: 'var(--font-mono)' }}>
                   {batchToVerify.batchId}
                 </div>
               </div>
               <div>
-                <div style={{ color: 'var(--text-muted)' }}>Medicine:</div>
-                <div style={{ fontWeight: 700, color: '#38bdf8' }}>
+                <div style={{ color: '#64748b' }}>Medicine:</div>
+                <div style={{ fontWeight: 700, color: '#2563eb' }}>
                   {batchToVerify.medicineName}
                 </div>
               </div>
@@ -747,33 +759,33 @@ export default function RetailerDashboard({
             {/* Error Banner */}
             {scanError && (
               <div style={{
-                background: 'var(--rose-bg)',
-                border: '1px solid rgba(244, 63, 94, 0.4)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#fca5a5',
+                color: '#b91c1c',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'flex-start',
                 gap: '8px'
               }}>
-                <AlertCircle size={16} color="#f43f5e" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <AlertCircle size={16} color="#ef4444" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <span>{scanError}</span>
               </div>
             )}
 
             {/* Image Upload Area */}
             <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '0.5rem', display: 'block' }}>
                 Capture or Upload Physical Medicine Box / Strip Photo:
               </label>
 
               <div style={{
-                border: '2px dashed var(--border-medium)',
+                border: '2px dashed #cbd5e1',
                 borderRadius: 'var(--radius-lg)',
                 padding: '1rem',
                 textAlign: 'center',
-                background: 'var(--bg-surface)',
+                background: '#f8fafc',
                 position: 'relative'
               }}>
                 {imagePreview ? (
@@ -788,8 +800,9 @@ export default function RetailerDashboard({
                       style={{
                         display: 'inline-block',
                         marginTop: '0.75rem',
-                        fontSize: '0.72rem',
-                        color: '#38bdf8',
+                        fontSize: '0.75rem',
+                        color: '#2563eb',
+                        fontWeight: 600,
                         cursor: 'pointer',
                         textDecoration: 'underline'
                       }}
@@ -806,11 +819,11 @@ export default function RetailerDashboard({
                   </div>
                 ) : (
                   <div>
-                    <Camera size={32} color="#10b981" style={{ margin: '0 auto 0.5rem' }} />
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#fff' }}>
+                    <Camera size={32} color="#059669" style={{ margin: '0 auto 0.5rem' }} />
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>
                       Take photo or upload package image
                     </div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '2px' }}>
                       Groq Vision will extract printed details and verify directly against the original Manufacturer baseline
                     </div>
                     <label
@@ -818,14 +831,14 @@ export default function RetailerDashboard({
                       style={{
                         display: 'inline-block',
                         marginTop: '0.75rem',
-                        background: 'rgba(16, 185, 129, 0.15)',
-                        color: '#34d399',
+                        background: '#ecfdf5',
+                        color: '#059669',
                         padding: '6px 14px',
                         borderRadius: 'var(--radius-sm)',
                         fontSize: '0.75rem',
                         fontWeight: 700,
                         cursor: 'pointer',
-                        border: '1px solid rgba(16, 185, 129, 0.4)'
+                        border: '1px solid #a7f3d0'
                       }}
                     >
                       Select Image
@@ -848,7 +861,7 @@ export default function RetailerDashboard({
                 onClick={handleExecuteScanVerification}
                 disabled={isScanning}
                 style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  background: 'linear-gradient(135deg, #059669, #047857)',
                   color: '#fff',
                   border: 'none',
                   padding: '12px',
@@ -859,7 +872,8 @@ export default function RetailerDashboard({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px'
+                  gap: '8px',
+                  boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)'
                 }}
               >
                 {isScanning ? (
@@ -881,8 +895,8 @@ export default function RetailerDashboard({
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {/* Overall Verdict Banner */}
                 <div style={{
-                  background: scanResult.verified ? 'rgba(16, 185, 129, 0.15)' : 'rgba(244, 63, 94, 0.15)',
-                  border: `1px solid ${scanResult.verified ? 'rgba(16, 185, 129, 0.5)' : 'rgba(244, 63, 94, 0.5)'}`,
+                  background: scanResult.verified ? '#ecfdf5' : '#fef2f2',
+                  border: `1px solid ${scanResult.verified ? '#a7f3d0' : '#fecaca'}`,
                   borderRadius: 'var(--radius-md)',
                   padding: '1rem',
                   display: 'flex',
@@ -890,19 +904,19 @@ export default function RetailerDashboard({
                   gap: '10px'
                 }}>
                   {scanResult.verified ? (
-                    <ShieldCheck size={26} color="#10b981" style={{ flexShrink: 0 }} />
+                    <ShieldCheck size={26} color="#059669" style={{ flexShrink: 0 }} />
                   ) : (
-                    <ShieldAlert size={26} color="#f43f5e" style={{ flexShrink: 0 }} />
+                    <ShieldAlert size={26} color="#ef4444" style={{ flexShrink: 0 }} />
                   )}
                   <div>
                     <div style={{
                       fontSize: '0.88rem',
                       fontWeight: 800,
-                      color: scanResult.verified ? '#10b981' : '#f43f5e'
+                      color: scanResult.verified ? '#059669' : '#b91c1c'
                     }}>
                       {scanResult.verified ? 'VERIFIED AT PHARMACY' : 'VERIFICATION FAILED'}
                     </div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
                       {scanResult.verified 
                         ? 'Medicine packaging directly matches the original Manufacturer baseline and cryptographic hash.'
                         : `Discrepancy detected on: ${scanResult.failedFields?.join(', ') || 'Package fields'}`}
@@ -912,13 +926,14 @@ export default function RetailerDashboard({
 
                 {/* Field-by-Field Baseline Comparison */}
                 <div style={{
-                  background: 'var(--bg-surface)',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   borderRadius: 'var(--radius-md)',
                   padding: '0.75rem',
                   fontSize: '0.75rem'
                 }}>
-                  <div style={{ fontWeight: 700, color: '#fff', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <FileText size={14} color="#38bdf8" /> Field-Level Baseline Comparison
+                  <div style={{ fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <FileText size={14} color="#2563eb" /> Field-Level Baseline Comparison
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -929,13 +944,15 @@ export default function RetailerDashboard({
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'space-between',
-                          padding: '4px 6px',
-                          borderBottom: '1px solid var(--border-subtle)'
+                          padding: '6px 8px',
+                          background: '#ffffff',
+                          borderRadius: '6px',
+                          border: '1px solid #e2e8f0'
                         }}
                       >
                         <div>
-                          <div style={{ fontWeight: 600, color: '#fff' }}>{f.field}</div>
-                          <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
+                          <div style={{ fontWeight: 700, color: '#0f172a' }}>{f.field}</div>
+                          <div style={{ fontSize: '0.68rem', color: '#64748b' }}>
                             Expected: {String(f.expected)}
                           </div>
                         </div>
@@ -946,12 +963,13 @@ export default function RetailerDashboard({
                             fontWeight: 800,
                             padding: '2px 6px',
                             borderRadius: '4px',
-                            background: f.match ? 'rgba(16, 185, 129, 0.2)' : 'rgba(244, 63, 94, 0.2)',
-                            color: f.match ? '#10b981' : '#f43f5e'
+                            background: f.match ? '#ecfdf5' : '#fef2f2',
+                            color: f.match ? '#059669' : '#b91c1c',
+                            border: `1px solid ${f.match ? '#a7f3d0' : '#fecaca'}`
                           }}>
                             {f.status}
                           </span>
-                          <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <div style={{ fontSize: '0.68rem', color: '#475569', maxWidth: '160px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {String(f.extracted)}
                           </div>
                         </div>
@@ -962,24 +980,25 @@ export default function RetailerDashboard({
 
                 {/* Cryptographic Hash Audit */}
                 <div style={{
-                  background: 'var(--bg-surface)',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   borderRadius: 'var(--radius-md)',
                   padding: '0.75rem',
                   fontSize: '0.72rem',
                   fontFamily: 'var(--font-mono)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ color: '#64748b', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
                       <Lock size={12} /> Cryptographic Integrity Audit
                     </span>
-                    <span style={{ color: scanResult.hashMatch ? '#10b981' : '#f43f5e', fontWeight: 800 }}>
+                    <span style={{ color: scanResult.hashMatch ? '#059669' : '#b91c1c', fontWeight: 800 }}>
                       {scanResult.hashMatch ? '✓ HASH MATCH' : '✗ HASH MISMATCH'}
                     </span>
                   </div>
-                  <div style={{ wordBreak: 'break-all', color: '#c084fc' }}>
+                  <div style={{ wordBreak: 'break-all', color: '#7c3aed' }}>
                     Trusted Hash: {scanResult.trustedDataHash}
                   </div>
-                  <div style={{ wordBreak: 'break-all', color: '#38bdf8', marginTop: '2px' }}>
+                  <div style={{ wordBreak: 'break-all', color: '#2563eb', marginTop: '2px' }}>
                     Scanned Hash: {scanResult.scannedDataHash}
                   </div>
                 </div>
@@ -988,7 +1007,7 @@ export default function RetailerDashboard({
                 {scanResult.verified && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.25rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)' }}>
+                      <label style={{ fontSize: '0.72rem', fontWeight: 700, color: '#475569' }}>
                         Pharmacy Shelf Storage Verification Seal:
                       </label>
                       <input 
@@ -997,14 +1016,15 @@ export default function RetailerDashboard({
                         onChange={(e) => setNewSealId(e.target.value)}
                         style={{
                           width: '100%',
-                          background: 'var(--bg-surface)',
-                          border: '1px solid var(--border-medium)',
-                          padding: '8px',
+                          background: '#ffffff',
+                          border: '1px solid #cbd5e1',
+                          padding: '8px 10px',
                           borderRadius: 'var(--radius-sm)',
-                          color: '#fff',
+                          color: '#0f172a',
                           fontFamily: 'var(--font-mono)',
                           fontSize: '0.78rem',
-                          marginTop: '2px'
+                          marginTop: '2px',
+                          fontWeight: 600
                         }}
                       />
                     </div>
@@ -1013,7 +1033,7 @@ export default function RetailerDashboard({
                       onClick={handleConfirmReceipt}
                       disabled={receiving}
                       style={{
-                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        background: 'linear-gradient(135deg, #059669, #047857)',
                         color: '#fff',
                         border: 'none',
                         padding: '12px',
@@ -1025,7 +1045,7 @@ export default function RetailerDashboard({
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '8px',
-                        boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                        boxShadow: '0 4px 15px rgba(5, 150, 105, 0.25)'
                       }}
                     >
                       {receiving ? (
@@ -1056,16 +1076,16 @@ export default function RetailerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(15, 23, 42, 0.45)',
+          backdropFilter: 'blur(6px)',
           zIndex: 100,
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'center'
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            borderTop: '1px solid #e2e8f0',
             borderRadius: '24px 24px 0 0',
             width: '100%',
             maxWidth: '520px',
@@ -1075,85 +1095,87 @@ export default function RetailerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
-            animation: 'slideUp 0.3s ease-out'
+            animation: 'slideUp 0.3s ease-out',
+            boxShadow: '0 -10px 25px rgba(0, 0, 0, 0.1)'
           }}>
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: '#c084fc', fontWeight: 800 }}>
+                <div style={{ fontSize: '0.7rem', color: '#7c3aed', fontWeight: 800 }}>
                   STAGE 4 FINAL DISPENSING
                 </div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                   Dispense to Patient / Prescription
                 </h3>
               </div>
               <button
                 onClick={() => setIsDispenseModalOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+                style={{ background: '#f1f5f9', border: 'none', color: '#64748b', cursor: 'pointer', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
             {/* Medicine Summary */}
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '0.75rem 1rem',
               fontSize: '0.78rem'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Medicine:</span>
-                <strong style={{ color: '#38bdf8' }}>{batchToDispense.medicineName}</strong>
+                <span style={{ color: '#64748b' }}>Medicine:</span>
+                <strong style={{ color: '#2563eb' }}>{batchToDispense.medicineName}</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Batch ID:</span>
-                <span style={{ fontFamily: 'var(--font-mono)', color: '#fff' }}>{batchToDispense.batchId}</span>
+                <span style={{ color: '#64748b' }}>Batch ID:</span>
+                <span style={{ fontFamily: 'var(--font-mono)', color: '#0f172a', fontWeight: 700 }}>{batchToDispense.batchId}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Available Stock:</span>
-                <span style={{ color: '#10b981', fontWeight: 700 }}>{batchToDispense.quantity} units</span>
+                <span style={{ color: '#64748b' }}>Available Stock:</span>
+                <span style={{ color: '#059669', fontWeight: 700 }}>{batchToDispense.quantity} units</span>
               </div>
             </div>
 
             {/* Error / Success Feedback */}
             {dispenseError && (
               <div style={{
-                background: 'var(--rose-bg)',
-                border: '1px solid rgba(244, 63, 94, 0.4)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#fca5a5',
+                color: '#b91c1c',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <AlertCircle size={16} color="#f43f5e" />
+                <AlertCircle size={16} color="#ef4444" />
                 <span>{dispenseError}</span>
               </div>
             )}
 
             {dispenseSuccess && (
               <div style={{
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#34d399',
+                color: '#059669',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <CheckCircle2 size={16} color="#10b981" />
+                <CheckCircle2 size={16} color="#059669" />
                 <span>{dispenseSuccess}</span>
               </div>
             )}
 
             {/* Patient ID input */}
             <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '4px', display: 'block' }}>
                 Patient ID / Prescription Slip Number *
               </label>
               <input
@@ -1163,20 +1185,21 @@ export default function RetailerDashboard({
                 placeholder="e.g. PAT-982104"
                 style={{
                   width: '100%',
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-medium)',
-                  color: '#fff',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  color: '#0f172a',
                   fontFamily: 'var(--font-mono)',
                   padding: '10px',
                   borderRadius: 'var(--radius-md)',
-                  fontSize: '0.82rem'
+                  fontSize: '0.82rem',
+                  fontWeight: 600
                 }}
               />
             </div>
 
             {/* Dispense Quantity */}
             <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '4px', display: 'block' }}>
                 Quantity to Dispense (Units) *
               </label>
               <input
@@ -1187,19 +1210,20 @@ export default function RetailerDashboard({
                 onChange={(e) => setDispenseQty(e.target.value)}
                 style={{
                   width: '100%',
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-medium)',
-                  color: '#fff',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  color: '#0f172a',
                   padding: '10px',
                   borderRadius: 'var(--radius-md)',
-                  fontSize: '0.82rem'
+                  fontSize: '0.82rem',
+                  fontWeight: 600
                 }}
               />
             </div>
 
             {/* Dispense Notes */}
             <div>
-              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px', display: 'block' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '4px', display: 'block' }}>
                 Pharmacist Verification Notes
               </label>
               <textarea
@@ -1208,13 +1232,14 @@ export default function RetailerDashboard({
                 onChange={(e) => setDispenseNotes(e.target.value)}
                 style={{
                   width: '100%',
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-medium)',
-                  color: '#fff',
-                  padding: '8px',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  color: '#0f172a',
+                  padding: '8px 10px',
                   borderRadius: 'var(--radius-md)',
                   fontSize: '0.78rem',
-                  resize: 'none'
+                  resize: 'none',
+                  fontWeight: 500
                 }}
               />
             </div>
@@ -1224,7 +1249,7 @@ export default function RetailerDashboard({
               onClick={handleExecuteDispense}
               disabled={dispensing}
               style={{
-                background: 'linear-gradient(135deg, #c084fc, #9333ea)',
+                background: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
                 color: '#fff',
                 border: 'none',
                 padding: '12px',
@@ -1237,7 +1262,7 @@ export default function RetailerDashboard({
                 justifyContent: 'center',
                 gap: '8px',
                 marginTop: '0.5rem',
-                boxShadow: '0 4px 15px rgba(192, 132, 252, 0.3)'
+                boxShadow: '0 4px 15px rgba(124, 58, 237, 0.25)'
               }}
             >
               {dispensing ? (
@@ -1264,16 +1289,16 @@ export default function RetailerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(15, 23, 42, 0.45)',
+          backdropFilter: 'blur(6px)',
           zIndex: 100,
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'center'
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            borderTop: '1px solid #e2e8f0',
             borderRadius: '24px 24px 0 0',
             width: '100%',
             maxWidth: '520px',
@@ -1283,27 +1308,29 @@ export default function RetailerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
-            animation: 'slideUp 0.3s ease-out'
+            animation: 'slideUp 0.3s ease-out',
+            boxShadow: '0 -10px 25px rgba(0, 0, 0, 0.1)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 800 }}>
+                <div style={{ fontSize: '0.7rem', color: '#059669', fontWeight: 800 }}>
                   PHARMACY DISPENSING RECORD
                 </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                   {selectedBatch.batchId}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedBatch(null)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+                style={{ background: '#f1f5f9', border: 'none', color: '#64748b', cursor: 'pointer', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '1rem',
               display: 'flex',
@@ -1311,30 +1338,31 @@ export default function RetailerDashboard({
               gap: '0.5rem',
               fontSize: '0.78rem'
             }}>
-              <div><span style={{ color: 'var(--text-muted)' }}>Medicine:</span> <strong style={{ color: '#fff' }}>{selectedBatch.medicineName}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Manufacturer:</span> <strong style={{ color: '#fff' }}>{selectedBatch.manufacturerName}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Current Custody Holder:</span> <strong style={{ color: '#38bdf8' }}>{selectedBatch.currentHolderName}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Current Stage:</span> <span style={{ color: '#c084fc', fontWeight: 700 }}>Stage 4 (Pharmacy / Retailer)</span></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Active Status:</span> <strong style={{ color: '#fff' }}>{selectedBatch.status}</strong></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Remaining Quantity:</span> <span style={{ color: '#fff' }}>{selectedBatch.quantity} units</span></div>
-              <div><span style={{ color: 'var(--text-muted)' }}>Pharmacy Seal ID:</span> <span style={{ fontFamily: 'var(--font-mono)', color: '#fbbf24' }}>{selectedBatch.sealId}</span></div>
+              <div><span style={{ color: '#64748b' }}>Medicine:</span> <strong style={{ color: '#0f172a' }}>{selectedBatch.medicineName}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Manufacturer:</span> <strong style={{ color: '#0f172a' }}>{selectedBatch.manufacturerName}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Current Custody Holder:</span> <strong style={{ color: '#2563eb' }}>{selectedBatch.currentHolderName}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Current Stage:</span> <span style={{ color: '#7c3aed', fontWeight: 700 }}>Stage 4 (Pharmacy / Retailer)</span></div>
+              <div><span style={{ color: '#64748b' }}>Active Status:</span> <strong style={{ color: '#0f172a' }}>{selectedBatch.status}</strong></div>
+              <div><span style={{ color: '#64748b' }}>Remaining Quantity:</span> <span style={{ color: '#0f172a', fontWeight: 600 }}>{selectedBatch.quantity} units</span></div>
+              <div><span style={{ color: '#64748b' }}>Pharmacy Seal ID:</span> <span style={{ fontFamily: 'var(--font-mono)', color: '#d97706', fontWeight: 600 }}>{selectedBatch.sealId}</span></div>
             </div>
 
             {/* Cryptographic Baseline Audit */}
             <div style={{
-              background: 'var(--bg-surface)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: 'var(--radius-md)',
               padding: '1rem',
               fontSize: '0.75rem',
               fontFamily: 'var(--font-mono)'
             }}>
-              <div style={{ fontWeight: 700, color: '#c084fc', marginBottom: '6px' }}>
+              <div style={{ fontWeight: 700, color: '#7c3aed', marginBottom: '6px' }}>
                 Manufacturer Cryptographic Baseline
               </div>
-              <div style={{ wordBreak: 'break-all', color: 'var(--text-secondary)' }}>
+              <div style={{ wordBreak: 'break-all', color: '#475569' }}>
                 Trusted Hash: {selectedBatch.trustedDataHash}
               </div>
-              <div style={{ marginTop: '4px', color: '#10b981' }}>
+              <div style={{ marginTop: '4px', color: '#059669', fontWeight: 600 }}>
                 Fingerprint: {selectedBatch.batchFingerprint}
               </div>
             </div>
@@ -1342,7 +1370,7 @@ export default function RetailerDashboard({
             {/* Dispense Logs */}
             {selectedBatch.dispenseHistory && selectedBatch.dispenseHistory.length > 0 && (
               <div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#c084fc', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#7c3aed', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <ClipboardList size={14} /> Patient Dispensing Records ({selectedBatch.dispenseHistory.length})
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -1350,7 +1378,8 @@ export default function RetailerDashboard({
                     <div
                       key={dIdx}
                       style={{
-                        background: 'var(--bg-surface)',
+                        background: '#f8fafc',
+                        border: '1px solid #e2e8f0',
                         borderRadius: 'var(--radius-sm)',
                         padding: '8px 10px',
                         fontSize: '0.72rem',
@@ -1360,14 +1389,14 @@ export default function RetailerDashboard({
                       }}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span style={{ color: '#fff', fontWeight: 700 }}>Patient: {d.patientId}</span>
-                        <span style={{ color: '#10b981' }}>{d.dispensedQuantity} units</span>
+                        <span style={{ color: '#0f172a', fontWeight: 700 }}>Patient: {d.patientId}</span>
+                        <span style={{ color: '#059669', fontWeight: 700 }}>{d.dispensedQuantity} units</span>
                       </div>
-                      <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem' }}>
+                      <div style={{ color: '#64748b', fontSize: '0.68rem' }}>
                         Notes: {d.notes}
                       </div>
                       {d.blockNumber && (
-                        <div style={{ color: '#38bdf8', fontFamily: 'var(--font-mono)', fontSize: '0.65rem' }}>
+                        <div style={{ color: '#2563eb', fontFamily: 'var(--font-mono)', fontSize: '0.65rem' }}>
                           Blockchain Block #{d.blockNumber}
                         </div>
                       )}
@@ -1379,7 +1408,7 @@ export default function RetailerDashboard({
 
             {/* Custody Transfer History */}
             <div>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
                 Custody Chain Transitions ({selectedBatch.transferHistory?.length || 0})
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -1387,7 +1416,8 @@ export default function RetailerDashboard({
                   <div 
                     key={idx}
                     style={{
-                      background: 'var(--bg-surface)',
+                      background: '#f8fafc',
+                      border: '1px solid #e2e8f0',
                       borderRadius: 'var(--radius-sm)',
                       padding: '8px 10px',
                       fontSize: '0.72rem',
@@ -1397,13 +1427,13 @@ export default function RetailerDashboard({
                     }}
                   >
                     <div>
-                      <strong style={{ color: '#38bdf8' }}>{t.senderOrgName}</strong> ➔ <strong style={{ color: '#10b981' }}>{t.receiverOrgName}</strong>
-                      <div style={{ color: 'var(--text-muted)', fontSize: '0.65rem' }}>
+                      <strong style={{ color: '#2563eb' }}>{t.senderOrgName}</strong> ➔ <strong style={{ color: '#059669' }}>{t.receiverOrgName}</strong>
+                      <div style={{ color: '#64748b', fontSize: '0.65rem' }}>
                         Seal: {t.newSealId}
                       </div>
                     </div>
                     {t.blockNumber && (
-                      <span style={{ color: '#10b981', fontFamily: 'var(--font-mono)', fontSize: '0.68rem' }}>
+                      <span style={{ color: '#059669', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', fontWeight: 700 }}>
                         Block #{t.blockNumber}
                       </span>
                     )}

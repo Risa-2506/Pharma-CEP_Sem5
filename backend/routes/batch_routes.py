@@ -113,6 +113,10 @@ def get_batches():
             query["$or"] = [
                 {"currentHolderId": org_id},
                 {"manufacturerId": org_id},
+                {"transferHistory.senderOrgId": org_id},
+                {"transferHistory.receiverOrgId": org_id},
+                {"transferHistory.senderOrgName": user.get("organizationName")},
+                {"transferHistory.receiverOrgName": user.get("organizationName")},
             ]
 
     status_filter = request.args.get("status")

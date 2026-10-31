@@ -99,13 +99,13 @@ export default function App() {
     <div className="app-container">
       {/* Top Mobile Status Header */}
       <div className="app-status-bar">
-        <span style={{ fontWeight: 700, fontFamily: 'var(--font-mono)' }}>9:41 AM</span>
+        <span style={{ fontWeight: 700, fontFamily: 'var(--font-mono)', color: '#0f172a' }}>9:41 AM</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '3px', color: '#10b981', fontSize: '0.68rem', fontWeight: 600 }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '3px', color: '#059669', fontSize: '0.68rem', fontWeight: 600 }}>
             <Cpu size={11} /> Hardhat 31337
           </span>
-          <Wifi size={13} color="#fff" />
-          <Battery size={14} color="#fff" />
+          <Wifi size={13} color="#64748b" />
+          <Battery size={14} color="#64748b" />
         </div>
       </div>
 
@@ -165,42 +165,43 @@ export default function App() {
 
             {activeTab === 'profile' && (
               <div className="animate-slide" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
                   Operator Profile & Licence
                 </h2>
 
                 <div style={{
-                  background: 'var(--bg-card)',
+                  background: '#ffffff',
                   borderRadius: 'var(--radius-lg)',
-                  border: '1px solid var(--border-medium)',
+                  border: '1px solid #e2e8f0',
                   padding: '1.5rem',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '1rem'
+                  gap: '1rem',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
                 }}>
                   <div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Authenticated Operator</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fff' }}>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Authenticated Operator</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>
                       {user.fullName || user.username}
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#475569' }}>
                       @{user.username} • {user.email}
                     </div>
                   </div>
 
-                  <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem' }}>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Assigned Organisation</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#38bdf8' }}>
+                  <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '0.75rem' }}>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Assigned Organisation</div>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0284c7' }}>
                       {user.organizationName}
                     </div>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
                       Role: {user.role} ({user.organizationType || 'Supply Chain Participant'})
                     </div>
                   </div>
 
-                  <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem' }}>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Supply Chain Stage</div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#10b981' }}>
+                  <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '0.75rem' }}>
+                    <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Supply Chain Stage</div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#059669' }}>
                       {isManufacturer && 'Stage 1: Production, Packaging & Baseline Registration'}
                       {isDistributor && 'Stage 2: Bulk Receiving, Scan Verification & Onward Dispatch'}
                       {isWholesaler && 'Stage 3: Regional Wholesale Receiving & Pharmacy Distribution'}
@@ -214,9 +215,9 @@ export default function App() {
                       marginTop: '0.5rem',
                       padding: '0.75rem',
                       borderRadius: 'var(--radius-md)',
-                      background: 'var(--rose-bg)',
-                      color: '#f43f5e',
-                      border: '1px solid rgba(244, 63, 94, 0.3)',
+                      background: '#fef2f2',
+                      color: '#dc2626',
+                      border: '1px solid #fecaca',
                       fontWeight: 700,
                       fontSize: '0.85rem',
                       display: 'flex',
@@ -296,23 +297,23 @@ export default function App() {
                 justifyContent: 'space-between',
                 padding: '10px 12px',
                 borderRadius: 'var(--radius-sm)',
-                background: 'var(--bg-card)',
-                border: `1px solid ${t.type === 'success' ? '#10b981' : t.type === 'error' ? '#f43f5e' : '#06b6d4'}`,
-                boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
+                background: '#ffffff',
+                border: `1px solid ${t.type === 'success' ? '#059669' : t.type === 'error' ? '#dc2626' : '#0284c7'}`,
+                boxShadow: '0 4px 15px rgba(0,0,0,0.08)',
                 fontSize: '0.75rem',
-                color: '#fff',
+                color: '#0f172a',
                 animation: 'slideUp 0.2s ease-out'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                {t.type === 'success' && <CheckCircle size={15} color="#10b981" />}
-                {t.type === 'error' && <AlertCircle size={15} color="#f43f5e" />}
-                {t.type !== 'success' && t.type !== 'error' && <Info size={15} color="#06b6d4" />}
-                <span>{t.message}</span>
+                {t.type === 'success' && <CheckCircle size={15} color="#059669" />}
+                {t.type === 'error' && <AlertCircle size={15} color="#dc2626" />}
+                {t.type !== 'success' && t.type !== 'error' && <Info size={15} color="#0284c7" />}
+                <span style={{ fontWeight: 600 }}>{t.message}</span>
               </div>
               <button
                 onClick={() => removeToast(t.id)}
-                style={{ background: 'transparent', color: 'var(--text-muted)', border: 'none' }}
+                style={{ background: 'transparent', color: '#64748b', border: 'none' }}
               >
                 <X size={13} />
               </button>

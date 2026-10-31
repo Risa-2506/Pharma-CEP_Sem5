@@ -106,24 +106,25 @@ export default function SupplyChainRulesView({
     <div className="animate-fade" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {/* Header */}
       <div>
-        <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
+        <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>
           Authorized Supply Chain Routing & Stage Rules
         </h2>
-        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+        <p style={{ fontSize: '0.875rem', color: '#475569' }}>
           Define mandatory custody transitions and enforce legitimate participant relationships. Transfers violating this route trigger fraud alerts.
         </p>
       </div>
 
       {/* Visual Pipeline Card */}
       <div style={{
-        background: 'var(--bg-surface)',
+        background: '#ffffff',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #e2e8f0',
         padding: '2rem',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Layers size={20} color="#06b6d4" /> Authorised Custody Pipeline
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Layers size={20} color="#0284c7" /> Authorised Custody Pipeline
           </h3>
           <span className="badge badge-active">Mandatory Route Order</span>
         </div>
@@ -168,9 +169,9 @@ export default function SupplyChainRulesView({
             <div
               key={idx}
               style={{
-                background: 'var(--bg-card)',
+                background: '#f8fafc',
                 borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
+                border: '1px solid #e2e8f0',
                 padding: '1.25rem',
                 display: 'flex',
                 flexDirection: 'column',
@@ -179,7 +180,7 @@ export default function SupplyChainRulesView({
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#64748b', fontFamily: 'var(--font-mono)' }}>
                   STAGE {step.order}
                 </span>
                 <span className={`badge ${step.badgeClass}`}>
@@ -188,15 +189,15 @@ export default function SupplyChainRulesView({
               </div>
 
               <div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>
+                <div style={{ fontSize: '0.72rem', color: '#64748b', marginBottom: '0.2rem' }}>
                   Authorised Organisation:
                 </div>
-                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a' }}>
                   {step.assigned}
                 </div>
               </div>
 
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+              <p style={{ fontSize: '0.75rem', color: '#475569', lineHeight: 1.4 }}>
                 {step.desc}
               </p>
             </div>
@@ -206,18 +207,19 @@ export default function SupplyChainRulesView({
 
       {/* Route Mapping Configuration Form */}
       <div style={{
-        background: 'var(--bg-surface)',
+        background: '#ffffff',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #e2e8f0',
         padding: '2rem',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-          <GitFork size={22} color="#3b82f6" />
+          <GitFork size={22} color="#0284c7" />
           <div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#fff' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a' }}>
               Map Organisation Supply Chain Authorisations
             </h3>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+            <p style={{ fontSize: '0.8rem', color: '#475569' }}>
               Configure exactly which registered licensed organisations are authorized to hand over batches to one another.
             </p>
           </div>
@@ -225,7 +227,7 @@ export default function SupplyChainRulesView({
 
         <form onSubmit={handleSaveRules} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#334155', marginBottom: '0.4rem' }}>
               Route Rule Name
             </label>
             <input
@@ -234,11 +236,11 @@ export default function SupplyChainRulesView({
               onChange={(e) => setRouteName(e.target.value)}
               style={{
                 width: '100%',
-                background: 'var(--bg-card)',
-                border: '1px solid var(--border-medium)',
+                background: '#f8fafc',
+                border: '1px solid #cbd5e1',
                 borderRadius: 'var(--radius-sm)',
                 padding: '0.7rem 0.9rem',
-                color: '#fff',
+                color: '#0f172a',
                 fontSize: '0.9rem',
               }}
             />
@@ -250,8 +252,8 @@ export default function SupplyChainRulesView({
             gap: '1.25rem'
           }}>
             {/* Manufacturer Selector */}
-            <div style={{ background: 'var(--bg-card)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.5rem' }}>
+            <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0' }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#0369a1', marginBottom: '0.5rem' }}>
                 1. Authorised Manufacturer
               </label>
               <select
@@ -259,11 +261,11 @@ export default function SupplyChainRulesView({
                 onChange={(e) => setManufacturerId(e.target.value)}
                 style={{
                   width: '100%',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-medium)',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
                   borderRadius: 'var(--radius-sm)',
                   padding: '0.65rem',
-                  color: '#fff',
+                  color: '#0f172a',
                   fontSize: '0.85rem',
                 }}
               >
@@ -275,8 +277,8 @@ export default function SupplyChainRulesView({
             </div>
 
             {/* Distributor Selector */}
-            <div style={{ background: 'var(--bg-card)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#818cf8', marginBottom: '0.5rem' }}>
+            <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0' }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#4338ca', marginBottom: '0.5rem' }}>
                 2. Authorised Distributor
               </label>
               <select
@@ -284,11 +286,11 @@ export default function SupplyChainRulesView({
                 onChange={(e) => setDistributorId(e.target.value)}
                 style={{
                   width: '100%',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-medium)',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
                   borderRadius: 'var(--radius-sm)',
                   padding: '0.65rem',
-                  color: '#fff',
+                  color: '#0f172a',
                   fontSize: '0.85rem',
                 }}
               >
@@ -300,8 +302,8 @@ export default function SupplyChainRulesView({
             </div>
 
             {/* Wholesaler Selector */}
-            <div style={{ background: 'var(--bg-card)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#fbbf24', marginBottom: '0.5rem' }}>
+            <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0' }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#b45309', marginBottom: '0.5rem' }}>
                 3. Authorised Wholesaler
               </label>
               <select
@@ -309,11 +311,11 @@ export default function SupplyChainRulesView({
                 onChange={(e) => setWholesalerId(e.target.value)}
                 style={{
                   width: '100%',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-medium)',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
                   borderRadius: 'var(--radius-sm)',
                   padding: '0.65rem',
-                  color: '#fff',
+                  color: '#0f172a',
                   fontSize: '0.85rem',
                 }}
               >
@@ -325,8 +327,8 @@ export default function SupplyChainRulesView({
             </div>
 
             {/* Retailer Selector */}
-            <div style={{ background: 'var(--bg-card)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#34d399', marginBottom: '0.5rem' }}>
+            <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0' }}>
+              <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#047857', marginBottom: '0.5rem' }}>
                 4. Authorised Retailer / Pharmacy
               </label>
               <select
@@ -334,11 +336,11 @@ export default function SupplyChainRulesView({
                 onChange={(e) => setRetailerId(e.target.value)}
                 style={{
                   width: '100%',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-medium)',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
                   borderRadius: 'var(--radius-sm)',
                   padding: '0.65rem',
-                  color: '#fff',
+                  color: '#0f172a',
                   fontSize: '0.85rem',
                 }}
               >
@@ -351,8 +353,8 @@ export default function SupplyChainRulesView({
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              <Info size={15} color="#06b6d4" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', color: '#64748b' }}>
+              <Info size={15} color="#0284c7" />
               <span>
                 Saved routes are enforced by the backend API and logged on the audit ledger.
               </span>
@@ -367,11 +369,11 @@ export default function SupplyChainRulesView({
                 gap: '0.5rem',
                 padding: '0.75rem 1.6rem',
                 borderRadius: 'var(--radius-md)',
-                background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                 color: '#fff',
                 fontSize: '0.875rem',
                 fontWeight: 700,
-                boxShadow: '0 4px 15px rgba(6, 182, 212, 0.35)',
+                boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                 opacity: saving ? 0.7 : 1,
               }}
             >

@@ -16,13 +16,13 @@ export default function Navbar({ activeTab, setActiveTab, user, onLogout, health
 
   return (
     <header style={{
-      background: 'rgba(13, 21, 38, 0.85)',
-      backdropFilter: 'blur(16px)',
+      background: '#ffffff',
       borderBottom: '1px solid var(--border-subtle)',
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      padding: '0.75rem 2rem'
+      padding: '0.75rem 2rem',
+      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
     }}>
       <div style={{
         maxWidth: '1440px',
@@ -39,33 +39,33 @@ export default function Navbar({ activeTab, setActiveTab, user, onLogout, health
             width: '42px',
             height: '42px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+            background: 'linear-gradient(135deg, #0284c7, #2563eb)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 16px rgba(6, 182, 212, 0.4)'
+            boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)'
           }}>
             <ShieldCheck size={26} color="#ffffff" />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#fff' }}>
-                PharmaShield <span style={{ color: '#06b6d4' }}>AI</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#0f172a' }}>
+                PharmaShield <span style={{ color: '#0284c7' }}>AI</span>
               </span>
               <span style={{
-                background: 'rgba(168, 85, 247, 0.2)',
-                color: '#c084fc',
+                background: '#eff6ff',
+                color: '#1d4ed8',
                 fontSize: '0.68rem',
                 fontWeight: 700,
                 padding: '2px 8px',
                 borderRadius: '6px',
-                border: '1px solid rgba(168, 85, 247, 0.3)',
+                border: '1px solid #bfdbfe',
                 letterSpacing: '0.05em'
               }}>
                 AUTHORITY PORTAL
               </span>
             </div>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+            <p style={{ fontSize: '0.75rem', color: '#64748b' }}>
               National Drug Regulatory & Supply Chain Integrity Authority
             </p>
           </div>
@@ -93,10 +93,10 @@ export default function Navbar({ activeTab, setActiveTab, user, onLogout, health
                   borderRadius: '10px',
                   fontSize: '0.875rem',
                   fontWeight: 600,
-                  background: isActive ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2))' : 'transparent',
-                  color: isActive ? '#38bdf8' : 'var(--text-secondary)',
-                  border: isActive ? '1px solid rgba(6, 182, 212, 0.4)' : '1px solid transparent',
-                  boxShadow: isActive ? '0 0 15px rgba(6, 182, 212, 0.15)' : 'none',
+                  background: isActive ? '#eff6ff' : 'transparent',
+                  color: isActive ? '#1d4ed8' : '#475569',
+                  border: isActive ? '1px solid #bfdbfe' : '1px solid transparent',
+                  boxShadow: isActive ? '0 1px 2px rgba(29, 78, 216, 0.08)' : 'none',
                 }}
               >
                 <Icon size={17} />
@@ -118,28 +118,27 @@ export default function Navbar({ activeTab, setActiveTab, user, onLogout, health
               borderRadius: '20px',
               fontSize: '0.72rem',
               fontWeight: 600,
-              background: blockchainConnected ? 'rgba(16, 185, 129, 0.12)' : 'rgba(244, 63, 94, 0.12)',
-              color: blockchainConnected ? '#10b981' : '#f43f5e',
-              border: `1px solid ${blockchainConnected ? 'rgba(16, 185, 129, 0.25)' : 'rgba(244, 63, 94, 0.25)'}`
+              background: blockchainConnected ? '#ecfdf5' : '#fef2f2',
+              color: blockchainConnected ? '#059669' : '#dc2626',
+              border: `1px solid ${blockchainConnected ? '#a7f3d0' : '#fecaca'}`
             }}>
               <span style={{
                 width: '6px',
                 height: '6px',
                 borderRadius: '50%',
-                background: blockchainConnected ? '#10b981' : '#f43f5e',
-                boxShadow: blockchainConnected ? '0 0 8px #10b981' : 'none'
+                background: blockchainConnected ? '#059669' : '#dc2626',
               }} />
-              {blockchainConnected ? 'Hardhat Ledger' : 'Blockchain Offline'}
+              {blockchainConnected ? 'Hardhat Ledger Connected' : 'Blockchain Offline'}
             </span>
           </div>
 
           {/* User Profile */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingLeft: '0.75rem', borderLeft: '1px solid var(--border-subtle)' }}>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f8fafc' }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>
                 {user?.fullName || user?.username || 'Authority Admin'}
               </div>
-              <div style={{ fontSize: '0.7rem', color: '#c084fc', fontWeight: 600 }}>
+              <div style={{ fontSize: '0.7rem', color: '#6366f1', fontWeight: 600 }}>
                 {user?.role || 'Regulatory Authority'}
               </div>
             </div>
@@ -151,9 +150,9 @@ export default function Navbar({ activeTab, setActiveTab, user, onLogout, health
                 width: '36px',
                 height: '36px',
                 borderRadius: '8px',
-                background: 'rgba(244, 63, 94, 0.12)',
-                color: '#f43f5e',
-                border: '1px solid rgba(244, 63, 94, 0.25)',
+                background: '#fef2f2',
+                color: '#dc2626',
+                border: '1px solid #fecaca',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

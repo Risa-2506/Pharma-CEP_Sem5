@@ -160,27 +160,38 @@ export default function ManufacturerDashboard({
     <div className="animate-slide" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Organisation Badge & Operator Card */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(37, 99, 235, 0.12))',
+        background: 'linear-gradient(135deg, #eff6ff, #dbeafe)',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid rgba(6, 182, 212, 0.3)',
+        border: '1px solid #bfdbfe',
         padding: '1.25rem',
-        boxShadow: 'var(--shadow-card)',
+        boxShadow: '0 2px 8px rgba(37, 99, 235, 0.06)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-          <span className="badge-mfg">
+          <span style={{
+            background: '#ffffff',
+            color: '#1d4ed8',
+            fontSize: '0.68rem',
+            fontWeight: 800,
+            padding: '2px 8px',
+            borderRadius: '4px',
+            border: '1px solid #bfdbfe',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px'
+          }}>
             <Building2 size={12} /> LICENSED MANUFACTURER
           </span>
-          <span style={{ fontSize: '0.7rem', color: '#10b981', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981' }} />
+          <span style={{ fontSize: '0.72rem', color: '#059669', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#059669' }} />
             Authorised Operator
           </span>
         </div>
 
-        <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em' }}>
+        <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.01em', margin: 0 }}>
           {user?.organizationName || 'Apex Pharma Pvt. Ltd.'}
         </h2>
-        <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '2px' }}>
-          Operator: <strong style={{ color: '#fff' }}>{user?.fullName || user?.username || 'Operator'}</strong>
+        <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '3px' }}>
+          Operator: <strong style={{ color: '#0f172a' }}>{user?.fullName || user?.username || 'Operator'}</strong>
         </div>
       </div>
 
@@ -188,7 +199,7 @@ export default function ManufacturerDashboard({
       <button
         onClick={onStartRegistration}
         style={{
-          background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+          background: 'linear-gradient(135deg, #0284c7, #2563eb)',
           color: '#fff',
           fontWeight: 700,
           fontSize: '0.95rem',
@@ -198,7 +209,9 @@ export default function ManufacturerDashboard({
           alignItems: 'center',
           justifyContent: 'center',
           gap: '8px',
-          boxShadow: '0 6px 20px rgba(6, 182, 212, 0.4)',
+          border: 'none',
+          cursor: 'pointer',
+          boxShadow: '0 4px 15px rgba(37, 99, 235, 0.25)',
         }}
       >
         <Plus size={22} /> Register New Batch
@@ -207,7 +220,7 @@ export default function ManufacturerDashboard({
       {/* My Batches List Header & Search */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ fontSize: '1rem', fontWeight: 800, color: '#fff' }}>
+          <div style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a' }}>
             My Batches ({batches?.length || 0})
           </div>
 
@@ -215,13 +228,17 @@ export default function ManufacturerDashboard({
             onClick={onRefresh}
             disabled={loading}
             style={{
-              background: 'transparent',
-              color: 'var(--text-muted)',
-              border: 'none',
+              background: '#ffffff',
+              color: '#475569',
+              border: '1px solid #cbd5e1',
+              padding: '4px 10px',
+              borderRadius: 'var(--radius-sm)',
               display: 'flex',
               alignItems: 'center',
               gap: '4px',
               fontSize: '0.75rem',
+              fontWeight: 600,
+              cursor: 'pointer'
             }}
           >
             <RefreshCw size={13} style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }} />
@@ -233,13 +250,13 @@ export default function ManufacturerDashboard({
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '6px',
-          background: 'var(--bg-input)',
+          gap: '8px',
+          background: '#ffffff',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-subtle)',
-          padding: '0.55rem 0.85rem',
+          border: '1px solid #cbd5e1',
+          padding: '0.6rem 0.85rem',
         }}>
-          <Search size={15} color="var(--text-muted)" />
+          <Search size={15} color="#94a3b8" />
           <input
             type="text"
             placeholder="Search batch number or medicine..."
@@ -248,9 +265,11 @@ export default function ManufacturerDashboard({
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#fff',
+              color: '#0f172a',
               fontSize: '0.8rem',
               width: '100%',
+              outline: 'none',
+              fontWeight: 500
             }}
           />
         </div>
@@ -268,21 +287,21 @@ export default function ManufacturerDashboard({
                 key={b.id || b.batchId}
                 onClick={() => setSelectedBatch(b)}
                 style={{
-                  background: 'var(--bg-card)',
+                  background: '#ffffff',
                   borderRadius: 'var(--radius-md)',
-                  border: isHeldByMe ? '1px solid rgba(6, 182, 212, 0.35)' : '1px solid var(--border-subtle)',
+                  border: isHeldByMe ? '1px solid #93c5fd' : '1px solid #e2e8f0',
                   padding: '1.1rem',
                   cursor: 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.75rem',
-                  boxShadow: 'var(--shadow-card)',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
                   transition: 'all 0.2s',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '0.98rem', fontWeight: 800, color: '#38bdf8', fontFamily: 'var(--font-mono)' }}>
+                    <span style={{ fontSize: '0.98rem', fontWeight: 800, color: '#2563eb', fontFamily: 'var(--font-mono)' }}>
                       {b.batchId}
                     </span>
                     <span style={{
@@ -290,9 +309,9 @@ export default function ManufacturerDashboard({
                       fontWeight: 700,
                       padding: '2px 7px',
                       borderRadius: '4px',
-                      background: 'rgba(16, 185, 129, 0.15)',
-                      color: '#10b981',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
+                      background: '#ecfdf5',
+                      color: '#059669',
+                      border: '1px solid #a7f3d0'
                     }}>
                       ✓ Verified
                     </span>
@@ -304,9 +323,9 @@ export default function ManufacturerDashboard({
                       fontWeight: 700,
                       padding: '3px 8px',
                       borderRadius: '6px',
-                      background: 'rgba(245, 158, 11, 0.15)',
-                      color: '#fbbf24',
-                      border: '1px solid rgba(245, 158, 11, 0.3)',
+                      background: '#fffbeb',
+                      color: '#d97706',
+                      border: '1px solid #fde68a',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px'
@@ -319,9 +338,9 @@ export default function ManufacturerDashboard({
                       fontWeight: 700,
                       padding: '3px 8px',
                       borderRadius: '6px',
-                      background: 'rgba(6, 182, 212, 0.15)',
-                      color: '#38bdf8',
-                      border: '1px solid rgba(6, 182, 212, 0.3)',
+                      background: '#eff6ff',
+                      color: '#2563eb',
+                      border: '1px solid #bfdbfe',
                     }}>
                       At Facility
                     </span>
@@ -329,11 +348,11 @@ export default function ManufacturerDashboard({
                 </div>
 
                 <div>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#fff' }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#0f172a' }}>
                     {b.medicineName}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                    Current Custody: <strong style={{ color: '#e2e8f0' }}>{b.currentHolderName}</strong>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px' }}>
+                    Current Custody: <strong style={{ color: '#0f172a' }}>{b.currentHolderName}</strong>
                   </div>
                 </div>
 
@@ -342,12 +361,12 @@ export default function ManufacturerDashboard({
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   paddingTop: '0.6rem',
-                  borderTop: '1px solid var(--border-subtle)',
+                  borderTop: '1px solid #f1f5f9',
                   fontSize: '0.72rem',
-                  color: 'var(--text-muted)'
+                  color: '#64748b'
                 }}>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <span>Qty: <strong style={{ color: '#fff' }}>{b.quantity?.toLocaleString() || '10,000'}</strong></span>
+                    <span>Qty: <strong style={{ color: '#0f172a' }}>{b.quantity?.toLocaleString() || '10,000'}</strong></span>
                     <span>Exp: {b.expiryDate}</span>
                     <span>Seal: {b.sealId}</span>
                   </div>
@@ -367,13 +386,14 @@ export default function ManufacturerDashboard({
                         padding: '0.35rem 0.75rem',
                         borderRadius: '6px',
                         border: 'none',
-                        boxShadow: '0 2px 10px rgba(245, 158, 11, 0.3)'
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(245, 158, 11, 0.25)'
                       }}
                     >
                       <Truck size={13} /> Transfer to Distributor
                     </button>
                   ) : (
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                    <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontStyle: 'italic' }}>
                       Transferred
                     </span>
                   )}
@@ -385,15 +405,15 @@ export default function ManufacturerDashboard({
           <div style={{
             padding: '2.5rem 1rem',
             textAlign: 'center',
-            background: 'var(--bg-card)',
+            background: '#ffffff',
             borderRadius: 'var(--radius-lg)',
-            border: '1px dashed var(--border-medium)',
+            border: '1px dashed #cbd5e1',
           }}>
-            <Package size={36} color="var(--text-muted)" style={{ margin: '0 auto 0.75rem' }} />
-            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#fff', marginBottom: '0.25rem' }}>
+            <Package size={36} color="#94a3b8" style={{ margin: '0 auto 0.75rem' }} />
+            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.25rem' }}>
               No Batches Registered Yet
             </div>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', maxWidth: '300px', margin: '0 auto 1rem' }}>
+            <p style={{ fontSize: '0.75rem', color: '#64748b', maxWidth: '300px', margin: '0 auto 1rem' }}>
               Click <strong>Register New Batch</strong> above to upload packaging images, extract AI verification, and anchor your trusted baseline to the blockchain.
             </p>
           </div>
@@ -408,8 +428,8 @@ export default function ManufacturerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(15, 23, 42, 0.45)',
+          backdropFilter: 'blur(6px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -417,8 +437,8 @@ export default function ManufacturerDashboard({
           padding: '1rem',
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            border: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '420px',
@@ -426,55 +446,66 @@ export default function ManufacturerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <span className="badge-mfg">TRUSTED BASELINE</span>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)', marginTop: '4px' }}>
+                <span style={{
+                  background: '#eff6ff',
+                  color: '#1d4ed8',
+                  fontSize: '0.68rem',
+                  fontWeight: 800,
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  border: '1px solid #bfdbfe'
+                }}>
+                  TRUSTED BASELINE
+                </span>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', fontFamily: 'var(--font-mono)', marginTop: '4px', margin: 0 }}>
                   {selectedBatch.batchId}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedBatch(null)}
-                style={{ background: 'transparent', color: 'var(--text-muted)', fontSize: '1.2rem' }}
+                style={{ background: '#f1f5f9', border: 'none', color: '#64748b', cursor: 'pointer', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
                 ✕
               </button>
             </div>
 
             <div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>
                 {selectedBatch.medicineName}
               </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+              <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
                 Composition: {selectedBatch.composition || 'Active Formulation'}
               </div>
             </div>
 
             {/* Fingerprint */}
-            <div style={{ background: 'var(--bg-input)', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Cryptographic Fingerprint:</div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#c084fc', fontFamily: 'var(--font-mono)' }}>
+            <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0' }}>
+              <div style={{ fontSize: '0.68rem', color: '#64748b' }}>Cryptographic Fingerprint:</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#7c3aed', fontFamily: 'var(--font-mono)' }}>
                 {selectedBatch.batchFingerprint || 'FP-VERIFIED'}
               </div>
-              <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: '4px', wordBreak: 'break-all', fontFamily: 'var(--font-mono)' }}>
+              <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: '4px', wordBreak: 'break-all', fontFamily: 'var(--font-mono)' }}>
                 Hash: {selectedBatch.trustedDataHash}
               </div>
             </div>
 
             {/* Blockchain */}
-            <div style={{ background: 'var(--bg-input)', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <div style={{ fontSize: '0.68rem', color: '#10b981', fontWeight: 700 }}>Blockchain Evidence (Hardhat):</div>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+            <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0' }}>
+              <div style={{ fontSize: '0.68rem', color: '#059669', fontWeight: 700 }}>Blockchain Evidence (Hardhat):</div>
+              <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '2px' }}>
                 Block #{selectedBatch.blockNumber || 1}
               </div>
-              <div style={{ fontSize: '0.68rem', color: '#94a3b8', wordBreak: 'break-all', fontFamily: 'var(--font-mono)', marginTop: '2px' }}>
+              <div style={{ fontSize: '0.68rem', color: '#475569', wordBreak: 'break-all', fontFamily: 'var(--font-mono)', marginTop: '2px' }}>
                 Tx: {selectedBatch.blockchainTx || '0x...'}
               </div>
             </div>
 
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              Current Custody: <strong style={{ color: '#fff' }}>{selectedBatch.currentHolderName}</strong> ({selectedBatch.stage})
+            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+              Current Custody: <strong style={{ color: '#0f172a' }}>{selectedBatch.currentHolderName}</strong> ({selectedBatch.stage})
             </div>
 
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
@@ -490,10 +521,12 @@ export default function ManufacturerDashboard({
                     color: '#fff',
                     fontSize: '0.82rem',
                     fontWeight: 700,
+                    border: 'none',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px'
+                    gap: '6px',
+                    cursor: 'pointer'
                   }}
                 >
                   <Truck size={15} /> Transfer to Distributor
@@ -505,10 +538,12 @@ export default function ManufacturerDashboard({
                 style={{
                   padding: '0.7rem 1.25rem',
                   borderRadius: 'var(--radius-sm)',
-                  background: 'var(--bg-elevated)',
-                  color: '#fff',
+                  background: '#f8fafc',
+                  border: '1px solid #cbd5e1',
+                  color: '#475569',
                   fontSize: '0.8rem',
                   fontWeight: 600,
+                  cursor: 'pointer'
                 }}
               >
                 Close
@@ -526,8 +561,8 @@ export default function ManufacturerDashboard({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(10px)',
+          background: 'rgba(15, 23, 42, 0.45)',
+          backdropFilter: 'blur(6px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -535,8 +570,8 @@ export default function ManufacturerDashboard({
           padding: '1rem',
         }}>
           <div style={{
-            background: 'var(--bg-card)',
-            border: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '440px',
@@ -544,28 +579,29 @@ export default function ManufacturerDashboard({
             display: 'flex',
             flexDirection: 'column',
             gap: '1.25rem',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
             animation: 'fadeIn 0.2s ease-out'
           }}>
             {/* Modal Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '10px',
                   background: 'linear-gradient(135deg, #f59e0b, #d97706)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 10px rgba(245, 158, 11, 0.2)'
                 }}>
                   <Truck size={18} color="#fff" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                     Transfer Custody to Distributor
                   </h3>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+                  <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '2px' }}>
                     Regulatory Authority Rule Enforced
                   </div>
                 </div>
@@ -574,7 +610,7 @@ export default function ManufacturerDashboard({
               <button
                 onClick={() => setIsTransferModalOpen(false)}
                 disabled={transferLoading}
-                style={{ background: 'transparent', color: 'var(--text-muted)', fontSize: '1.2rem', padding: '4px' }}
+                style={{ background: '#f1f5f9', border: 'none', color: '#64748b', cursor: 'pointer', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
                 ✕
               </button>
@@ -583,11 +619,11 @@ export default function ManufacturerDashboard({
             {/* Error / Success Banners */}
             {transferError && (
               <div style={{
-                background: 'rgba(239, 68, 68, 0.15)',
-                border: '1px solid rgba(239, 68, 68, 0.4)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#fca5a5',
+                color: '#b91c1c',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'center',
@@ -600,38 +636,38 @@ export default function ManufacturerDashboard({
 
             {transferSuccess && (
               <div style={{
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
                 borderRadius: 'var(--radius-md)',
                 padding: '0.75rem',
-                color: '#6ee7b7',
+                color: '#047857',
                 fontSize: '0.78rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <CheckCircle2 size={16} color="#10b981" style={{ flexShrink: 0 }} />
+                <CheckCircle2 size={16} color="#059669" style={{ flexShrink: 0 }} />
                 <span>{transferSuccess}</span>
               </div>
             )}
 
             {/* Target Batch Info Box */}
             <div style={{
-              background: 'var(--bg-input)',
+              background: '#f8fafc',
               borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-subtle)',
+              border: '1px solid #e2e8f0',
               padding: '0.85rem'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Transferring Batch:</span>
-                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#38bdf8', fontFamily: 'var(--font-mono)' }}>
+                <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Transferring Batch:</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#2563eb', fontFamily: 'var(--font-mono)' }}>
                   {batchToTransfer.batchId}
                 </span>
               </div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff', marginTop: '4px' }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a', marginTop: '4px' }}>
                 {batchToTransfer.medicineName}
               </div>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+              <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '2px' }}>
                 Quantity: {batchToTransfer.quantity?.toLocaleString()} units | Current Seal: {batchToTransfer.sealId}
               </div>
             </div>
@@ -639,12 +675,12 @@ export default function ManufacturerDashboard({
             {/* Transfer Form */}
             <form onSubmit={handleExecuteTransfer} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.35rem' }}>
                   Authorised Distributor Recipient *
                 </label>
 
                 {loadingRules ? (
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', padding: '0.5rem' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b', padding: '0.5rem' }}>
                     Verifying authorized distributor rules...
                   </div>
                 ) : authorizedDistributors.length > 0 ? (
@@ -655,17 +691,19 @@ export default function ManufacturerDashboard({
                       required
                       style={{
                         width: '100%',
-                        background: '#0d1526',
-                        border: '1px solid rgba(6, 182, 212, 0.4)',
+                        background: '#ffffff',
+                        border: '1px solid #cbd5e1',
                         borderRadius: 'var(--radius-md)',
                         padding: '0.7rem',
-                        color: '#fff',
-                        colorScheme: 'dark',
+                        color: '#0f172a',
+                        colorScheme: 'light',
                         fontSize: '0.85rem',
+                        outline: 'none',
+                        fontWeight: 600
                       }}
                     >
                       {authorizedDistributors.map(d => (
-                        <option key={d.id} value={d.id} style={{ background: '#0f172a', color: '#ffffff' }}>
+                        <option key={d.id} value={d.id} style={{ background: '#ffffff', color: '#0f172a' }}>
                           {d.name} ({d.code || 'DIST'})
                         </option>
                       ))}
@@ -674,12 +712,13 @@ export default function ManufacturerDashboard({
                     <div style={{
                       marginTop: '0.4rem',
                       fontSize: '0.7rem',
-                      color: '#10b981',
+                      color: '#059669',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '4px'
+                      gap: '4px',
+                      fontWeight: 600
                     }}>
-                      <ShieldCheck size={12} color="#10b981" />
+                      <ShieldCheck size={12} color="#059669" />
                       Authorised partner according to Regulatory Authority Supply Chain Rules
                     </div>
                   </div>
@@ -687,14 +726,14 @@ export default function ManufacturerDashboard({
                   <div style={{
                     padding: '0.85rem',
                     borderRadius: 'var(--radius-md)',
-                    background: 'rgba(239, 68, 68, 0.1)',
-                    border: '1px dashed rgba(239, 68, 68, 0.4)',
-                    color: '#fca5a5',
+                    background: '#fef2f2',
+                    border: '1px dashed #fca5a5',
+                    color: '#b91c1c',
                     fontSize: '0.75rem',
                     lineHeight: 1.5
                   }}>
                     <strong>⚠️ No Authorized Distributor Configured</strong>
-                    <p style={{ marginTop: '4px', color: 'var(--text-secondary)' }}>
+                    <p style={{ marginTop: '4px', color: '#64748b' }}>
                       The Regulatory Authority has not yet assigned an authorized Distributor route for your facility. Custody transfer is strictly prevented until configured in the Authority Portal.
                     </p>
                   </div>
@@ -702,7 +741,7 @@ export default function ManufacturerDashboard({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#475569', marginBottom: '0.35rem' }}>
                   New Tamper Transit Seal ID *
                 </label>
                 <input
@@ -713,16 +752,18 @@ export default function ManufacturerDashboard({
                   placeholder="e.g. SEAL-TR-4091"
                   style={{
                     width: '100%',
-                    background: 'var(--bg-input)',
-                    border: '1px solid var(--border-medium)',
+                    background: '#ffffff',
+                    border: '1px solid #cbd5e1',
                     borderRadius: 'var(--radius-md)',
                     padding: '0.7rem',
-                    color: '#fff',
+                    color: '#0f172a',
                     fontSize: '0.85rem',
-                    fontFamily: 'var(--font-mono)'
+                    fontFamily: 'var(--font-mono)',
+                    fontWeight: 600,
+                    outline: 'none'
                   }}
                 />
-                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: '3px' }}>
+                <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: '3px' }}>
                   New seal applied during dispatch; will be anchored onto the Hardhat smart contract.
                 </div>
               </div>
@@ -737,11 +778,12 @@ export default function ManufacturerDashboard({
                     flex: 1,
                     padding: '0.75rem',
                     borderRadius: 'var(--radius-md)',
-                    background: 'var(--bg-elevated)',
-                    color: 'var(--text-secondary)',
+                    background: '#f8fafc',
+                    color: '#475569',
                     fontWeight: 600,
                     fontSize: '0.82rem',
-                    border: '1px solid var(--border-medium)'
+                    border: '1px solid #cbd5e1',
+                    cursor: 'pointer'
                   }}
                 >
                   Cancel
@@ -756,7 +798,7 @@ export default function ManufacturerDashboard({
                     borderRadius: 'var(--radius-md)',
                     background: authorizedDistributors.length > 0 
                       ? 'linear-gradient(135deg, #f59e0b, #d97706)' 
-                      : 'rgba(255,255,255,0.1)',
+                      : '#cbd5e1',
                     color: '#fff',
                     fontWeight: 700,
                     fontSize: '0.85rem',
@@ -765,7 +807,7 @@ export default function ManufacturerDashboard({
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '6px',
-                    boxShadow: authorizedDistributors.length > 0 ? '0 4px 15px rgba(245, 158, 11, 0.4)' : 'none',
+                    boxShadow: authorizedDistributors.length > 0 ? '0 4px 15px rgba(245, 158, 11, 0.25)' : 'none',
                     cursor: authorizedDistributors.length > 0 ? 'pointer' : 'not-allowed',
                     opacity: transferLoading ? 0.7 : 1
                   }}

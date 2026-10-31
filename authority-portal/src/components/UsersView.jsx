@@ -129,10 +129,10 @@ export default function UsersView({
         gap: '1rem'
       }}>
         <div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>
             System Users & Role Governance
           </h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          <p style={{ fontSize: '0.875rem', color: '#475569' }}>
             Provision authenticated operators, enforce zero-trust identity, and assign organization roles.
           </p>
         </div>
@@ -150,11 +150,11 @@ export default function UsersView({
             gap: '0.5rem',
             padding: '0.65rem 1.25rem',
             borderRadius: 'var(--radius-md)',
-            background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+            background: 'linear-gradient(135deg, #0284c7, #2563eb)',
             color: '#fff',
             fontSize: '0.875rem',
             fontWeight: 700,
-            boxShadow: '0 4px 15px rgba(6, 182, 212, 0.35)',
+            boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
           }}
         >
           <UserPlus size={18} /> Provision New User
@@ -163,28 +163,29 @@ export default function UsersView({
 
       {/* Filter and Search Bar */}
       <div style={{
-        background: 'var(--bg-surface)',
+        background: '#ffffff',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #e2e8f0',
         padding: '1rem 1.25rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '1rem'
+        gap: '1rem',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         {/* Search */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '0.6rem',
-          background: 'var(--bg-card)',
+          background: '#f8fafc',
           borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-subtle)',
+          border: '1px solid #cbd5e1',
           padding: '0.5rem 0.9rem',
           minWidth: '280px',
         }}>
-          <Search size={16} color="var(--text-muted)" />
+          <Search size={16} color="#64748b" />
           <input
             type="text"
             placeholder="Search by name, email, organization..."
@@ -193,7 +194,7 @@ export default function UsersView({
             style={{
               background: 'transparent',
               border: 'none',
-              color: '#fff',
+              color: '#0f172a',
               fontSize: '0.85rem',
               width: '100%',
             }}
@@ -211,9 +212,9 @@ export default function UsersView({
                 borderRadius: '8px',
                 fontSize: '0.78rem',
                 fontWeight: 600,
-                background: roleFilter === r ? 'rgba(6, 182, 212, 0.2)' : 'var(--bg-elevated)',
-                color: roleFilter === r ? '#38bdf8' : 'var(--text-secondary)',
-                border: roleFilter === r ? '1px solid rgba(6, 182, 212, 0.4)' : '1px solid transparent',
+                background: roleFilter === r ? '#eff6ff' : '#f1f5f9',
+                color: roleFilter === r ? '#1d4ed8' : '#475569',
+                border: roleFilter === r ? '1px solid #bfdbfe' : '1px solid #e2e8f0',
               }}
             >
               {r.replace(' Operator', '')}
@@ -224,20 +225,21 @@ export default function UsersView({
 
       {/* Users Table */}
       <div style={{
-        background: 'var(--bg-surface)',
+        background: '#ffffff',
         borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid #e2e8f0',
         overflow: 'hidden',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
             <thead>
-              <tr style={{ background: 'var(--bg-elevated)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                <th style={{ padding: '0.9rem 1.25rem' }}>User Profile</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Assigned Organisation</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Role</th>
-                <th style={{ padding: '0.9rem 1rem' }}>Status</th>
-                <th style={{ padding: '0.9rem 1.25rem', textAlign: 'right' }}>Actions</th>
+              <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#64748b' }}>
+                <th style={{ padding: '0.9rem 1.25rem', fontWeight: 700 }}>User Profile</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Assigned Organisation</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Role</th>
+                <th style={{ padding: '0.9rem 1rem', fontWeight: 700 }}>Status</th>
+                <th style={{ padding: '0.9rem 1.25rem', textAlign: 'right', fontWeight: 700 }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -248,25 +250,25 @@ export default function UsersView({
                     <tr
                       key={u.id}
                       style={{
-                        borderBottom: '1px solid var(--border-subtle)',
+                        borderBottom: '1px solid #f1f5f9',
                         transition: 'background 0.15s',
                       }}
                     >
                       <td style={{ padding: '1rem 1.25rem' }}>
-                        <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.92rem' }}>
+                        <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.92rem' }}>
                           {u.fullName || u.username}
                         </div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span>@{u.username}</span> • <span>{u.email}</span>
+                        <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{ fontWeight: 600, color: '#0284c7' }}>@{u.username}</span> • <span>{u.email}</span>
                         </div>
                       </td>
 
                       <td style={{ padding: '1rem 1rem' }}>
-                        <div style={{ fontWeight: 600, color: '#e2e8f0' }}>
+                        <div style={{ fontWeight: 600, color: '#1e293b' }}>
                           {u.organizationName || '—'}
                         </div>
                         {u.organizationType && (
-                          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                          <div style={{ fontSize: '0.7rem', color: '#64748b' }}>
                             Type: {u.organizationType}
                           </div>
                         )}
@@ -299,9 +301,9 @@ export default function UsersView({
                               borderRadius: '6px',
                               fontSize: '0.72rem',
                               fontWeight: 600,
-                              background: 'rgba(59, 130, 246, 0.12)',
-                              color: '#60a5fa',
-                              border: '1px solid rgba(59, 130, 246, 0.25)',
+                              background: '#eff6ff',
+                              color: '#1d4ed8',
+                              border: '1px solid #bfdbfe',
                               display: 'flex',
                               alignItems: 'center',
                               gap: '4px'
@@ -319,15 +321,15 @@ export default function UsersView({
                                 borderRadius: '6px',
                                 fontSize: '0.72rem',
                                 fontWeight: 600,
-                                background: isActive ? 'rgba(244, 63, 94, 0.12)' : 'rgba(16, 185, 129, 0.12)',
-                                color: isActive ? '#f43f5e' : '#10b981',
-                                border: `1px solid ${isActive ? 'rgba(244, 63, 94, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`,
+                                background: isActive ? 'rgba(244, 63, 94, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+                                color: isActive ? '#dc2626' : '#059669',
+                                border: `1px solid ${isActive ? 'rgba(244, 63, 94, 0.25)' : 'rgba(16, 185, 129, 0.25)'}`,
                               }}
                             >
                               {isActive ? 'Deactivate' : 'Activate'}
                             </button>
                           ) : (
-                            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                            <span style={{ fontSize: '0.72rem', color: '#94a3b8', fontStyle: 'italic' }}>
                               Root
                             </span>
                           )}
@@ -338,7 +340,7 @@ export default function UsersView({
                 })
               ) : (
                 <tr>
-                  <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                  <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
                     No users found matching current filter.
                   </td>
                 </tr>
@@ -356,7 +358,7 @@ export default function UsersView({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
@@ -365,25 +367,25 @@ export default function UsersView({
           padding: '1.5rem',
         }}>
           <div style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '560px',
             padding: '2rem',
-            boxShadow: 'var(--shadow-lg)',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
             animation: 'fadeIn 0.2s ease-out'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <UserPlus size={24} color="#06b6d4" />
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#fff' }}>
+                <UserPlus size={24} color="#0284c7" />
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a' }}>
                   Provision User Account
                 </h3>
               </div>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
-                style={{ background: 'transparent', color: 'var(--text-muted)', fontSize: '1.2rem', padding: '4px 8px' }}
+                style={{ background: 'transparent', color: '#64748b', fontSize: '1.2rem', padding: '4px 8px' }}
               >
                 ✕
               </button>
@@ -391,7 +393,7 @@ export default function UsersView({
 
             <form onSubmit={handleCreateUser} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                   Full Legal Name *
                 </label>
                 <input
@@ -402,11 +404,11 @@ export default function UsersView({
                   onChange={(e) => setFullName(e.target.value)}
                   style={{
                     width: '100%',
-                    background: 'var(--bg-card)',
-                    border: '1px solid var(--border-medium)',
+                    background: '#f8fafc',
+                    border: '1px solid #cbd5e1',
                     borderRadius: 'var(--radius-sm)',
                     padding: '0.65rem 0.85rem',
-                    color: '#fff',
+                    color: '#0f172a',
                     fontSize: '0.85rem',
                   }}
                 />
@@ -414,7 +416,7 @@ export default function UsersView({
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Username (Unique) *
                   </label>
                   <input
@@ -425,18 +427,18 @@ export default function UsersView({
                     onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                     }}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Official Email *
                   </label>
                   <input
@@ -447,11 +449,11 @@ export default function UsersView({
                     onChange={(e) => setEmail(e.target.value)}
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                     }}
                   />
@@ -460,7 +462,7 @@ export default function UsersView({
 
               <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Assigned Organisation *
                   </label>
                   <select
@@ -479,11 +481,11 @@ export default function UsersView({
                     required
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                     }}
                   >
@@ -500,7 +502,7 @@ export default function UsersView({
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                     Assigned Role *
                   </label>
                   <select
@@ -508,11 +510,11 @@ export default function UsersView({
                     onChange={(e) => setRole(e.target.value)}
                     style={{
                       width: '100%',
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-medium)',
+                      background: '#f8fafc',
+                      border: '1px solid #cbd5e1',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.65rem 0.85rem',
-                      color: '#fff',
+                      color: '#0f172a',
                       fontSize: '0.85rem',
                     }}
                   >
@@ -526,7 +528,7 @@ export default function UsersView({
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                   Initial Password
                 </label>
                 <input
@@ -535,11 +537,11 @@ export default function UsersView({
                   onChange={(e) => setPassword(e.target.value)}
                   style={{
                     width: '100%',
-                    background: 'var(--bg-card)',
-                    border: '1px solid var(--border-medium)',
+                    background: '#f8fafc',
+                    border: '1px solid #cbd5e1',
                     borderRadius: 'var(--radius-sm)',
                     padding: '0.65rem 0.85rem',
-                    color: '#fff',
+                    color: '#0f172a',
                     fontSize: '0.85rem',
                     fontFamily: 'var(--font-mono)',
                   }}
@@ -553,10 +555,11 @@ export default function UsersView({
                   style={{
                     padding: '0.65rem 1.25rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'var(--bg-elevated)',
-                    color: 'var(--text-secondary)',
+                    background: '#f1f5f9',
+                    color: '#475569',
                     fontWeight: 600,
                     fontSize: '0.85rem',
+                    border: '1px solid #e2e8f0'
                   }}
                 >
                   Cancel
@@ -568,11 +571,11 @@ export default function UsersView({
                   style={{
                     padding: '0.65rem 1.4rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'linear-gradient(135deg, #06b6d4, #2563eb)',
+                    background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                     color: '#fff',
                     fontWeight: 700,
                     fontSize: '0.85rem',
-                    boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3)',
+                    boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                     opacity: submitting ? 0.7 : 1,
                   }}
                 >
@@ -592,7 +595,7 @@ export default function UsersView({
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
@@ -601,29 +604,29 @@ export default function UsersView({
           padding: '1.5rem',
         }}>
           <div style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-medium)',
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
             borderRadius: 'var(--radius-xl)',
             width: '100%',
             maxWidth: '440px',
             padding: '2rem',
-            boxShadow: 'var(--shadow-lg)',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
             animation: 'fadeIn 0.2s ease-out'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
-              <Key size={22} color="#3b82f6" />
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>
+              <Key size={22} color="#0284c7" />
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
                 Reset User Password
               </h3>
             </div>
 
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
+            <p style={{ fontSize: '0.85rem', color: '#475569', marginBottom: '1.25rem' }}>
               Set a new temporary password for <strong>{selectedUserForReset.fullName}</strong> (@{selectedUserForReset.username}).
             </p>
 
             <form onSubmit={handleResetPassword} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#334155', marginBottom: '0.35rem' }}>
                   New Secure Password
                 </label>
                 <input
@@ -633,11 +636,11 @@ export default function UsersView({
                   onChange={(e) => setNewPassword(e.target.value)}
                   style={{
                     width: '100%',
-                    background: 'var(--bg-card)',
-                    border: '1px solid var(--border-medium)',
+                    background: '#f8fafc',
+                    border: '1px solid #cbd5e1',
                     borderRadius: 'var(--radius-sm)',
                     padding: '0.65rem 0.85rem',
-                    color: '#fff',
+                    color: '#0f172a',
                     fontSize: '0.85rem',
                     fontFamily: 'var(--font-mono)',
                   }}
@@ -651,10 +654,11 @@ export default function UsersView({
                   style={{
                     padding: '0.6rem 1.1rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'var(--bg-elevated)',
-                    color: 'var(--text-secondary)',
+                    background: '#f1f5f9',
+                    color: '#475569',
                     fontWeight: 600,
                     fontSize: '0.85rem',
+                    border: '1px solid #e2e8f0'
                   }}
                 >
                   Cancel
@@ -666,10 +670,11 @@ export default function UsersView({
                   style={{
                     padding: '0.6rem 1.25rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                    background: 'linear-gradient(135deg, #0284c7, #2563eb)',
                     color: '#fff',
                     fontWeight: 700,
                     fontSize: '0.85rem',
+                    boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                     opacity: submitting ? 0.7 : 1,
                   }}
                 >
