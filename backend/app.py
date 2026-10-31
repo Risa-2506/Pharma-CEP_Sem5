@@ -77,4 +77,4 @@ app = create_app()
 
 if __name__ == "__main__":
     logger.info(f"Starting PharmaShield Flask backend on http://127.0.0.1:{Config.PORT}...")
-    app.run(host="0.0.0.0", port=Config.PORT, debug=False, use_reloader=False)
+    app.run(host="0.0.0.0", port=Config.PORT, debug=Config.DEBUG, use_reloader=Config.DEBUG)

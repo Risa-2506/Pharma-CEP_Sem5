@@ -218,10 +218,35 @@ class AIService:
             else:
                 is_match = False
                 if norm_exp and norm_ext:
-                    if base_key in ("batchNumber", "composition", "mrp"):
+                    if base_key == "batchNumber":
                         is_match = (norm_exp == norm_ext)
+                    elif base_key == "composition":
+                        # Match if active ingredients are contained in formulation or vice versa
+                        exp_words = [w.lower() for w in re.findall(r"[a-zA-Z0-9]+", str(expected_val)) if len(w) > 1]
+                        ext_lower = str(extracted_val).lower()
+                        words_matched = all(w in ext_lower for w in exp_words) if exp_words else False
+                        is_match = (norm_exp == norm_ext) or (norm_exp in norm_ext) or (norm_ext in norm_exp) or words_matched
+                    elif base_key == "mrp":
+                        # Numeric price comparison (e.g., 150 vs Rs. 150.00 PER 15 TABS)
+                        def parse_price(val):
+                            if val is None:
+                                return None
+                            nums = re.findall(r"\d+(?:\.\d+)?", str(val))
+                            if nums:
+                                try:
+                                    return float(nums[0])
+                                except ValueError:
+                                    pass
+                            return None
+
+                        exp_price = parse_price(expected_val)
+                        ext_price = parse_price(extracted_val)
+                        if exp_price is not None and ext_price is not None:
+                            is_match = abs(exp_price - ext_price) < 0.01
+                        else:
+                            is_match = (norm_exp == norm_ext) or (norm_exp in norm_ext) or (norm_ext in norm_exp)
                     elif base_key in ("medicineName", "manufacturerName"):
-                        is_match = (norm_exp == norm_ext) or (norm_exp in norm_ext and len(norm_ext) <= len(norm_exp) + 6)
+                        is_match = (norm_exp == norm_ext) or (norm_exp in norm_ext) or (norm_ext in norm_exp)
                     elif base_key in ("expiryDate", "manufacturingDate"):
                         exp_nums = re.findall(r"\d+", str(expected_val))
                         ext_nums = re.findall(r"\d+", str(extracted_val))

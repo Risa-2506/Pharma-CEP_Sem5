@@ -154,7 +154,7 @@ def get_incoming_deliveries():
 @token_required
 def get_batch_details(batch_id):
     """Retrieve single batch details."""
-    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"_id": batch_id}]})
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"batchNumber": batch_id}, {"_id": batch_id}]})
     if not batch:
         return jsonify({"success": False, "error": "Batch not found."}), 404
 
@@ -203,7 +203,7 @@ def verify_batch_stage_scan(batch_id):
     user_org_id = user.get("organizationId")
     user_stage = user.get("organizationType", "Distributor")
 
-    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"_id": batch_id}]})
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"batchNumber": batch_id}, {"_id": batch_id}]})
     if not batch:
         return jsonify({"success": False, "error": f"Batch '{batch_id}' not found."}), 404
 
@@ -310,7 +310,7 @@ def receive_batch(batch_id):
         return jsonify({"success": False, "error": f"Role '{user_role}' cannot receive custody."}), 403
 
     # Rule 6: Batch exists
-    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"_id": batch_id}]})
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"batchNumber": batch_id}, {"_id": batch_id}]})
     if not batch:
         return jsonify({"success": False, "error": f"Batch '{batch_id}' not found."}), 404
 
@@ -638,7 +638,7 @@ def transfer_batch(batch_id):
     user = getattr(request, "user", {})
     user_org_id = user.get("organizationId", "")
 
-    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"_id": batch_id}]})
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"batchNumber": batch_id}, {"_id": batch_id}]})
     if not batch:
         return jsonify({"success": False, "error": f"Batch '{batch_id}' not found."}), 404
 
@@ -828,7 +828,7 @@ def get_batch_blockchain_audit(batch_id):
     """Queries live on-chain smart contract data and event logs for transparent verification."""
     from services.blockchain_service import blockchain_service
 
-    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"_id": batch_id}]})
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"batchNumber": batch_id}, {"_id": batch_id}]})
     if not batch:
         return jsonify({"success": False, "error": "Batch not found."}), 404
 

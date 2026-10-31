@@ -208,13 +208,125 @@ class BlockchainService:
             "sealId": res[5],
         }
 
+    def _sync_batch_from_db(self, batch_id: str) -> bool:
+        """If batch exists in MongoDB but Hardhat node was restarted, re-registers & synchronizes batch on-chain."""
+        try:
+            from database import batches_col
+            from config import Config
+            import datetime
+
+            batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"batchNumber": batch_id}, {"_id": batch_id}]})
+            if not batch:
+                return False
+
+            b_id = batch.get("batchId", batch_id)
+            med_name = batch.get("medicineName", "Medicine")
+            batch_num = batch.get("batchNumber", b_id)
+            exp_date_str = batch.get("expiryDate", "12/2030")
+
+            # Calculate expiry timestamp in future
+            exp_ts = int((datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=730)).timestamp())
+            if "/" in str(exp_date_str):
+                parts = str(exp_date_str).split("/")
+                if len(parts) == 2:
+                    try:
+                        m, y = int(parts[0]), int(parts[1])
+                        exp_ts = int(datetime.datetime(y, m, 28, tzinfo=datetime.timezone.utc).timestamp())
+                    except Exception:
+                        pass
+
+            qty = int(batch.get("quantity") or 1000)
+            transfers = batch.get("transferHistory", [])
+            initial_seal = batch.get("sealId", "SEAL-001")
+            if transfers and transfers[0].get("previousSealId"):
+                initial_seal = transfers[0].get("previousSealId")
+
+            logger.info(f"Auto-syncing batch '{b_id}' to active blockchain ledger...")
+            mfg_key = Config.HARDHAT_OWNER_PRIVATE_KEY
+            self.register_batch(
+                sender_private_key=mfg_key,
+                batch_id=b_id,
+                medicine_name=med_name,
+                batch_number=batch_num,
+                expiry_timestamp=exp_ts,
+                quantity=qty,
+                seal_id=initial_seal,
+            )
+
+            stage_eth_accounts = {
+                "Manufacturer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+                "Distributor": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+                "Wholesaler": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+                "Retailer": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+            }
+            stage_eth_keys = {
+                "Manufacturer": "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+                "Distributor": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+                "Wholesaler": "0x5de4111afa1a4b94908f83103eb219e8638b38558a1dcf3734e29ddae8ac0057",
+                "Retailer": "0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6",
+            }
+
+            if transfers:
+                for t in transfers:
+                    sender_stage = t.get("senderStage", "Manufacturer")
+                    receiver_stage = t.get("receiverStage", "Distributor")
+                    receiver_addr = stage_eth_accounts.get(receiver_stage, "0x70997970C51812dc3A010C7d01b50e0d17dc79C8")
+                    new_seal = t.get("newSealId", "SEAL-TRANS")
+                    s_key = stage_eth_keys.get(sender_stage, mfg_key)
+                    self.transfer_batch(
+                        sender_private_key=s_key,
+                        batch_id=b_id,
+                        receiver_address=receiver_addr,
+                        new_seal_id=new_seal,
+                    )
+            elif batch.get("stage") == "Distributor" or batch.get("status") == "In Transit":
+                dist_addr = stage_eth_accounts.get("Distributor")
+                new_seal = batch.get("sealId", "SEAL-TR-9001")
+                self.transfer_batch(
+                    sender_private_key=mfg_key,
+                    batch_id=b_id,
+                    receiver_address=dist_addr,
+                    new_seal_id=new_seal,
+                )
+
+            receipts = batch.get("receiptHistory", [])
+            for r in receipts:
+                insp_stage = r.get("receivedByStage", "Distributor")
+                insp_key = stage_eth_keys.get(insp_stage, mfg_key)
+                notes = f"Receipt & Baseline Verified at {insp_stage}"
+                curr_seal = batch.get("sealId", "SEAL-INSPECTED")
+                try:
+                    self.inspect_batch(
+                        inspector_private_key=insp_key,
+                        batch_id=b_id,
+                        notes=notes,
+                        new_seal_id=curr_seal,
+                    )
+                except Exception as ie:
+                    logger.warning(f"Could not replay inspection during sync: {ie}")
+
+            logger.info(f"Successfully auto-synced batch '{b_id}' to active blockchain ledger!")
+            return True
+        except Exception as e:
+            logger.error(f"Error auto-syncing batch '{batch_id}' to blockchain: {e}")
+            return False
+
     def get_batch_history(self, batch_id: str) -> dict:
         if not self.contract:
             raise RuntimeError("Blockchain contract is not initialized.")
 
-        batch, holder, transfers, inspections = (
-            self.contract.functions.getBatchHistory(batch_id).call()
-        )
+        try:
+            batch, holder, transfers, inspections = (
+                self.contract.functions.getBatchHistory(batch_id).call()
+            )
+        except Exception as e:
+            # Try to auto-sync from MongoDB if Hardhat node was restarted
+            if self._sync_batch_from_db(batch_id):
+                batch, holder, transfers, inspections = (
+                    self.contract.functions.getBatchHistory(batch_id).call()
+                )
+            else:
+                raise e
 
         return {
             "batch": {
