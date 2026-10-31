@@ -116,6 +116,24 @@ export const api = {
     return request(`/api/batches/${batchId}/blockchain`);
   },
 
+  async getIncomingDeliveries() {
+    return request('/api/deliveries/incoming');
+  },
+
+  async verifyBatchStageScan(batchId, aiExtracted) {
+    return request(`/api/batches/${batchId}/verify-scan`, {
+      method: 'POST',
+      body: JSON.stringify({ aiExtracted }),
+    });
+  },
+
+  async receiveBatch(batchId, verification, newSealId) {
+    return request(`/api/batches/${batchId}/receive`, {
+      method: 'POST',
+      body: JSON.stringify({ verification, newSealId }),
+    });
+  },
+
   async extractMedicineImage(imageFile) {
     const token = getAuthToken();
     const formData = new FormData();

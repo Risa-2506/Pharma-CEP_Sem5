@@ -176,6 +176,24 @@ class BlockchainService:
         )
         return self._send_transaction(func, account)
 
+    def inspect_batch(
+        self,
+        inspector_private_key: str,
+        batch_id: str,
+        notes: str,
+        new_seal_id: str,
+    ) -> dict:
+        if not self.contract:
+            raise RuntimeError("Blockchain contract is not initialized.")
+
+        account = self.web3.eth.account.from_key(inspector_private_key)
+        self.ensure_participant_authorized(account.address)
+
+        func = self.contract.functions.inspectBatch(
+            str(batch_id), str(notes), str(new_seal_id)
+        )
+        return self._send_transaction(func, account)
+
     def get_batch(self, batch_id: str) -> dict:
         if not self.contract:
             raise RuntimeError("Blockchain contract is not initialized.")
@@ -292,6 +310,24 @@ class BlockchainService:
                 })
         except Exception as e:
             logger.warning(f"Could not query BatchTransferred events: {e}")
+
+        try:
+            inspect_filter = self.contract.events.BatchInspected.create_filter(
+                from_block=0,
+                argument_filters={"batchId": batch_id}
+            )
+            for entry in inspect_filter.get_all_entries():
+                raw_args = dict(entry.args)
+                clean_args = {k: clean_val(v) for k, v in raw_args.items()}
+                clean_args["batchId"] = batch_id
+                events.append({
+                    "event": "BatchInspected",
+                    "blockNumber": entry.blockNumber,
+                    "transactionHash": entry.transactionHash.hex(),
+                    "args": clean_args
+                })
+        except Exception as e:
+            logger.warning(f"Could not query BatchInspected events: {e}")
 
         current_holder = history.get("currentHolder", "")
 

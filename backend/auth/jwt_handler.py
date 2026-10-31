@@ -20,6 +20,7 @@ def create_access_token(user: dict) -> str:
         "email": user.get("email"),
         "fullName": user.get("fullName", user.get("name", "")),
         "role": user.get("role"),
+        "status": user.get("status", "Active"),
         "organizationId": str(user.get("organizationId", "")),
         "organizationName": user.get("organizationName", ""),
         "organizationType": user.get("organizationType", ""),

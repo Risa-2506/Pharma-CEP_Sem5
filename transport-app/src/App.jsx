@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ManufacturerLogin from './components/ManufacturerLogin';
 import ManufacturerDashboard from './components/ManufacturerDashboard';
+import DistributorDashboard from './components/DistributorDashboard';
 import RegisterBatchFlow from './components/RegisterBatchFlow';
 import { api, getAuthToken, getStoredUser } from './services/api';
 import { 
@@ -16,7 +17,8 @@ import {
   CheckCircle,
   AlertCircle,
   Info,
-  X
+  X,
+  Truck
 } from 'lucide-react';
 
 export default function App() {
@@ -102,13 +104,23 @@ export default function App() {
         ) : (
           <>
             {activeTab === 'dashboard' && (
-              <ManufacturerDashboard
-                user={user}
-                batches={batches}
-                onStartRegistration={() => setActiveTab('register')}
-                onRefresh={loadBatches}
-                loading={loading}
-              />
+              (user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) ? (
+                <DistributorDashboard
+                  user={user}
+                  batches={batches}
+                  onRefresh={loadBatches}
+                  loading={loading}
+                  showToast={showToast}
+                />
+              ) : (
+                <ManufacturerDashboard
+                  user={user}
+                  batches={batches}
+                  onStartRegistration={() => setActiveTab('register')}
+                  onRefresh={loadBatches}
+                  loading={loading}
+                />
+              )
             )}
 
             {activeTab === 'register' && (
@@ -154,14 +166,16 @@ export default function App() {
                       {user.organizationName}
                     </div>
                     <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                      Role: {user.role}
+                      Role: {user.role} ({user.organizationType || 'Supply Chain Participant'})
                     </div>
                   </div>
 
                   <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem' }}>
                     <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Supply Chain Stage</div>
                     <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#10b981' }}>
-                      Stage 1: Production, Packaging & Verification
+                      {(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor'))
+                        ? 'Stage 2: Bulk Receiving, Scan Verification & Onward Dispatch'
+                        : 'Stage 1: Production, Packaging & Verification'}
                     </div>
                   </div>
 
@@ -198,17 +212,23 @@ export default function App() {
             className={`nav-tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
             onClick={() => setActiveTab('dashboard')}
           >
-            <Package size={20} />
-            <span>Batches</span>
+            {(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) ? (
+              <Truck size={20} />
+            ) : (
+              <Package size={20} />
+            )}
+            <span>{(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) ? 'Logistics' : 'Batches'}</span>
           </button>
 
-          <button
-            className="nav-action-btn"
-            title="Register New Batch"
-            onClick={() => setActiveTab('register')}
-          >
-            <Plus size={24} />
-          </button>
+          {!(user?.organizationType === 'Distributor' || user?.role?.toLowerCase().includes('distributor')) && (
+            <button
+              className="nav-action-btn"
+              title="Register New Batch"
+              onClick={() => setActiveTab('register')}
+            >
+              <Plus size={24} />
+            </button>
+          )}
 
           <button
             className={`nav-tab-btn ${activeTab === 'profile' ? 'active' : ''}`}

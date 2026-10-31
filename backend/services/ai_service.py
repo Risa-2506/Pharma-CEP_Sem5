@@ -3,6 +3,7 @@ import json
 import logging
 import re
 import requests
+from datetime import datetime, timezone
 from config import Config
 
 logger = logging.getLogger(__name__)
@@ -161,6 +162,110 @@ class AIService:
             "canonicalData": canonical_data,
             "trustedDataHash": f"0x{trusted_hash}",
             "batchFingerprint": f"FP-{fingerprint}",
+        }
+
+    @staticmethod
+    def verify_stage_scan(trusted_baseline: dict, ai_data: dict, current_stage: str = "Distributor") -> dict:
+        """
+        Compares newly scanned medicine package information directly against the 
+        ORIGINAL MANUFACTURER TRUSTED BASELINE.
+        Computes scannedDataHash and compares against trustedDataHash.
+        Never replaces or modifies the original manufacturer baseline.
+        """
+        def normalize(val):
+            if val is None:
+                return ""
+            return re.sub(r"[\s\-_.,/]+", "", str(val).strip().lower())
+
+        canonical = trusted_baseline.get("canonicalData") or trusted_baseline
+        trusted_hash = trusted_baseline.get("trustedDataHash") or ""
+
+        checks = {}
+        all_matched = True
+        failed_fields = []
+
+        field_specs = [
+            ("medicineName", "medicineName", "Medicine Name", True),
+            ("manufacturerName", "manufacturer", "Manufacturer", True),
+            ("batchNumber", "batchNumber", "Batch Number", True),
+            ("expiryDate", "expiryDate", "Expiry Date", True),
+            ("composition", "composition", "Composition", False),
+            ("manufacturingDate", "manufacturingDate", "Manufacturing Date", False),
+            ("mrp", "mrp", "MRP", False),
+        ]
+
+        scanned_canonical = dict(canonical)
+
+        for base_key, ai_key, label, required in field_specs:
+            expected_val = canonical.get(base_key) or canonical.get(ai_key)
+            extracted_val = ai_data.get(ai_key)
+
+            norm_exp = normalize(expected_val)
+            norm_ext = normalize(extracted_val)
+
+            if not extracted_val:
+                match_status = "REVIEW_REQUIRED" if required else "NOT_DETECTED"
+                checks[base_key] = {
+                    "field": label,
+                    "expected": expected_val,
+                    "extracted": extracted_val or "Not detected / Unreadable",
+                    "match": False,
+                    "status": match_status,
+                }
+                if required:
+                    all_matched = False
+                    failed_fields.append(f"{label} (Unreadable)")
+            else:
+                is_match = False
+                if norm_exp and norm_ext:
+                    if base_key in ("batchNumber", "composition", "mrp"):
+                        is_match = (norm_exp == norm_ext)
+                    elif base_key in ("medicineName", "manufacturerName"):
+                        is_match = (norm_exp == norm_ext) or (norm_exp in norm_ext and len(norm_ext) <= len(norm_exp) + 6)
+                    elif base_key in ("expiryDate", "manufacturingDate"):
+                        exp_nums = re.findall(r"\d+", str(expected_val))
+                        ext_nums = re.findall(r"\d+", str(extracted_val))
+                        is_match = (exp_nums == ext_nums) or (norm_exp == norm_ext)
+                    else:
+                        is_match = (norm_exp == norm_ext)
+
+                checks[base_key] = {
+                    "field": label,
+                    "expected": expected_val,
+                    "extracted": extracted_val,
+                    "match": is_match,
+                    "status": "MATCH" if is_match else "MISMATCH",
+                }
+                if is_match:
+                    scanned_canonical[base_key] = str(expected_val)
+                else:
+                    all_matched = False
+                    failed_fields.append(label)
+                    scanned_canonical[base_key] = str(extracted_val)
+
+        # Generate scannedDataHash using the exact same canonical algorithm
+        sorted_keys = sorted(scanned_canonical.keys())
+        scanned_str = "|".join(f"{k}:{scanned_canonical[k]}" for k in sorted_keys)
+        raw_scanned_hash = hashlib.sha256(scanned_str.encode("utf-8")).hexdigest()
+        scanned_data_hash = f"0x{raw_scanned_hash}"
+
+        hash_match = (trusted_hash.lower() == scanned_data_hash.lower()) if trusted_hash else False
+
+        verified = all_matched and hash_match
+        stage_label = current_stage.upper()
+        status_text = f"VERIFIED AT {stage_label}" if verified else "VERIFICATION FAILED"
+
+        return {
+            "verified": verified,
+            "status": status_text,
+            "stage": current_stage,
+            "trustedDataHash": trusted_hash,
+            "scannedDataHash": scanned_data_hash,
+            "hashMatch": hash_match,
+            "fieldChecks": checks,
+            "failedFields": failed_fields,
+            "allFieldsMatch": all_matched,
+            "scannedAt": datetime.now(timezone.utc).isoformat(),
         }
 
 

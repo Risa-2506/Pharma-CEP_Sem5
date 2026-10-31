@@ -1,6 +1,23 @@
+import logging
 from flask import Blueprint, request, jsonify
 from database import batches_col, discrepancies_col
 from auth.decorators import token_required
+
+logger = logging.getLogger(__name__)
+
+STAGE_ETH_ACCOUNTS = {
+    "Manufacturer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "Distributor": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "Wholesaler": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+    "Retailer": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+}
+
+STAGE_ETH_KEYS = {
+    "Manufacturer": "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    "Distributor": "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+    "Wholesaler": "0x5de4111afa1a4b94908f83103eb219e8638b38558a1dcf3734e29ddae8ac0057",
+    "Retailer": "0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6",
+}
 
 batch_bp = Blueprint("batch_bp", __name__)
 
@@ -31,6 +48,10 @@ def serialize_batch(batch):
         "blockNumber": batch.get("blockNumber"),
         "contractAddress": batch.get("contractAddress"),
         "verificationStatus": batch.get("verificationStatus", "Verified"),
+        "transferHistory": batch.get("transferHistory", []),
+        "verificationHistory": batch.get("verificationHistory", []),
+        "receiptHistory": batch.get("receiptHistory", []),
+        "trustedBaseline": batch.get("trustedBaseline"),
         "createdAt": batch.get("createdAt"),
         "updatedAt": batch.get("updatedAt"),
     }
@@ -72,20 +93,28 @@ def get_batch_summary():
 @batch_bp.route("/api/batches", methods=["GET"])
 @token_required
 def get_batches():
-    """Retrieve batches list."""
+    """Retrieve batches list with optional view filter (inventory vs incoming)."""
     user = getattr(request, "user", {})
     query = {}
+    org_id = user.get("organizationId")
+    view = request.args.get("view")  # 'incoming', 'inventory', or None
 
     # Authority sees all batches. Other roles see batches relevant to their organization.
     if user.get("role") != "Authority":
-        org_id = user.get("organizationId")
-        query["$or"] = [
-            {"currentHolderId": org_id},
-            {"manufacturerId": org_id},
-        ]
+        if view == "incoming":
+            query["currentHolderId"] = org_id
+            query["status"] = "In Transit"
+        elif view == "inventory":
+            query["currentHolderId"] = org_id
+            query["status"] = {"$ne": "In Transit"}
+        else:
+            query["$or"] = [
+                {"currentHolderId": org_id},
+                {"manufacturerId": org_id},
+            ]
 
     status_filter = request.args.get("status")
-    if status_filter:
+    if status_filter and view not in ("incoming", "inventory"):
         query["status"] = status_filter
 
     cursor = batches_col.find(query).sort("createdAt", -1)
@@ -95,6 +124,29 @@ def get_batches():
         "success": True,
         "batches": batches,
         "count": len(batches),
+    }), 200
+
+
+@batch_bp.route("/api/deliveries/incoming", methods=["GET"])
+@token_required
+def get_incoming_deliveries():
+    """Returns batches currently in transit addressed to the authenticated organization."""
+    user = getattr(request, "user", {})
+    org_id = user.get("organizationId")
+    if not org_id:
+        return jsonify({"success": False, "error": "No organization associated with user."}), 400
+
+    query = {
+        "currentHolderId": org_id,
+        "status": "In Transit",
+    }
+    cursor = batches_col.find(query).sort("updatedAt", -1)
+    deliveries = [serialize_batch(b) for b in cursor]
+
+    return jsonify({
+        "success": True,
+        "deliveries": deliveries,
+        "count": len(deliveries),
     }), 200
 
 
@@ -131,6 +183,252 @@ def verify_batch_data():
     return jsonify({
         "success": True,
         "verification": verification,
+    }), 200
+
+
+@batch_bp.route("/api/batches/<batch_id>/verify-scan", methods=["POST"])
+@token_required
+def verify_batch_stage_scan(batch_id):
+    """
+    Compares newly scanned package details at a supply-chain receiving stage (Distributor,
+    Wholesaler, Retailer) directly against the ORIGINAL MANUFACTURER TRUSTED BASELINE.
+    Computes scannedDataHash and verifies against trustedDataHash.
+    Logs discrepancy if mismatch is found.
+    """
+    from datetime import datetime, timezone
+    from services.ai_service import ai_service
+    from database import discrepancies_col
+
+    user = getattr(request, "user", {})
+    user_org_id = user.get("organizationId")
+    user_stage = user.get("organizationType", "Distributor")
+
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"_id": batch_id}]})
+    if not batch:
+        return jsonify({"success": False, "error": f"Batch '{batch_id}' not found."}), 404
+
+    # 1. Validation of recipient
+    if user.get("role") != "Authority" and batch.get("currentHolderId") != user_org_id:
+        return jsonify({
+            "success": False,
+            "error": f"Access denied: Batch '{batch_id}' is addressed to '{batch.get('currentHolderName')}', not your organization."
+        }), 403
+
+    # 2. Blocked status check
+    if batch.get("status") == "Blocked":
+        return jsonify({
+            "success": False,
+            "error": f"CRITICAL: Batch '{batch_id}' is under REGULATORY HOLD (Blocked). Verification and receipt are disabled."
+        }), 403
+
+    data = request.get_json(silent=True) or {}
+    ai_extracted = data.get("aiExtracted")
+    if not ai_extracted:
+        return jsonify({"success": False, "error": "AI extracted package details are required for scan verification."}), 400
+
+    # 3. Retrieve original manufacturer baseline
+    baseline = batch.get("trustedBaseline")
+    if not baseline:
+        baseline = ai_service.generate_trusted_baseline({
+            "medicineName": batch.get("medicineName", ""),
+            "batchNumber": batch.get("batchNumber", batch.get("batchId", "")),
+            "manufacturerName": batch.get("manufacturerName", ""),
+            "composition": batch.get("composition", ""),
+            "manufacturingDate": batch.get("manufacturingDate", ""),
+            "expiryDate": batch.get("expiryDate", ""),
+            "quantity": str(batch.get("quantity", "")),
+            "sealId": batch.get("sealId", ""),
+            "mrp": batch.get("mrp", ""),
+        })
+
+    # 4. Run Stage Verification against Original Manufacturer Baseline
+    verification = ai_service.verify_stage_scan(baseline, ai_extracted, current_stage=user_stage)
+
+    # 5. If verification failed, record discrepancy in MongoDB
+    if not verification.get("verified", False):
+        failed_labels = ", ".join(verification.get("failedFields", []))
+        discrepancy_doc = {
+            "batchId": batch.get("batchId"),
+            "issueType": f"{user_stage} Medicine Verification Mismatch",
+            "description": f"Mismatch detected during {user_stage} receipt scan against original Manufacturer baseline on: [{failed_labels}].",
+            "expected": str(baseline.get("canonicalData") or baseline),
+            "actual": str(ai_extracted),
+            "trustedDataHash": verification.get("trustedDataHash"),
+            "scannedDataHash": verification.get("scannedDataHash"),
+            "detectedBy": user.get("username", "Unknown"),
+            "detectedByRole": user.get("role", "Unknown"),
+            "organization": user.get("organizationName", "Unknown"),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "status": "Open",
+        }
+        discrepancies_col.insert_one(discrepancy_doc)
+
+    return jsonify({
+        "success": True,
+        "batchId": batch.get("batchId"),
+        "verification": verification,
+        "originalBaseline": baseline,
+        "aiExtracted": ai_extracted,
+    }), 200
+
+
+@batch_bp.route("/api/batches/<batch_id>/receive", methods=["POST"])
+@token_required
+def receive_batch(batch_id):
+    """
+    Confirms physical receipt & custody acceptance of an incoming delivery at a supply chain stage.
+    Enforces all 13 security/business rules from Section 9.7.
+    """
+    from datetime import datetime, timezone
+    import time
+    from services.blockchain_service import blockchain_service
+    from database import organizations_col
+    from config import Config
+
+    user = getattr(request, "user", {})
+    user_org_id = user.get("organizationId")
+    user_role = user.get("role", "")
+    user_stage = user.get("organizationType", "Distributor")
+
+    # Rule 2: Active user
+    if user.get("status") and user.get("status") != "Active":
+        return jsonify({"success": False, "error": "Unauthorized: User account is inactive."}), 403
+
+    # Rule 3: Active organization
+    try:
+        from bson import ObjectId
+        user_org = organizations_col.find_one({"_id": ObjectId(user_org_id)})
+    except Exception:
+        user_org = organizations_col.find_one({"$or": [{"id": user_org_id}, {"name": user.get("organizationName")}]})
+
+    if not user_org or user_org.get("status") != "Active":
+        return jsonify({"success": False, "error": "Unauthorized: Organization is inactive or unapproved."}), 403
+
+    # Rule 4 & 5: Role and receive permissions
+    allowed_stages = ["Distributor", "Wholesaler", "Retailer"]
+    if user_stage not in allowed_stages and user_role != "Authority":
+        return jsonify({"success": False, "error": f"Role '{user_role}' cannot receive custody."}), 403
+
+    # Rule 6: Batch exists
+    batch = batches_col.find_one({"$or": [{"batchId": batch_id}, {"_id": batch_id}]})
+    if not batch:
+        return jsonify({"success": False, "error": f"Batch '{batch_id}' not found."}), 404
+
+    # Rule 10: Batch not blocked
+    if batch.get("status") == "Blocked":
+        return jsonify({
+            "success": False,
+            "error": "CRITICAL: Batch is under REGULATORY HOLD (Blocked). Receipt is strictly prohibited."
+        }), 403
+
+    # Rule 7: Intended receiver
+    if user_role != "Authority" and batch.get("currentHolderId") != user_org_id:
+        return jsonify({
+            "success": False,
+            "error": f"Receipt Error: Batch '{batch_id}' is addressed to '{batch.get('currentHolderName')}', not your organization."
+        }), 403
+
+    # Rule 9: Expected stage
+    if batch.get("stage") != user_stage and user_role != "Authority":
+        return jsonify({
+            "success": False,
+            "error": f"Stage Error: Batch is at stage '{batch.get('stage')}', but your stage is '{user_stage}'."
+        }), 400
+
+    # Rule 11: Receipt not already processed
+    if batch.get("status") != "In Transit":
+        return jsonify({
+            "success": False,
+            "error": f"Batch is not in transit (Current status: '{batch.get('status')}'). Receipt already completed or not yet dispatched."
+        }), 400
+
+    data = request.get_json(silent=True) or {}
+    verification_payload = data.get("verification")
+    new_seal_id = (data.get("newSealId") or batch.get("sealId") or f"SEAL-{int(time.time())}").strip()
+
+    # Rule 12: Medicine verification passed
+    if not verification_payload or not verification_payload.get("verified", False):
+        return jsonify({
+            "success": False,
+            "error": "VERIFICATION REQUIRED: Medicine package scan verification must pass against original Manufacturer baseline before custody receipt."
+        }), 400
+
+    now_iso = datetime.now(timezone.utc).isoformat()
+    audit_entry = {
+        "stage": user_stage,
+        "operator": user.get("username"),
+        "operatorRole": user_role,
+        "organization": user.get("organizationName"),
+        "timestamp": now_iso,
+        "trustedDataHash": verification_payload.get("trustedDataHash"),
+        "scannedDataHash": verification_payload.get("scannedDataHash"),
+        "hashMatch": verification_payload.get("hashMatch", False),
+        "fieldChecks": verification_payload.get("fieldChecks", {}),
+        "status": "Verified",
+    }
+
+    # On-Chain Blockchain Receipt Event
+    tx_hash = None
+    block_num = None
+    if blockchain_service.is_connected() and blockchain_service.contract:
+        try:
+            inspector_key = STAGE_ETH_KEYS.get(user_stage, Config.HARDHAT_OWNER_PRIVATE_KEY)
+            notes = f"Receipt & Baseline Verified at {user_stage}: {user.get('organizationName')}"
+            tx_res = blockchain_service.inspect_batch(
+                inspector_private_key=inspector_key,
+                batch_id=batch.get("batchId"),
+                notes=notes,
+                new_seal_id=new_seal_id,
+            )
+            tx_hash = tx_res.get("transactionHash")
+            block_num = tx_res.get("blockNumber")
+            audit_entry["blockchainTx"] = tx_hash
+            audit_entry["blockNumber"] = block_num
+        except Exception as e:
+            logger.warning(f"Blockchain inspection logging note: {e}")
+
+    # Atomic Update in MongoDB
+    updated = batches_col.find_one_and_update(
+        {"_id": batch["_id"]},
+        {
+            "$set": {
+                "status": "Verified",
+                "stage": user_stage,
+                "currentHolderId": user_org_id,
+                "currentHolderName": user.get("organizationName"),
+                "currentHolderType": user_stage,
+                "custodyStatus": "In Custody",
+                "verificationStatus": "Verified",
+                "lastVerifiedAt": now_iso,
+                "lastVerifiedBy": user.get("username"),
+                "sealId": new_seal_id,
+                "updatedAt": now_iso,
+            },
+            "$push": {
+                "verificationHistory": audit_entry,
+                "receiptHistory": {
+                    "stage": user_stage,
+                    "organization": user.get("organizationName"),
+                    "receivedBy": user.get("username"),
+                    "timestamp": now_iso,
+                    "sealId": new_seal_id,
+                    "txHash": tx_hash,
+                    "blockNumber": block_num,
+                }
+            }
+        },
+        return_document=True,
+    )
+
+    return jsonify({
+        "success": True,
+        "message": f"Batch '{batch.get('batchId')}' verified and received into {user_stage} inventory successfully!",
+        "batch": serialize_batch(updated),
+        "verificationAudit": audit_entry,
+        "blockchainReceipt": {
+            "transactionHash": tx_hash,
+            "blockNumber": block_num,
+        } if tx_hash else None,
     }), 200
 
 
@@ -358,6 +656,13 @@ def transfer_batch(batch_id):
             "error": f"Custody Error: Only the current holder '{batch.get('currentHolderName')}' can transfer this batch."
         }), 403
 
+    # 2b. Check if batch is currently In Transit
+    if batch.get("status") == "In Transit":
+        return jsonify({
+            "success": False,
+            "error": "Custody Error: Cannot transfer a batch that is currently 'In Transit'. The receiving facility must first complete medicine scan verification and confirm receipt."
+        }), 400
+
     data = request.get_json(silent=True) or {}
     receiver_id = (data.get("receiverId") or data.get("receiverOrgId") or "").strip()
     new_seal_id = (data.get("newSealId") or data.get("sealId") or f"SEAL-{int(datetime.now().timestamp())}").strip()
@@ -452,7 +757,7 @@ def transfer_batch(batch_id):
                 "Retailer": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
             }
             receiver_eth_addr = receiver_org.get("ethAddress") or STAGE_ETH_ACCOUNTS.get(receiver_type, "0x70997970C51812dc3A010C7d01b50e0d17dc79C8")
-            sender_key = Config.HARDHAT_OWNER_PRIVATE_KEY
+            sender_key = STAGE_ETH_KEYS.get(current_stage, Config.HARDHAT_OWNER_PRIVATE_KEY)
 
             tx_res = blockchain_service.transfer_batch(
                 sender_private_key=sender_key,
